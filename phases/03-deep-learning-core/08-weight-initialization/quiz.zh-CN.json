@@ -1,0 +1,37 @@
+[
+  {
+    "question": "如果把神经网络中的所有权重初始化为零，会发生什么？",
+    "options": ["网络会正常但缓慢地训练", "所有神经元计算相同输出并收到相同梯度，所以每层只有 1 个有效神经元", "网络会发散", "零初始化是推荐默认值"],
+    "correct": 1,
+    "explanation": "权重为零时，同一层中的每个神经元都会计算同一个函数，收到同一个梯度，并以同样方式更新。这种“对称性”让数百个参数表现得像一个参数。",
+    "stage": "pre"
+  },
+  {
+    "question": "为什么随机权重初始化的尺度很重要？",
+    "options": ["更大的权重训练更快", "如果方差太高，激活会爆炸；如果太低，激活会消失，两者都会阻止训练", "尺度只影响输出层", "只要权重非零就无所谓"],
+    "correct": 1,
+    "explanation": "每一层都会把方差乘以 fan_in * Var(w)。如果这个乘积大于 1，信号会跨层指数级爆炸；如果小于 1，信号会消失。正确初始化会让这个乘积接近 1。",
+    "stage": "pre"
+  },
+  {
+    "question": "Kaiming/He 初始化的方差公式是什么？",
+    "options": ["Var(w) = 1/fan_in", "Var(w) = 2/fan_in", "Var(w) = 2/(fan_in + fan_out)", "Var(w) = 1/(fan_in + fan_out)"],
+    "correct": 1,
+    "explanation": "Kaiming 初始化使用 Var(w) = 2/fan_in。系数 2 用来补偿 ReLU 把一半激活置零，也就是负值变成 0，这会有效减半 fan_in。",
+    "stage": "post"
+  },
+  {
+    "question": "什么时候应该使用 Xavier/Glorot 初始化，而不是 Kaiming/He？",
+    "options": ["永远使用，Xavier 普遍更好", "使用 sigmoid 或 tanh 激活时，因为它们不像 ReLU 那样把一半输出置零", "在小数据集上训练时", "使用 Adam 优化器时"],
+    "correct": 1,
+    "explanation": "Xavier 初始化使用 Var(w) = 2/(fan_in + fan_out)，适合在零附近近似线性的激活函数，例如 sigmoid 和 tanh。Kaiming 的额外系数 2 是为补偿 ReLU 半数置零准备的，Xavier 不需要它。",
+    "stage": "post"
+  },
+  {
+    "question": "为什么 GPT-2 会把残差层权重按 1/sqrt(2N) 缩放？",
+    "options": ["为了加速训练", "每次残差相加都会增加方差，因此缩放可以防止累积信号穿过 N 层时无界增长", "为了减少参数数量", "为了改进分词"],
+    "correct": 1,
+    "explanation": "残差连接会把子层输出加到输入上：x = x + sublayer(x)。每次相加都会增加方差。有 N 个残差层时，方差大致按 N 增长。按 1/sqrt(2N) 缩放可以保持信号稳定。",
+    "stage": "post"
+  }
+]
