@@ -26,7 +26,28 @@ phases/<阶段>/<课程>/
 
 ## 现在怎么读
 
-推荐从 Phase 3 开始看：这一阶段 13 节课已经补齐中文正文、中文测验和中文产物，可以直接按顺序学习。
+推荐按照课程自然顺序从 Phase 0 开始看。Phase 0 的 12 节课已经补齐中文正文、中文测验和中文产物，可以直接按顺序学习。
+
+### Phase 0：环境搭建与工具
+
+| # | 中文入口 | 英文课程目录 | 状态 |
+|:---:|---|---|---|
+| 01 | [开发环境](phases/00-setup-and-tooling/01-dev-environment/docs/zh-CN.md) | [Dev Environment](phases/00-setup-and-tooling/01-dev-environment/) | 已完成 |
+| 02 | [Git 与协作](phases/00-setup-and-tooling/02-git-and-collaboration/docs/zh-CN.md) | [Git & Collaboration](phases/00-setup-and-tooling/02-git-and-collaboration/) | 已完成 |
+| 03 | [GPU 设置与云端环境](phases/00-setup-and-tooling/03-gpu-setup-and-cloud/docs/zh-CN.md) | [GPU Setup & Cloud](phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | 已完成 |
+| 04 | [API 与密钥](phases/00-setup-and-tooling/04-apis-and-keys/docs/zh-CN.md) | [APIs & Keys](phases/00-setup-and-tooling/04-apis-and-keys/) | 已完成 |
+| 05 | [Jupyter Notebooks](phases/00-setup-and-tooling/05-jupyter-notebooks/docs/zh-CN.md) | [Jupyter Notebooks](phases/00-setup-and-tooling/05-jupyter-notebooks/) | 已完成 |
+| 06 | [Python 环境](phases/00-setup-and-tooling/06-python-environments/docs/zh-CN.md) | [Python Environments](phases/00-setup-and-tooling/06-python-environments/) | 已完成 |
+| 07 | [面向 AI 的 Docker](phases/00-setup-and-tooling/07-docker-for-ai/docs/zh-CN.md) | [Docker for AI](phases/00-setup-and-tooling/07-docker-for-ai/) | 已完成 |
+| 08 | [编辑器设置](phases/00-setup-and-tooling/08-editor-setup/docs/zh-CN.md) | [Editor Setup](phases/00-setup-and-tooling/08-editor-setup/) | 已完成 |
+| 09 | [数据管理](phases/00-setup-and-tooling/09-data-management/docs/zh-CN.md) | [Data Management](phases/00-setup-and-tooling/09-data-management/) | 已完成 |
+| 10 | [终端与 Shell](phases/00-setup-and-tooling/10-terminal-and-shell/docs/zh-CN.md) | [Terminal & Shell](phases/00-setup-and-tooling/10-terminal-and-shell/) | 已完成 |
+| 11 | [面向 AI 的 Linux](phases/00-setup-and-tooling/11-linux-for-ai/docs/zh-CN.md) | [Linux for AI](phases/00-setup-and-tooling/11-linux-for-ai/) | 已完成 |
+| 12 | [调试与 Profiling](phases/00-setup-and-tooling/12-debugging-and-profiling/docs/zh-CN.md) | [Debugging & Profiling](phases/00-setup-and-tooling/12-debugging-and-profiling/) | 已完成 |
+
+Phase 3 也已经补齐中文正文、中文测验和中文产物，可以在完成前置基础后继续阅读。
+
+### Phase 3：深度学习核心
 
 | # | 中文入口 | 英文课程目录 | 状态 |
 |:---:|---|---|---|
@@ -53,13 +74,13 @@ phases/<阶段>/<课程>/
 查看中文化进度：
 
 ```bash
-python3 scripts/audit_translations.py --phase 3
+python3 scripts/audit_translations.py --phase 0
 ```
 
 查看原仓库课程结构是否仍然有效：
 
 ```bash
-python3 scripts/audit_lessons.py --phase 3
+python3 scripts/audit_lessons.py --phase 0
 ```
 
 ## 课程目录

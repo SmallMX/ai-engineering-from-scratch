@@ -14,7 +14,7 @@
   <b>中文读者：</b>
   <a href="README.zh-CN.md">打开中文说明与目录</a>
   ·
-  <a href="README.zh-CN.md#现在怎么读">Phase 3 完整中文译文</a>
+  <a href="README.zh-CN.md#现在怎么读">Phase 0 + Phase 3 中文译文</a>
   ·
   <a href="#contents">Jump to English Contents</a>
 </p>
@@ -256,6 +256,8 @@ Twenty phases. Click any phase to expand its lesson list.
 <a id="phase-0"></a>
 ### Phase 0: Setup & Tooling `12 lessons`
 > Get your environment ready for everything that follows.
+>
+> 中文译文已补齐：每课包含 `docs/zh-CN.md`、`quiz.zh-CN.json`，相关 outputs 也提供 `*.zh-CN.md`。
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
