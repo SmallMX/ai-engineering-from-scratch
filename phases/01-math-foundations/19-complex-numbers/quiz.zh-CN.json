@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "中文导读：What is the imaginary unit i defined by?",
+      "options": [
+        "中文选项：i = sqrt(2)",
+        "中文选项：i^2 = -1",
+        "中文选项：i = -1",
+        "中文选项：i^2 = 1"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：The imaginary unit i is defined by the property i^2 = -1. It extends the real number line into a 2D plane. Geometrically, multiplying by i is a 90-degree rotation — two multiplications (i^2) give a 180-degree rotation, which is -1."
+    },
+    {
+      "stage": "pre",
+      "question": "中文导读：What does Euler's formula e^(i*theta) equal?",
+      "options": [
+        "中文选项：theta + i",
+        "中文选项：cos(theta) + i*sin(theta)",
+        "中文选项：sin(theta) + cos(theta)",
+        "中文选项：i^theta"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Euler's formula states e^(i*theta) = cos(theta) + i*sin(theta). This connects complex exponentials to trigonometry and shows that e^(i*theta) traces the unit circle as theta varies."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：What is the result of (3 + 2i)(1 + 4i)?",
+      "options": [
+        "中文选项：3 + 8i",
+        "中文选项：4 + 6i",
+        "中文选项：-5 + 14i",
+        "中文选项：5 + 14i"
+      ],
+      "correct": 2,
+      "explanation": "中文解析：Using FOIL: (3)(1) + (3)(4i) + (2i)(1) + (2i)(4i) = 3 + 12i + 2i + 8i^2 = 3 + 14i + 8(-1) = 3 + 14i - 8 = -5 + 14i."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：Why are complex numbers used in Rotary Position Embedding (RoPE) for transformers?",
+      "options": [
+        "中文选项：Complex numbers compress the position encoding to use less memory",
+        "中文选项：Multiplying query/key vectors by complex rotations encodes relative position as a rotation angle",
+        "中文选项：Complex numbers are required by the attention softmax function",
+        "中文选项：RoPE uses imaginary numbers to handle negative positions"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：RoPE multiplies query and key vectors by complex rotation matrices e^(i*m*theta) where m is the position. The relative position between two tokens becomes a rotation angle, and attention naturally becomes sensitive to relative (not absolute) position through complex multiplication."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：The N-th roots of unity are N equally spaced points on the unit circle. What is their sum?",
+      "options": [
+        "中文选项：N",
+        "中文选项：1",
+        "中文选项：0",
+        "中文选项：N/2"
+      ],
+      "correct": 2,
+      "explanation": "中文解析：The N roots of unity are e^(2*pi*i*k/N) for k = 0, ..., N-1. They are symmetrically distributed around the unit circle, so their vector sum cancels out to zero. This symmetry property is what makes the DFT invertible."
+    }
+  ]
+}
