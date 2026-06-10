@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "中文导读：What does the derivative of a function at a point tell you?",
+      "options": [
+        "中文选项：The value of the function at that point",
+        "中文选项：The rate of change (slope) of the function at that point",
+        "中文选项：The area under the function up to that point",
+        "中文选项：The maximum value the function can reach"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：The derivative f'(x) measures how much the output changes per unit change in input. Geometrically, it is the slope of the tangent line at that point."
+    },
+    {
+      "stage": "pre",
+      "question": "中文导读：What is a gradient in the context of machine learning?",
+      "options": [
+        "中文选项：A measure of model accuracy",
+        "中文选项：A vector of all partial derivatives that points in the direction of steepest ascent",
+        "中文选项：The learning rate used during training",
+        "中文选项：The difference between predicted and actual values"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：The gradient collects every partial derivative into one vector. It points in the direction that increases the function fastest. To minimize loss, you move opposite the gradient."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：In gradient descent, what does the update rule 'w = w - lr * dL/dw' accomplish?",
+      "options": [
+        "中文选项：It increases the loss to test model robustness",
+        "中文选项：It adjusts each weight in the direction that reduces the loss, scaled by the learning rate",
+        "中文选项：It resets the weight to its initial value minus the gradient",
+        "中文选项：It normalizes the weight to have magnitude 1"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：dL/dw tells you which direction increases the loss. Subtracting it (times the learning rate) moves the weight in the direction that decreases the loss. This is repeated for every weight in the model."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：Why can't Newton's method (which uses the Hessian matrix) be directly applied to neural networks with millions of parameters?",
+      "options": [
+        "中文选项：Newton's method only works for convex functions",
+        "中文选项：The Hessian is an N x N matrix, requiring O(N^2) storage and O(N^3) computation per step, which is intractable for millions of parameters",
+        "中文选项：Newton's method requires analytical derivatives which cannot be computed for neural networks",
+        "中文选项：Newton's method converges too slowly for deep networks"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：For N=1 million parameters, the Hessian has 1 trillion entries. Computing and inverting it is impossible. This is why we use first-order methods (SGD, Adam) that approximate second-order information cheaply."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：What is the numerical (central difference) approximation for f'(x)?",
+      "options": [
+        "中文选项：f(x+h) / h",
+        "中文选项：(f(x+h) - f(x)) / h",
+        "中文选项：(f(x+h) - f(x-h)) / (2*h)",
+        "中文选项：f(x) * h"
+      ],
+      "correct": 2,
+      "explanation": "中文解析：The central difference (f(x+h) - f(x-h)) / (2h) is more accurate than the forward difference because it averages the slope on both sides of x, canceling out the leading error term."
+    }
+  ]
+}
