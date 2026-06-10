@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Docker 容器和虚拟机的主要区别是什么？",
+      "options": [
+        "容器更慢，但比虚拟机更安全",
+        "容器共享宿主机操作系统内核，而虚拟机会运行自己的完整操作系统",
+        "容器只能运行 Linux，而虚拟机支持任何操作系统",
+        "两者在实践中没有区别"
+      ],
+      "correct": 1,
+      "explanation": "容器共享宿主机内核，并在进程级别做隔离，所以可以在几秒内启动。虚拟机会运行一个带有自己内核的完整客户机操作系统，因此需要更多资源，启动也更慢。"
+    },
+    {
+      "stage": "pre",
+      "question": "Dockerfile 是什么？",
+      "options": [
+        "Docker daemon 的配置文件",
+        "一组用于逐层构建 Docker 镜像的指令",
+        "记录容器活动的日志文件",
+        "列出正在运行容器的文件"
+      ],
+      "correct": 1,
+      "explanation": "Dockerfile 包含一组顺序执行的指令，例如 FROM、RUN、COPY 等。Docker 会执行这些指令来构建镜像，每条指令都会创建一个可缓存的层。"
+    },
+    {
+      "stage": "post",
+      "question": "为什么 volume mount 对使用 Docker 的 AI 开发非常关键？",
+      "options": [
+        "Volume 通过使用宿主机磁盘速度让容器运行得更快",
+        "Volume 会在容器重建之间持久化数据（模型、数据集、代码），这样你不需要每次都重新下载好几个 GB",
+        "Volume 是正确安装 Python 包的必要条件",
+        "Volume 允许多个容器共享同一块 GPU"
+      ],
+      "correct": 1,
+      "explanation": "如果没有 volume，容器停止后容器内部的一切都会丢失。Volume mount 会把宿主机目录映射进容器，所以模型权重（14 GB 以上）和数据集可以在重建后继续保留。"
+    },
+    {
+      "stage": "post",
+      "question": "NVIDIA Container Toolkit 启用了什么能力？",
+      "options": [
+        "在容器内部安装 CUDA 驱动",
+        "通过 --gpus 参数把宿主机 GPU 暴露给 Docker 容器",
+        "在 AMD 硬件上运行 NVIDIA GPU 容器",
+        "在 Docker 构建过程中编译 CUDA 代码"
+      ],
+      "correct": 1,
+      "explanation": "NVIDIA Container Toolkit 是一个 runtime hook，会把宿主机 GPU 暴露给容器。CUDA toolkit 位于容器内部，但 GPU 驱动来自宿主机共享。"
+    },
+    {
+      "stage": "post",
+      "question": "在 AI 的 Docker Compose 文件中，`ai-dev` 服务如何访问 `qdrant` 向量数据库？",
+      "options": [
+        "使用宿主机的 IP 地址和端口",
+        "使用服务名 `qdrant` 作为主机名，因为 Compose 会创建共享网络",
+        "在两个容器之间挂载共享 volume",
+        "在容器之间配置 VPN"
+      ],
+      "correct": 1,
+      "explanation": "Docker Compose 会自动创建一个共享网络，服务之间可以通过名称互相访问。ai-dev 容器会使用服务名作为主机名，连接到 `http://qdrant:6333`。"
+    }
+  ]
+}
