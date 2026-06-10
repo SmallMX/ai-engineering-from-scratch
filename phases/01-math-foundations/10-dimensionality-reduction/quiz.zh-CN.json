@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "中文导读：What is the 'curse of dimensionality'?",
+      "options": [
+        "中文选项：High-dimensional data takes too long to download",
+        "中文选项：As dimensions grow, distances become meaningless, volume concentrates in corners, and you need exponentially more data",
+        "中文选项：Neural networks cannot process data with more than 100 features",
+        "中文选项：High-dimensional data always contains noise"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：In high dimensions, all pairwise distances converge to similar values, data points spread to corners, and maintaining sample density requires exponentially more data. Dimensionality reduction counteracts these effects."
+    },
+    {
+      "stage": "pre",
+      "question": "中文导读：What does PCA find?",
+      "options": [
+        "中文选项：The most important features by name",
+        "中文选项：The orthogonal directions of maximum variance in the data",
+        "中文选项：Clusters of similar data points",
+        "中文选项：The optimal number of features to keep"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：PCA computes the eigenvectors of the covariance matrix, which are orthogonal directions ranked by how much data variance they capture. The first principal component points along the direction of maximum spread."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：After running PCA on 784-dimensional MNIST data with k=50 components, you find 95% of variance is captured. What does this tell you?",
+      "options": [
+        "中文选项：Only 50 pixels matter in each image",
+        "中文选项：The data effectively lives in a ~50-dimensional subspace; the remaining 734 dimensions are mostly noise or redundancy",
+        "中文选项：95% of images belong to the same class",
+        "中文选项：The model will achieve 95% accuracy"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：95% explained variance with 50 components means the essential structure of 784-dimensional data is captured by just 50 directions. The rest carries only 5% of the variation -- mostly noise."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：Why should you NOT use t-SNE as preprocessing before training a classifier?",
+      "options": [
+        "中文选项：t-SNE is too slow for large datasets",
+        "中文选项：t-SNE is designed for visualization only: it distorts global distances, is stochastic, and the output coordinates have no consistent meaning across runs",
+        "中文选项：t-SNE reduces data to exactly 2 dimensions which is too few",
+        "中文选项：t-SNE requires the labels to be known in advance"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：t-SNE preserves local neighborhoods but distorts global structure. Distances between clusters are meaningless, and different runs produce different layouts. Use PCA for preprocessing and t-SNE/UMAP only for visualization."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：When would you choose kernel PCA over standard PCA?",
+      "options": [
+        "中文选项：When you have more samples than features",
+        "中文选项：When the data lies on a nonlinear manifold that standard PCA cannot separate, like concentric circles",
+        "中文选项：When you need the fastest possible computation",
+        "中文选项：When you want interpretable principal components"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Standard PCA finds linear subspaces. If data has nonlinear structure (e.g., two concentric rings), PCA projects both onto the same line. Kernel PCA maps data to a higher-dimensional space where the structure becomes linear."
+    }
+  ]
+}
