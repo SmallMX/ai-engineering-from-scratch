@@ -26,13 +26,29 @@ phases/<阶段>/<课程>/
 
 ## 现在怎么读
 
-推荐从 Phase 3 已翻译的课程开始看，因为这里已经有完整中文正文、中文测验和中文产物：
+推荐从 Phase 3 开始看：这一阶段 13 节课已经补齐中文正文、中文测验和中文产物，可以直接按顺序学习。
 
 | # | 中文入口 | 英文课程目录 | 状态 |
 |:---:|---|---|---|
-| 01 | [感知机](phases/03-deep-learning-core/01-the-perceptron/docs/zh-CN.md) | [The Perceptron](phases/03-deep-learning-core/01-the-perceptron/) | 已翻译 |
-| 02 | [多层网络与前向传播](phases/03-deep-learning-core/02-multi-layer-networks/docs/zh-CN.md) | [Multi-Layer Networks](phases/03-deep-learning-core/02-multi-layer-networks/) | 已翻译 |
-| 03 | [从零实现反向传播](phases/03-deep-learning-core/03-backpropagation/docs/zh-CN.md) | [Backpropagation from Scratch](phases/03-deep-learning-core/03-backpropagation/) | 已翻译 |
+| 01 | [感知机](phases/03-deep-learning-core/01-the-perceptron/docs/zh-CN.md) | [The Perceptron](phases/03-deep-learning-core/01-the-perceptron/) | 已完成 |
+| 02 | [多层网络与前向传播](phases/03-deep-learning-core/02-multi-layer-networks/docs/zh-CN.md) | [Multi-Layer Networks](phases/03-deep-learning-core/02-multi-layer-networks/) | 已完成 |
+| 03 | [从零实现反向传播](phases/03-deep-learning-core/03-backpropagation/docs/zh-CN.md) | [Backpropagation from Scratch](phases/03-deep-learning-core/03-backpropagation/) | 已完成 |
+| 04 | [激活函数](phases/03-deep-learning-core/04-activation-functions/docs/zh-CN.md) | [Activation Functions](phases/03-deep-learning-core/04-activation-functions/) | 已完成 |
+| 05 | [损失函数](phases/03-deep-learning-core/05-loss-functions/docs/zh-CN.md) | [Loss Functions](phases/03-deep-learning-core/05-loss-functions/) | 已完成 |
+| 06 | [优化器](phases/03-deep-learning-core/06-optimizers/docs/zh-CN.md) | [Optimizers](phases/03-deep-learning-core/06-optimizers/) | 已完成 |
+| 07 | [正则化](phases/03-deep-learning-core/07-regularization/docs/zh-CN.md) | [Regularization](phases/03-deep-learning-core/07-regularization/) | 已完成 |
+| 08 | [权重初始化与训练稳定性](phases/03-deep-learning-core/08-weight-initialization/docs/zh-CN.md) | [Weight Initialization](phases/03-deep-learning-core/08-weight-initialization/) | 已完成 |
+| 09 | [学习率调度与 Warmup](phases/03-deep-learning-core/09-learning-rate-schedules/docs/zh-CN.md) | [Learning Rate Schedules](phases/03-deep-learning-core/09-learning-rate-schedules/) | 已完成 |
+| 10 | [构建你自己的迷你框架](phases/03-deep-learning-core/10-mini-framework/docs/zh-CN.md) | [Mini Framework](phases/03-deep-learning-core/10-mini-framework/) | 已完成 |
+| 11 | [PyTorch 入门](phases/03-deep-learning-core/11-intro-to-pytorch/docs/zh-CN.md) | [Introduction to PyTorch](phases/03-deep-learning-core/11-intro-to-pytorch/) | 已完成 |
+| 12 | [JAX 入门](phases/03-deep-learning-core/12-intro-to-jax/docs/zh-CN.md) | [Introduction to JAX](phases/03-deep-learning-core/12-intro-to-jax/) | 已完成 |
+| 13 | [调试神经网络](phases/03-deep-learning-core/13-debugging-neural-networks/docs/zh-CN.md) | [Debugging Neural Networks](phases/03-deep-learning-core/13-debugging-neural-networks/) | 已完成 |
+
+每课都包含：
+
+- `docs/zh-CN.md`：中文正文
+- `quiz.zh-CN.json`：中文测验
+- `outputs/*.zh-CN.md`：中文 prompt / skill / artifact
 
 查看中文化进度：
 
