@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "中文导读：What does the Fourier transform do to a signal?",
+      "options": [
+        "中文选项：Compresses the signal to use less storage",
+        "中文选项：Decomposes the signal into sine waves of different frequencies, amplitudes, and phases",
+        "中文选项：Removes noise from the signal",
+        "中文选项：Converts the signal from analog to digital"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：The Fourier transform converts a signal from the time domain to the frequency domain. Each frequency coefficient X[k] tells you the amplitude and phase of a sine wave at frequency k. The signal is re-expressed as a sum of these sine waves."
+    },
+    {
+      "stage": "pre",
+      "question": "中文导读：What is the time complexity of the Fast Fourier Transform (FFT) compared to the direct DFT?",
+      "options": [
+        "中文选项：Both are O(N^2)",
+        "中文选项：FFT is O(N log N), DFT is O(N^2)",
+        "中文选项：FFT is O(N), DFT is O(N log N)",
+        "中文选项：FFT is O(log N), DFT is O(N)"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：The direct DFT computes N outputs, each summing over N inputs: O(N^2). The Cooley-Tukey FFT splits the signal into even/odd halves recursively, doing O(N) work at each of log2(N) levels, giving O(N log N). For N = 1 million, this is 20 million vs 1 trillion operations."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：What does the convolution theorem state?",
+      "options": [
+        "中文选项：Convolution in the time domain equals addition in the frequency domain",
+        "中文选项：Convolution in the time domain equals pointwise multiplication in the frequency domain",
+        "中文选项：Convolution always increases the length of a signal",
+        "中文选项：Convolution and correlation are identical operations"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：The convolution theorem states that convolution in the time domain equals pointwise multiplication in the frequency domain: x * h = IFFT(FFT(x) . FFT(h)). This is why FFT-based convolution is O(N log N) instead of O(N*M) for large kernels."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：Why does zero-padding a signal before FFT NOT increase the true frequency resolution?",
+      "options": [
+        "中文选项：Zero-padding introduces noise that cancels the improvement",
+        "中文选项：Zero-padding interpolates between existing frequency bins but cannot reveal frequency detail absent from the original samples",
+        "中文选项：Zero-padding only works for power-of-2 signal lengths",
+        "中文选项：The FFT algorithm ignores zero-padded samples"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：True frequency resolution depends on the observation time T = N/fs. Zero-padding adds more frequency bins (finer grid) but only interpolates the existing spectrum — it gives a smoother-looking result without resolving frequencies closer than 1/T Hz apart."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：In the original Transformer's sinusoidal positional encodings, why are different dimension pairs assigned geometrically spaced frequencies?",
+      "options": [
+        "中文选项：It reduces the computational cost of attention",
+        "中文选项：Each frequency provides a different resolution — high frequencies encode fine position, low frequencies encode coarse position, giving each position a unique fingerprint",
+        "中文选项：Geometric spacing is required by the FFT algorithm",
+        "中文选项：It ensures all encoding values are between 0 and 1"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：High-frequency dimensions change rapidly with position (fine resolution), while low-frequency dimensions change slowly (coarse resolution). Together, the multi-frequency encoding gives every position a unique pattern — similar to how Fourier coefficients uniquely identify a signal."
+    }
+  ]
+}
