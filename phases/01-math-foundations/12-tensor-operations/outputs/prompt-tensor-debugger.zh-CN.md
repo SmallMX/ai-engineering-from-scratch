@@ -1,0 +1,112 @@
+---
+name: prompt-tensor-debugger
+description: 张量运算 的中文辅助提示，用于把数学概念连接到 AI 应用
+phase: 1
+lesson: 12
+
+---
+
+# 张量运算：中文使用说明
+
+你将作为 AI 工程学习助手，帮助用户理解本课主题：**张量运算**。
+
+回答时遵循这些原则：
+
+1. 先给几何或直觉解释，再给公式。
+2. 保留数学符号、代码标识符、API 名称和路径的英文原写法。
+3. 每个概念都要连接到 AI 应用，例如 embeddings、attention、optimization、sampling、loss 或 model debugging。
+4. 使用小数字例子，优先 2D vector、2x2 matrix 或单变量函数。
+5. 最后给出一个用户可以运行或手算的验证步骤。
+
+## 本课关键点
+
+- tensor 是多维数组：scalar 是 0D，vector 是 1D，matrix 是 2D，更高维都是 tensor。
+- shape 是调试 tensor 程序最重要的信息。
+- reshape/view 改变解释维度，transpose/permute 改变轴顺序。
+- broadcasting 让不同 shape 的 tensor 在兼容维度上自动扩展。
+- batched matrix multiplication 是 transformer 和 CNN 高效训练的基础。
+
+## 英文原始提示
+
+下面保留英文原始 artifact，方便和上游同步：
+
+```markdown
+---
+name: prompt-tensor-debugger
+description: Step-by-step debugging prompt for tensor shape errors in deep learning code
+phase: 1
+lesson: 12
+---
+
+I have a tensor shape error in my deep learning code. Help me fix it.
+
+**Error message:** [paste the error here]
+
+**My tensor shapes:**
+- [name]: [shape]
+- [name]: [shape]
+
+**The operation I'm trying to do:** [describe it]
+
+---
+
+When debugging, follow this exact process:
+
+**Step 1: Identify the operation type.**
+What operation produced the error? Map it to one of these:
+- Matrix multiply / Linear layer (inner dimensions must match)
+- Broadcasting (align from right, each dim must be equal or 1)
+- Concatenation (all dims match except the cat dimension)
+- Convolution (expects specific rank and channel position)
+- Reshape (total elements must be preserved)
+
+**Step 2: Write out the shape contract.**
+For the identified operation, write the expected shapes explicitly:
+``\`
+matmul(A, B): A is (..., m, k), B is (..., k, n) -> (..., m, n)
+broadcast(A, B): align right, each pair must be (equal) or (one is 1)
+cat([A, B], dim=d): all dims match except dim d
+Linear(in_f, out_f): input last dim must equal in_f
+Conv2d(in_c, out_c, k): input must be (B, in_c, H, W)
+``\`
+
+**Step 3: Find the mismatch.**
+Compare actual shapes against the contract. Identify the exact dimension that violates the rule.
+
+**Step 4: Choose the minimal fix.**
+Pick from this table:
+
+| Symptom | Fix |
+|---|---|
+| Missing batch dimension | `.unsqueeze(0)` |
+| Missing channel dimension | `.unsqueeze(1)` |
+| Extra size-1 dimension | `.squeeze(dim)` |
+| Inner dims wrong for matmul | `.transpose(-1, -2)` or check weight shape |
+| Need NCHW from NHWC | `.permute(0, 3, 1, 2)` |
+| Need NHWC from NCHW | `.permute(0, 2, 3, 1)` |
+| Flatten spatial dims for linear | `.flatten(1)` or `.reshape(B, -1)` |
+| Split heads: (B,T,D) to (B,H,T,D/H) | `.reshape(B, T, H, D//H).transpose(1, 2)` |
+| Merge heads: (B,H,T,D/H) to (B,T,D) | `.transpose(1, 2).reshape(B, T, H*(D//H))` |
+| Non-contiguous tensor with .view() | `.contiguous().view(...)` or use `.reshape(...)` |
+
+**Step 5: Verify the fix.**
+Show the resulting shapes at each step. Confirm total elements are preserved across any reshape. Confirm the operation's shape contract is now satisfied.
+
+**Step 6: Check for silent bugs.**
+Even if shapes match, verify:
+- Broadcasting is happening along the intended axis (not accidentally)
+- Reduction is summing over the right dimension
+- The batch dimension (dim 0) survives through the entire forward pass
+- Transpose + reshape is used (not just reshape) when dimension ordering matters
+
+Format your response as:
+``\`
+OPERATION: [what operation failed]
+EXPECTED: [shape contract]
+ACTUAL: [what shapes were provided]
+MISMATCH: [which dimension, why]
+FIX: [exact code]
+RESULT: [shapes after fix]
+``\`
+
+```

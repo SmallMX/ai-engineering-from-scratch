@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "中文导读：What does the 'shape' of a tensor describe?",
+      "options": [
+        "中文选项：A tuple listing the size along each axis",
+        "中文选项：The total number of elements in the tensor",
+        "中文选项：The data type of the tensor elements",
+        "中文选项：The memory address of the tensor"
+      ],
+      "correct": 0,
+      "explanation": "中文解析：The shape is a tuple listing the size along each axis. For example, a tensor with shape (2, 3, 4) has 2 elements along axis 0, 3 along axis 1, and 4 along axis 2."
+    },
+    {
+      "stage": "pre",
+      "question": "中文导读：In PyTorch, what layout does an image batch tensor use by default?",
+      "options": [
+        "中文选项：NHWC (batch, height, width, channels)",
+        "中文选项：NCHW (batch, channels, height, width)",
+        "中文选项：CHWN (channels, height, width, batch)",
+        "中文选项：WHCN (width, height, channels, batch)"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：PyTorch defaults to NCHW (channels-first) layout. TensorFlow defaults to NHWC (channels-last). Mismatched layouts cause silent errors or performance issues."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：What is the result shape when broadcasting tensors of shape (8, 1, 6, 1) and (7, 1, 5)?",
+      "options": [
+        "中文选项：(8, 7, 6, 1)",
+        "中文选项：(8, 1, 6, 5)",
+        "中文选项：(8, 7, 6, 5)",
+        "中文选项：Broadcasting fails — shapes are incompatible"
+      ],
+      "correct": 2,
+      "explanation": "中文解析：Align shapes from the right: (8,1,6,1) and (1,7,1,5). Dimensions are compatible when equal or one is 1. The result takes the maximum along each axis: (8, 7, 6, 5)."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：In the einsum expression 'bhtd,bhsd->bhts', what happens to the index 'd'?",
+      "options": [
+        "中文选项：It is kept in the output as a new axis",
+        "中文选项：It is summed over (contracted) because it appears in both inputs but not the output",
+        "中文选项：It is broadcast across both tensors",
+        "中文选项：It is transposed between the two input tensors"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：In einsum, any index that appears in the inputs but not the output is summed over. Index 'd' appears in both 'bhtd' and 'bhsd' but not in the output 'bhts', so it is contracted (multiplied and summed)."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：Why does calling .view() fail on a transposed tensor in PyTorch?",
+      "options": [
+        "中文选项：Transposed tensors have a different data type",
+        "中文选项：The tensor is non-contiguous in memory after transpose, and view requires contiguous data",
+        "中文选项：View only works on 2D tensors",
+        "中文选项：Transpose changes the total number of elements"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Transpose swaps strides without moving data, making the tensor non-contiguous. The .view() operation requires contiguous memory layout. Use .reshape() or call .contiguous() first."
+    }
+  ]
+}
