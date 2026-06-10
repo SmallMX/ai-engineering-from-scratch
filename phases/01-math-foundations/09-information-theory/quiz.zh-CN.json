@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "中文导读：What does 'entropy' measure in information theory?",
+      "options": [
+        "中文选项：The energy of a physical system",
+        "中文选项：The average surprise or uncertainty in a probability distribution",
+        "中文选项：The number of bits in a binary message",
+        "中文选项：The error rate of a communication channel"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Entropy H(P) = -sum(p(x) * log(p(x))) measures the average amount of surprise across all outcomes. High entropy means high uncertainty (uniform distribution). Low entropy means the outcome is predictable."
+    },
+    {
+      "stage": "pre",
+      "question": "中文导读：What is the cross-entropy loss commonly used for in neural networks?",
+      "options": [
+        "中文选项：Regression tasks with continuous outputs",
+        "中文选项：Classification tasks, measuring how far predicted probabilities are from true labels",
+        "中文选项：Generating new data samples",
+        "中文选项：Regularizing model weights to prevent overfitting"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Cross-entropy loss H(P,Q) = -sum(p(x)*log(q(x))) measures the difference between the true distribution (labels) and the model's predicted distribution. It is THE standard loss for classification."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：Why is minimizing cross-entropy equivalent to minimizing KL divergence during training?",
+      "options": [
+        "中文选项：Because KL divergence is always zero during training",
+        "中文选项：Because cross-entropy = entropy + KL divergence, and the entropy of the true labels is constant, so minimizing cross-entropy minimizes KL divergence",
+        "中文选项：Because cross-entropy and KL divergence are the same formula",
+        "中文选项：Because the model's entropy equals zero at convergence"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：H(P,Q) = H(P) + D_KL(P||Q). Since the true distribution P doesn't change during training, H(P) is constant. Minimizing H(P,Q) is the same as minimizing D_KL(P||Q) -- pushing the model toward the true distribution."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：A language model has perplexity 50 on a test set. What does this mean?",
+      "options": [
+        "中文选项：The model makes 50 errors per sentence",
+        "中文选项：On average, the model is as uncertain as if it were choosing uniformly from 50 possible next tokens at each step",
+        "中文选项：The model has 50 layers",
+        "中文选项：The model was trained for 50 epochs"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Perplexity = e^(cross-entropy). A perplexity of 50 means the model's uncertainty at each token is equivalent to picking randomly from 50 equally likely options. Lower perplexity means better predictions."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：How does mutual information differ from Pearson correlation for feature selection?",
+      "options": [
+        "中文选项：Mutual information is faster to compute",
+        "中文选项：Mutual information detects any statistical dependency (linear or nonlinear) while correlation only detects linear relationships",
+        "中文选项：Pearson correlation works for any data type while mutual information only works for continuous data",
+        "中文选项：They always give the same feature rankings"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Mutual information I(X;Y) captures all statistical dependencies between variables, including nonlinear and non-monotonic ones. Pearson correlation only measures linear association, missing many important relationships."
+    }
+  ]
+}
