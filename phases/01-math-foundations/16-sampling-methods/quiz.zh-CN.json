@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "中文导读：What does temperature < 1.0 do to a language model's output distribution?",
+      "options": [
+        "中文选项：Makes the distribution more uniform (more random)",
+        "中文选项：Sharpens the distribution, making the highest-probability token more likely",
+        "中文选项：Removes all tokens except the top one",
+        "中文选项：Has no effect on the output"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Temperature < 1.0 divides logits by a number less than 1, which amplifies differences between logits. After softmax, the highest-probability token gets an even larger share. Temperature approaches 0 gives greedy (argmax) decoding."
+    },
+    {
+      "stage": "pre",
+      "question": "中文导读：What is the key difference between top-k and top-p (nucleus) sampling?",
+      "options": [
+        "中文选项：Top-k is faster than top-p",
+        "中文选项：Top-k keeps a fixed number of tokens; top-p keeps a variable number based on cumulative probability",
+        "中文选项：Top-p only works with temperature = 1.0",
+        "中文选项：Top-k works on logits while top-p works on probabilities"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Top-k always keeps exactly k tokens regardless of the probability distribution. Top-p adaptively keeps the smallest set of tokens whose cumulative probability exceeds p. When the model is confident, top-p keeps few tokens; when uncertain, it keeps many."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：Why can't you backpropagate through a standard sampling operation z ~ N(mu, sigma^2)?",
+      "options": [
+        "中文选项：Normal distributions don't have gradients",
+        "中文选项：The sampling operation is non-deterministic and has no well-defined derivative with respect to mu and sigma",
+        "中文选项：PyTorch doesn't support normal distributions",
+        "中文选项：The gradient is always exactly zero"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Sampling introduces a stochastic discontinuity — you can't compute d(sample)/d(mu) for a random draw. The reparameterization trick solves this by writing z = mu + sigma * epsilon (where epsilon ~ N(0,1)), making z a deterministic, differentiable function of mu and sigma."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：In Metropolis-Hastings MCMC, what happens if the proposal standard deviation is set much too large?",
+      "options": [
+        "中文选项：The chain converges faster because it takes bigger steps",
+        "中文选项：Most proposals land in low-probability regions and are rejected, so the chain barely moves",
+        "中文选项：The stationary distribution changes to a uniform distribution",
+        "中文选项：The burn-in period becomes zero"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：With a large proposal standard deviation, proposed points are far from the current position and likely land in low-probability regions. These are rejected, causing the chain to stay stuck at the current point. The optimal acceptance rate is about 23% for high-dimensional Gaussian proposals."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：In rejection sampling, what happens to the acceptance rate as the dimensionality of the target distribution increases?",
+      "options": [
+        "中文选项：It stays constant regardless of dimension",
+        "中文选项：It increases because there are more dimensions to accept in",
+        "中文选项：It drops exponentially because most of the proposal volume gets rejected",
+        "中文选项：It approaches 50% in all cases"
+      ],
+      "correct": 2,
+      "explanation": "中文解析：In high dimensions, the volume of the proposal distribution that overlaps with the target distribution shrinks exponentially. The bound M grows, and the acceptance rate (1/M) drops exponentially. This is the curse of dimensionality for rejection sampling."
+    }
+  ]
+}
