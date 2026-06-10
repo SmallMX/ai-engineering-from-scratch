@@ -14,7 +14,7 @@
   <b>中文读者：</b>
   <a href="README.zh-CN.md">打开中文说明与目录</a>
   ·
-  <a href="README.zh-CN.md#现在怎么读">Phase 0 + Phase 3 中文译文</a>
+  <a href="README.zh-CN.md#现在怎么读">Phase 0 + Phase 1 + Phase 3 中文译文</a>
   ·
   <a href="#contents">Jump to English Contents</a>
 </p>
@@ -277,6 +277,8 @@ Twenty phases. Click any phase to expand its lesson list.
 <details id="phase-1">
 <summary><b>Phase 1 — Math Foundations</b> &nbsp;<code>22 lessons</code>&nbsp; <em>The intuition behind every AI algorithm, through code.</em></summary>
 <br/>
+
+> 中文译文已补齐：每课包含 `docs/zh-CN.md`、`quiz.zh-CN.json`，相关 outputs 也提供 `*.zh-CN.md`。
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|

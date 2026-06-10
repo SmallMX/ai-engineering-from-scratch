@@ -26,7 +26,7 @@ phases/<阶段>/<课程>/
 
 ## 现在怎么读
 
-推荐按照课程自然顺序从 Phase 0 开始看。Phase 0 的 12 节课已经补齐中文正文、中文测验和中文产物，可以直接按顺序学习。
+推荐按照课程自然顺序从 Phase 0 开始看。Phase 0 和 Phase 1 已经补齐中文正文、中文测验和中文产物，可以直接按顺序学习。
 
 ### Phase 0：环境搭建与工具
 
@@ -44,6 +44,33 @@ phases/<阶段>/<课程>/
 | 10 | [终端与 Shell](phases/00-setup-and-tooling/10-terminal-and-shell/docs/zh-CN.md) | [Terminal & Shell](phases/00-setup-and-tooling/10-terminal-and-shell/) | 已完成 |
 | 11 | [面向 AI 的 Linux](phases/00-setup-and-tooling/11-linux-for-ai/docs/zh-CN.md) | [Linux for AI](phases/00-setup-and-tooling/11-linux-for-ai/) | 已完成 |
 | 12 | [调试与 Profiling](phases/00-setup-and-tooling/12-debugging-and-profiling/docs/zh-CN.md) | [Debugging & Profiling](phases/00-setup-and-tooling/12-debugging-and-profiling/) | 已完成 |
+
+### Phase 1：数学基础
+
+| # | 中文入口 | 英文课程目录 | 状态 |
+|:---:|---|---|---|
+| 01 | [线性代数直觉](phases/01-math-foundations/01-linear-algebra-intuition/docs/zh-CN.md) | [Linear Algebra Intuition](phases/01-math-foundations/01-linear-algebra-intuition/) | 已完成 |
+| 02 | [向量、矩阵与运算](phases/01-math-foundations/02-vectors-matrices-operations/docs/zh-CN.md) | [Vectors, Matrices & Operations](phases/01-math-foundations/02-vectors-matrices-operations/) | 已完成 |
+| 03 | [矩阵变换](phases/01-math-foundations/03-matrix-transformations/docs/zh-CN.md) | [Matrix Transformations](phases/01-math-foundations/03-matrix-transformations/) | 已完成 |
+| 04 | [机器学习微积分](phases/01-math-foundations/04-calculus-for-ml/docs/zh-CN.md) | [Calculus for Machine Learning](phases/01-math-foundations/04-calculus-for-ml/) | 已完成 |
+| 05 | [链式法则与自动微分](phases/01-math-foundations/05-chain-rule-and-autodiff/docs/zh-CN.md) | [Chain Rule & Automatic Differentiation](phases/01-math-foundations/05-chain-rule-and-autodiff/) | 已完成 |
+| 06 | [概率与分布](phases/01-math-foundations/06-probability-and-distributions/docs/zh-CN.md) | [Probability and Distributions](phases/01-math-foundations/06-probability-and-distributions/) | 已完成 |
+| 07 | [贝叶斯定理](phases/01-math-foundations/07-bayes-theorem/docs/zh-CN.md) | [Bayes' Theorem](phases/01-math-foundations/07-bayes-theorem/) | 已完成 |
+| 08 | [优化](phases/01-math-foundations/08-optimization/docs/zh-CN.md) | [Optimization](phases/01-math-foundations/08-optimization/) | 已完成 |
+| 09 | [信息论](phases/01-math-foundations/09-information-theory/docs/zh-CN.md) | [Information Theory](phases/01-math-foundations/09-information-theory/) | 已完成 |
+| 10 | [降维](phases/01-math-foundations/10-dimensionality-reduction/docs/zh-CN.md) | [Dimensionality Reduction](phases/01-math-foundations/10-dimensionality-reduction/) | 已完成 |
+| 11 | [奇异值分解](phases/01-math-foundations/11-singular-value-decomposition/docs/zh-CN.md) | [Singular Value Decomposition](phases/01-math-foundations/11-singular-value-decomposition/) | 已完成 |
+| 12 | [张量运算](phases/01-math-foundations/12-tensor-operations/docs/zh-CN.md) | [Tensor Operations](phases/01-math-foundations/12-tensor-operations/) | 已完成 |
+| 13 | [数值稳定性](phases/01-math-foundations/13-numerical-stability/docs/zh-CN.md) | [Numerical Stability](phases/01-math-foundations/13-numerical-stability/) | 已完成 |
+| 14 | [范数与距离](phases/01-math-foundations/14-norms-and-distances/docs/zh-CN.md) | [Norms and Distances](phases/01-math-foundations/14-norms-and-distances/) | 已完成 |
+| 15 | [机器学习统计学](phases/01-math-foundations/15-statistics-for-ml/docs/zh-CN.md) | [Statistics for Machine Learning](phases/01-math-foundations/15-statistics-for-ml/) | 已完成 |
+| 16 | [采样方法](phases/01-math-foundations/16-sampling-methods/docs/zh-CN.md) | [Sampling Methods](phases/01-math-foundations/16-sampling-methods/) | 已完成 |
+| 17 | [线性方程组](phases/01-math-foundations/17-linear-systems/docs/zh-CN.md) | [Linear Systems](phases/01-math-foundations/17-linear-systems/) | 已完成 |
+| 18 | [凸优化](phases/01-math-foundations/18-convex-optimization/docs/zh-CN.md) | [Convex Optimization](phases/01-math-foundations/18-convex-optimization/) | 已完成 |
+| 19 | [面向 AI 的复数](phases/01-math-foundations/19-complex-numbers/docs/zh-CN.md) | [Complex Numbers for AI](phases/01-math-foundations/19-complex-numbers/) | 已完成 |
+| 20 | [傅里叶变换](phases/01-math-foundations/20-fourier-transform/docs/zh-CN.md) | [The Fourier Transform](phases/01-math-foundations/20-fourier-transform/) | 已完成 |
+| 21 | [机器学习图论](phases/01-math-foundations/21-graph-theory/docs/zh-CN.md) | [Graph Theory for Machine Learning](phases/01-math-foundations/21-graph-theory/) | 已完成 |
+| 22 | [随机过程](phases/01-math-foundations/22-stochastic-processes/docs/zh-CN.md) | [Stochastic Processes](phases/01-math-foundations/22-stochastic-processes/) | 已完成 |
 
 Phase 3 也已经补齐中文正文、中文测验和中文产物，可以在完成前置基础后继续阅读。
 
@@ -74,13 +101,13 @@ Phase 3 也已经补齐中文正文、中文测验和中文产物，可以在完
 查看中文化进度：
 
 ```bash
-python3 scripts/audit_translations.py --phase 0
+python3 scripts/audit_translations.py --phase 1
 ```
 
 查看原仓库课程结构是否仍然有效：
 
 ```bash
-python3 scripts/audit_lessons.py --phase 0
+python3 scripts/audit_lessons.py --phase 1
 ```
 
 ## 课程目录
