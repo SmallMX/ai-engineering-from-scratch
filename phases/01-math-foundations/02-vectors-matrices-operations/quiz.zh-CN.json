@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "中文导读：For matrix multiplication (m x n) @ (n x p), what must be true about the dimensions?",
+      "options": [
+        "中文选项：m must equal p",
+        "中文选项：The inner dimensions n must match",
+        "中文选项：All dimensions must be equal",
+        "中文选项：m must be greater than p"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Matrix multiplication requires the number of columns in the first matrix (n) to equal the number of rows in the second matrix (n). The result has shape (m x p)."
+    },
+    {
+      "stage": "pre",
+      "question": "中文导读：What is the identity matrix?",
+      "options": [
+        "中文选项：A matrix of all ones",
+        "中文选项：A square matrix with ones on the diagonal and zeros elsewhere that acts as the multiplicative identity",
+        "中文选项：A matrix where every element is unique",
+        "中文选项：The transpose of any given matrix"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：The identity matrix I has ones on the diagonal and zeros everywhere else. Multiplying any matrix by I returns the original matrix unchanged, like multiplying a number by 1."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：What is the key difference between element-wise multiplication and matrix multiplication?",
+      "options": [
+        "中文选项：Element-wise is faster while matrix multiplication is more accurate",
+        "中文选项：Element-wise multiplies matching positions (same shape required), matrix multiplication takes dot products of rows and columns (inner dimensions must match)",
+        "中文选项：They produce the same result but use different notation",
+        "中文选项：Element-wise only works on vectors while matrix multiplication works on matrices"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Element-wise (Hadamard) product multiplies corresponding elements and requires identical shapes. Matrix multiplication computes dot products between rows and columns with the rule (m,n)@(n,p)=(m,p)."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：In the expression 'output = relu(W @ x + b)', what role does broadcasting play?",
+      "options": [
+        "中文选项：It broadcasts the computation across multiple GPUs",
+        "中文选项：It automatically stretches the bias vector b to match the shape of W @ x so they can be added",
+        "中文选项：It converts the data types of W and x to match",
+        "中文选项：It repeats the relu activation across all elements"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：W @ x produces a column vector, and b is also a vector. Broadcasting stretches b across the batch dimension if needed, allowing element-wise addition without explicit shape matching."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：What does a determinant of zero for a matrix indicate?",
+      "options": [
+        "中文选项：The matrix has all zero entries",
+        "中文选项：The matrix is singular: it crushes at least one dimension, cannot be inverted, and has no unique solution",
+        "中文选项：The matrix is the identity matrix",
+        "中文选项：The matrix performs a rotation"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：A zero determinant means the transformation collapses space by at least one dimension (e.g., mapping 2D to a line). The matrix has no inverse, and linear systems using it have either no solution or infinitely many."
+    }
+  ]
+}
