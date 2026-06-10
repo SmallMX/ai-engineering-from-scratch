@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "中文导读：What does the chain rule in calculus state?",
+      "options": [
+        "中文选项：The derivative of a sum is the sum of derivatives",
+        "中文选项：The derivative of composed functions is the product of their individual derivatives",
+        "中文选项：The integral of a product is the product of integrals",
+        "中文选项：Functions can only be differentiated if they are linear"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：For y = f(g(x)), the chain rule says dy/dx = f'(g(x)) * g'(x). You multiply the derivatives at each link in the chain. This is the mathematical basis of backpropagation."
+    },
+    {
+      "stage": "pre",
+      "question": "中文导读：What is a computational graph?",
+      "options": [
+        "中文选项：A plot of loss vs training steps",
+        "中文选项：A directed graph where nodes are operations and edges carry values forward or gradients backward",
+        "中文选项：A diagram showing the architecture of a neural network",
+        "中文选项：A graph database used for storing training data"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：A computational graph represents the sequence of operations in a computation. Data flows forward through the graph, and gradients flow backward during backpropagation."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：Why does PyTorch use reverse-mode autodiff (backpropagation) instead of forward-mode?",
+      "options": [
+        "中文选项：Reverse mode is more numerically accurate",
+        "中文选项：Reverse mode computes all gradients in one backward pass, while forward mode needs one pass per input variable -- neural networks have millions of inputs but one loss output",
+        "中文选项：Reverse mode uses less memory",
+        "中文选项：Forward mode cannot handle non-linear functions"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Neural networks have millions of weight inputs but produce a single scalar loss. Reverse mode needs one backward pass total. Forward mode would need one pass per weight -- millions of passes -- making it impractical."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：In the Value class autograd engine, why does the backward function use '+=' instead of '=' for accumulating gradients?",
+      "options": [
+        "中文选项：To average the gradients across multiple samples",
+        "中文选项：Because a value used in multiple operations receives gradient contributions from each one, which must be summed",
+        "中文选项：To prevent numerical overflow in the gradients",
+        "中文选项：Because Python does not support the '=' operator in closures"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：When a value feeds into multiple operations (e.g., x used in both x*y and x+z), its total gradient is the sum of all incoming gradient contributions. Using '=' would overwrite earlier contributions."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：What is gradient checking and when should you use it?",
+      "options": [
+        "中文选项：Checking that gradients are below a threshold to prevent exploding gradients",
+        "中文选项：Comparing autodiff gradients against numerical finite-difference gradients to verify correctness of the backward pass",
+        "中文选项：Checking that all parameters received non-zero gradients during training",
+        "中文选项：Monitoring gradient magnitudes during training to detect vanishing gradients"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Gradient checking computes numerical derivatives via (f(x+h) - f(x-h)) / 2h and compares them to autodiff gradients. Use it when adding new operations to your autograd engine or debugging training failures."
+    }
+  ]
+}
