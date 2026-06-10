@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "中文导读：What does cosine similarity measure between two vectors?",
+      "options": [
+        "中文选项：The Euclidean distance between them",
+        "中文选项：The angle between them, ignoring their magnitudes",
+        "中文选项：The sum of their element-wise products",
+        "中文选项：The maximum difference in any single dimension"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Cosine similarity measures the cosine of the angle between two vectors, normalized by their magnitudes. It ranges from -1 (opposite) to +1 (same direction) and ignores vector length, which is why it dominates in NLP where document length is noise."
+    },
+    {
+      "stage": "pre",
+      "question": "中文导读：Why is L1 distance called 'Manhattan distance'?",
+      "options": [
+        "中文选项：It was invented in Manhattan",
+        "中文选项：It measures distance along a grid, as if walking on city blocks",
+        "中文选项：It only works in exactly two dimensions",
+        "中文选项：It computes the maximum difference across all dimensions"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：L1 distance sums the absolute differences along each axis, which corresponds to the shortest path on a grid where you can only move along axes (no diagonals) — like walking on a city street grid."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：Why does L1 regularization (Lasso) produce sparse weights while L2 regularization (Ridge) does not?",
+      "options": [
+        "中文选项：L1 uses a larger penalty constant than L2",
+        "中文选项：The L1 diamond constraint has corners on the axes where weights are zero; loss contours are likely to touch at corners",
+        "中文选项：L2 regularization only applies to the bias terms",
+        "中文选项：L1 regularization clips weights below a threshold to zero"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：The L1 constraint region is a diamond shape with corners aligned with the axes. The loss function's contour ellipses are most likely to first touch the diamond at a corner, where one or more weights are exactly zero. The L2 constraint is a circle with no corners, so the touch point has all weights nonzero."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：What advantage does Wasserstein distance have over KL divergence when comparing probability distributions?",
+      "options": [
+        "中文选项：Wasserstein is always smaller than KL divergence",
+        "中文选项：Wasserstein provides meaningful gradients even when distributions do not overlap, while KL goes to infinity",
+        "中文选项：Wasserstein is symmetric but KL is not",
+        "中文选项：Both B and C are correct"
+      ],
+      "correct": 3,
+      "explanation": "中文解析：Wasserstein distance is a true metric (symmetric, satisfies triangle inequality) and provides gradients even for non-overlapping distributions. KL divergence is asymmetric and goes to infinity when distributions don't overlap, which is why WGANs replaced KL-based GANs."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：When would you use Mahalanobis distance instead of Euclidean distance?",
+      "options": [
+        "中文选项：When features are all binary (0 or 1)",
+        "中文选项：When features have different scales and are correlated with each other",
+        "中文选项：When you are comparing strings instead of vectors",
+        "中文选项：When you need a faster computation than L2"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Mahalanobis distance accounts for the covariance structure of the data, decorrelating and normalizing features before computing L2 distance. It correctly handles features at different scales and with correlations, whereas Euclidean distance treats all dimensions equally."
+    }
+  ]
+}
