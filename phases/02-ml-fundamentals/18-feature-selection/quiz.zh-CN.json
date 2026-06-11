@@ -1,0 +1,67 @@
+[
+  {
+    "id": "featsel-pre-1",
+    "stage": "pre",
+    "question": "中文导读：Why can adding more features actually make a model perform worse?",
+    "options": [
+      "中文选项：More features always improve model accuracy",
+      "中文选项：Irrelevant features add noise, increase overfitting risk, and dilute the signal from useful features",
+      "中文选项：Models have a hard limit on the number of features they can accept",
+      "中文选项：More features make the model run out of memory"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：Irrelevant features give the model opportunities to overfit on noise in the training data. They increase dimensionality, making the data sparser and distances less meaningful (curse of dimensionality)."
+  },
+  {
+    "id": "featsel-pre-2",
+    "stage": "pre",
+    "question": "中文导读：What is the key difference between filter and wrapper feature selection methods?",
+    "options": [
+      "中文选项：Filter methods use a model to evaluate features; wrapper methods use statistics",
+      "中文选项：Filter methods score features using statistics without a model; wrapper methods train a model to evaluate feature subsets",
+      "中文选项：Filter methods are always more accurate than wrapper methods",
+      "中文选项：Wrapper methods can only select one feature at a time"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：Filter methods (variance threshold, mutual information, correlation) score features with statistical measures. Wrapper methods (RFE, forward selection) train models repeatedly to evaluate different feature subsets."
+  },
+  {
+    "id": "featsel-post-1",
+    "stage": "post",
+    "question": "中文导读：Mutual information can detect relationships that Pearson correlation cannot. What kind?",
+    "options": [
+      "中文选项：Linear relationships between continuous features",
+      "中文选项：Nonlinear relationships such as quadratic or periodic dependencies",
+      "中文选项：Relationships between categorical features only",
+      "中文选项：Relationships that require more than 1000 data points"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：Pearson correlation only measures linear association. A quadratic relationship (y = x^2) has zero correlation but high mutual information. MI captures any statistical dependency between variables."
+  },
+  {
+    "id": "featsel-post-2",
+    "stage": "post",
+    "question": "中文导读：L1 (Lasso) regularization performs feature selection as part of training. How?",
+    "options": [
+      "中文选项：It removes features with low variance before training starts",
+      "中文选项：It drives the weights of irrelevant features to exactly zero, effectively eliminating them from the model",
+      "中文选项：It ranks features by correlation with the target",
+      "中文选项：It trains separate models for each feature"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：L1 regularization adds |w| penalty to the loss. The geometry of the L1 constraint (diamond shape) causes some weight solutions to land exactly at zero, producing sparse models that automatically select features."
+  },
+  {
+    "id": "featsel-post-3",
+    "stage": "post",
+    "question": "中文导读：RFE removes the least important feature and retrains. Why is this better than just removing all low-importance features at once?",
+    "options": [
+      "中文选项：It is not better -- removing all at once is always preferred",
+      "中文选项：Feature importances change as features are removed, so iterative removal accounts for interactions between features",
+      "中文选项：RFE uses a different importance metric than single-step removal",
+      "中文选项：Removing one at a time is only necessary for neural networks"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：Feature importances are relative. When a correlated feature is removed, the importance of its counterpart may increase. Iterative removal lets the model reassess importances at each step, capturing these interactions."
+  }
+]
