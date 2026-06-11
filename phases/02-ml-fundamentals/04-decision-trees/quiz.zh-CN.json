@@ -1,0 +1,67 @@
+[
+  {
+    "id": "trees-pre-1",
+    "stage": "pre",
+    "question": "中文导读：What does Gini impurity measure at a decision tree node?",
+    "options": [
+      "中文选项：The depth of the node in the tree",
+      "中文选项：The probability of misclassifying a randomly chosen sample given the class distribution at that node",
+      "中文选项：The total number of samples at the node",
+      "中文选项：The correlation between features"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：Gini impurity = 1 - sum(p_k^2). It measures how often a randomly chosen sample would be misclassified if labeled according to the class distribution at that node. Pure node = 0."
+  },
+  {
+    "id": "trees-pre-2",
+    "stage": "pre",
+    "question": "中文导读：What is the main advantage of tree-based models over neural networks for tabular data?",
+    "options": [
+      "中文选项：Trees can process images and text natively",
+      "中文选项：Trees always have lower bias than neural networks",
+      "中文选项：Trees handle mixed feature types, require less preprocessing, and are more interpretable",
+      "中文选项：Trees train faster on GPU hardware"
+    ],
+    "correct": 2,
+    "explanation": "中文解析：Trees natively handle numeric and categorical features without encoding, require minimal preprocessing, and produce interpretable rules. Neural networks excel at spatial/sequential data, not flat tables."
+  },
+  {
+    "id": "trees-post-1",
+    "stage": "post",
+    "question": "中文导读：Why does a random forest use both bootstrap sampling AND random feature subsets at each split?",
+    "options": [
+      "中文选项：To speed up training by reducing the dataset size",
+      "中文选项：To create diverse, decorrelated trees so that averaging reduces variance without increasing bias",
+      "中文选项：To ensure each tree sees every data point at least once",
+      "中文选项：To reduce the depth of individual trees"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：Both sources of randomness make the trees diverse. Without feature randomization, all trees would split on the same dominant feature. Diversity is what makes averaging effective at reducing variance."
+  },
+  {
+    "id": "trees-post-2",
+    "stage": "post",
+    "question": "中文导读：A node contains 8 dogs and 2 cats. What is its Gini impurity?",
+    "options": [
+      "中文选项：0.0",
+      "中文选项：0.20",
+      "中文选项：0.32",
+      "中文选项：0.50"
+    ],
+    "correct": 2,
+    "explanation": "中文解析：Gini = 1 - (0.8^2 + 0.2^2) = 1 - (0.64 + 0.04) = 0.32. The node is mostly dogs but not pure, so Gini is between 0 (pure) and 0.5 (max for binary)."
+  },
+  {
+    "id": "trees-post-3",
+    "stage": "post",
+    "question": "中文导读：MDI (Mean Decrease in Impurity) feature importance is biased toward which type of feature?",
+    "options": [
+      "中文选项：Binary features with only two values",
+      "中文选项：Features with low variance",
+      "中文选项：High-cardinality features with many possible split points",
+      "中文选项：Features that are highly correlated with the target"
+    ],
+    "correct": 2,
+    "explanation": "中文解析：MDI is biased toward high-cardinality features because they offer more possible split points, giving them more chances to reduce impurity by luck. Permutation importance is more reliable."
+  }
+]
