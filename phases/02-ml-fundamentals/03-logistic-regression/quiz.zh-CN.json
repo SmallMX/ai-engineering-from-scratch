@@ -1,0 +1,67 @@
+[
+  {
+    "id": "logreg-pre-1",
+    "stage": "pre",
+    "question": "中文导读：What is the range of the sigmoid function's output?",
+    "options": [
+      "中文选项：Negative infinity to positive infinity",
+      "中文选项：0 to 1 (exclusive)",
+      "中文选项：-1 to 1",
+      "中文选项：0 to positive infinity"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：The sigmoid function 1/(1+e^(-z)) outputs values strictly between 0 and 1, which can be interpreted as probabilities."
+  },
+  {
+    "id": "logreg-pre-2",
+    "stage": "pre",
+    "question": "中文导读：Why is logistic regression called 'regression' even though it is used for classification?",
+    "options": [
+      "中文选项：It predicts continuous values that are then rounded",
+      "中文选项：The name comes from the logistic (sigmoid) function it uses, not from regression analysis",
+      "中文选项：It was originally designed for regression and later adapted",
+      "中文选项：It minimizes mean squared error like linear regression"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：The name comes from the logistic function (sigmoid). Despite the name, logistic regression is a classification algorithm that outputs class probabilities."
+  },
+  {
+    "id": "logreg-post-1",
+    "stage": "post",
+    "question": "中文导读：Why is binary cross-entropy used instead of MSE for logistic regression?",
+    "options": [
+      "中文选项：Cross-entropy is faster to compute",
+      "中文选项：MSE with sigmoid creates a non-convex cost surface with local minima, while cross-entropy is convex",
+      "中文选项：MSE can only be used with linear models",
+      "中文选项：Cross-entropy works only when the dataset is balanced"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：MSE combined with the sigmoid activation creates a non-convex cost surface with many local minima. Binary cross-entropy with sigmoid is convex, guaranteeing a single global minimum."
+  },
+  {
+    "id": "logreg-post-2",
+    "stage": "post",
+    "question": "中文导读：A spam filter has precision = 0.95 and recall = 0.60. What does this mean in practical terms?",
+    "options": [
+      "中文选项：95% of all emails are correctly classified, and 60% of spam is caught",
+      "中文选项：When it flags an email as spam, it is correct 95% of the time, but it only catches 60% of actual spam",
+      "中文选项：60% of flagged emails are spam, and 95% of all spam is caught",
+      "中文选项：The model is 95% accurate on the test set and 60% on the training set"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：Precision = 0.95 means 95% of emails predicted as spam are actually spam (few false alarms). Recall = 0.60 means only 60% of actual spam is caught (40% slips through)."
+  },
+  {
+    "id": "logreg-post-3",
+    "stage": "post",
+    "question": "中文导读：In softmax regression for 4 classes, what is true about the output probabilities?",
+    "options": [
+      "中文选项：Each class gets an independent probability between 0 and 1",
+      "中文选项：The four output probabilities sum to 1, and the class with the highest probability is the prediction",
+      "中文选项：Only the top-2 classes receive nonzero probabilities",
+      "中文选项：The outputs are raw scores, not probabilities"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：Softmax converts a vector of raw scores into probabilities that sum to 1. The predicted class is the one with the highest probability."
+  }
+]
