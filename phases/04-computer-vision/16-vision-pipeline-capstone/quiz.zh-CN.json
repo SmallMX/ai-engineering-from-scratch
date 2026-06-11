@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "中文导读：Why do production vision pipelines use Pydantic models (or equivalent) at every stage boundary?",
+      "options": [
+        "中文选项：Pydantic is faster than dict access",
+        "中文选项：Typed schemas catch interface mismatches at the boundary; a detector returning (cx, cy, w, h) when the downstream expects (x1, y1, x2, y2) fails loudly with a validation error instead of silently producing empty crops",
+        "中文选项：Pydantic is required by FastAPI",
+        "中文选项：It helps with GPU allocation"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Silent interface bugs are the defining pain of ML pipelines. Every boundary has a coordinate system, a channel order, a value range, and a shape. Validating at the boundary with Pydantic turns every mismatch into an immediate error. The cost is a few microseconds; the savings are hours of debugging."
+    },
+    {
+      "stage": "pre",
+      "question": "中文导读：On a CPU-only vision pipeline, which stage is most often the biggest latency block?",
+      "options": [
+        "中文选项：The detector's final NMS",
+        "中文选项：Image preprocessing (JPEG decode, colour conversion, resize); it is CPU-bound and often dominates when no GPU is involved or when the GPU model is small",
+        "中文选项：Writing the JSON response",
+        "中文选项：Reading the HTTP request body"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：On CPU, preprocessing is frequently the biggest single cost. JPEG decode can take milliseconds, colour conversion more, resizing to model input another chunk. The rule is simple: profile before optimising. On GPU the detector typically dominates, but do not assume that on CPU."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：The pipeline classifier crashes when a detection has box size 3x4 pixels. What is the correct fix?",
+      "options": [
+        "中文选项：Add a global try/except and return empty classifications",
+        "中文选项：Set a min_crop threshold (e.g. 16 or 32 pixels) and skip classification for detections smaller than that; log the skip and include the detection in the response without a classification field",
+        "中文选项：Retrain the classifier on smaller images",
+        "中文选项：Increase batch size"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Tiny crops are a legitimate failure mode: the classifier was trained on 224x224 inputs and cannot reliably classify 3-pixel patches. A threshold (min_crop) skips those, preserves the detection, and produces a complete, honest response. Generic try/except hides the condition; returning no classification at all hides real failures; the right move is a named, logged skip."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：You add batching to the classifier (wait up to 10 ms, batch all pending crops, one GPU forward). What is the expected effect?",
+      "options": [
+        "中文选项：Latency strictly decreases",
+        "中文选项：Throughput increases significantly, per-request latency increases by up to the batching window (~10ms) plus a smaller amount from larger tensor ops; the right answer depends on whether the service is throughput-bound or latency-bound",
+        "中文选项：Throughput decreases because of the wait",
+        "中文选项：No effect"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Batching is a throughput-latency trade. Each request waits up to the window, which adds latency. The batched forward pass is more efficient per image, so throughput scales with batch size. Use batching when QPS is high and individual latency has slack; avoid it when latency SLA is under 50ms."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：Your pipeline response is a 500 error when a user uploads a corrupted JPEG. How should you fix it?",
+      "options": [
+        "中文选项：Ignore it; the user will retry",
+        "中文选项：Catch image-decode failures early in preprocessing, return a 400 with a specific error code like 'image_decode_failed' so the client can retry with a different file instead of a 500 that implies server error",
+        "中文选项：Always return 200 with an empty result",
+        "中文选项：Move decoding to the classifier"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：A 500 from corrupt user input is an API contract bug. Bad inputs should return 4xx so the client knows it is their problem; 5xx responses signal a server problem and trigger the client's retry logic with the same bad input, amplifying load. Named failure codes (image_decode_failed, image_too_large, unsupported_content_type) let clients react correctly."
+    }
+  ]
+}
