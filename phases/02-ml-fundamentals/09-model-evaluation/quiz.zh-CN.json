@@ -1,0 +1,67 @@
+[
+  {
+    "id": "eval-pre-1",
+    "stage": "pre",
+    "question": "中文导读：Why should you never tune hyperparameters based on test set performance?",
+    "options": [
+      "中文选项：The test set is too small for reliable estimates",
+      "中文选项：Adjusting the model based on test results effectively trains on the test set, making reported performance meaningless",
+      "中文选项：Hyperparameters cannot be changed after training",
+      "中文选项：The test set always has different features than the training set"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：Every time you adjust your model based on test performance, you leak test information into your modeling decisions. The test set must be used exactly once at the end for an unbiased estimate."
+  },
+  {
+    "id": "eval-pre-2",
+    "stage": "pre",
+    "question": "中文导读：A dataset has 95% negative and 5% positive samples. A model predicts 'negative' for every sample. What is its accuracy?",
+    "options": [
+      "中文选项：50%",
+      "中文选项：5%",
+      "中文选项：95%",
+      "中文选项：0%"
+    ],
+    "correct": 2,
+    "explanation": "中文解析：Accuracy = correct predictions / total = 950/1000 = 95%. This shows why accuracy is misleading for imbalanced data -- a useless model looks great."
+  },
+  {
+    "id": "eval-post-1",
+    "stage": "post",
+    "question": "中文导读：In K-fold cross-validation with K=5, how many times is each data point used for validation?",
+    "options": [
+      "中文选项：5 times",
+      "中文选项：Exactly once",
+      "中文选项：It depends on the random seed",
+      "中文选项：Never -- all data is used for training"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：In K-fold CV, data is split into K equal folds. Each fold is used as the validation set exactly once while the remaining K-1 folds are used for training."
+  },
+  {
+    "id": "eval-post-2",
+    "stage": "post",
+    "question": "中文导读：A learning curve shows training score = 0.95 and validation score = 0.60 that does not improve with more data. What should you try?",
+    "options": [
+      "中文选项：Collect more training data",
+      "中文选项：Use a simpler model or add regularization to reduce variance (overfitting)",
+      "中文选项：Remove the validation set to give the model more training data",
+      "中文选项：Increase the learning rate"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：A large gap between training (high) and validation (low) scores is high variance (overfitting). The fix is a simpler model, more regularization, or techniques like dropout -- not more data if the gap persists."
+  },
+  {
+    "id": "eval-post-3",
+    "stage": "post",
+    "question": "中文导读：AUC-ROC = 0.5 for a binary classifier. What does this indicate?",
+    "options": [
+      "中文选项：The model perfectly separates the two classes",
+      "中文选项：The model performs no better than random guessing at ranking positives above negatives",
+      "中文选项：The model has 50% accuracy",
+      "中文选项：The model has equal precision and recall"
+    ],
+    "correct": 1,
+    "explanation": "中文解析：AUC-ROC = 0.5 means the model's ranking of positive and negative examples is no better than random. AUC = 1.0 would be perfect separation. The metric is threshold-independent."
+  }
+]
