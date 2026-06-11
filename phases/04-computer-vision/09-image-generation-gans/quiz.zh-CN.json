@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "中文导读：Why does GAN training use the non-saturating generator loss -log(D(G(z))) instead of log(1 - D(G(z)))?",
+      "options": [
+        "中文选项：They are mathematically different and produce better equilibria",
+        "中文选项：Early in training D(G(z)) is near zero, so log(1 - D(G(z))) has vanishing gradient; -log(D(G(z))) has large gradient there so G receives a useful signal",
+        "中文选项：It speeds up the discriminator",
+        "中文选项：It is required by PyTorch"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：The two losses share the same gradient direction but very different magnitudes when D(G(z)) is small. log(1 - D(G(z))) plateaus at zero gradient there. The non-saturating form stays informative across the whole range. Goodfellow noted this tweak in the original paper and every modern GAN uses it."
+    },
+    {
+      "stage": "pre",
+      "question": "中文导读：DCGAN's rules say to use strided convolutions instead of pooling. Why?",
+      "options": [
+        "中文选项：Pooling is slower on GPUs",
+        "中文选项：Pooling is non-learnable and throws away information the generator might need; strided convs let the network learn its own downsampling, which empirically produces sharper generated images",
+        "中文选项：Pooling breaks gradient flow",
+        "中文选项：Pooling is incompatible with batch norm"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Max-pool is a hand-picked downsampling that discards everything but the max. In a generative setting the model benefits from a learned downsampling that can preserve information across the stride. Strided convolutions in D and strided transposed convolutions in G were the architectural change that made DCGANs trainable."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：You train a GAN and notice G produces almost identical samples regardless of the input noise. Which failure is this?",
+      "options": [
+        "中文选项：Vanishing gradients",
+        "中文选项：Mode collapse — G has found a narrow region of the data distribution that consistently fools D and has no incentive to explore; fixes include spectral norm, minibatch discrimination, or a larger batch",
+        "中文选项：Oscillation",
+        "中文选项：The dataset is too small"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Mode collapse is the characteristic GAN failure where samples lack diversity. The diagnostic is obvious: noise in, same image out. Fixes all target the discriminator's ability to punish lack of diversity, either by making D more expressive (spectral norm, minibatch discrimination) or by giving G less room to collapse (larger batch, conditional labels)."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：Why do DCGAN training scripts use Adam with betas=(0.5, 0.999) instead of the default (0.9, 0.999)?",
+      "options": [
+        "中文选项：The default is broken",
+        "中文选项：A lower beta1 reduces momentum; in an adversarial game, heavy momentum keeps each optimizer in the wrong direction too long when the other network's behaviour changes, which causes instability",
+        "中文选项：Adam is only supported with beta1=0.5 on CUDA",
+        "中文选项：It is a typo propagated through tutorials"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：Adam's default beta1=0.9 averages gradients over roughly 10 steps. In a stationary objective that is helpful. In an adversarial game where the loss landscape shifts every D and G update, that averaging delays the optimizer's response and causes oscillation. Radford et al. found beta1=0.5 much more stable, and it is now the GAN default."
+    },
+    {
+      "stage": "post",
+      "question": "中文导读：A colleague reports a GAN with D loss near zero and G loss increasing over training. What is happening and how do you fix it?",
+      "options": [
+        "中文选项：Both nets are improving correctly",
+        "中文选项：The discriminator has become too strong and drives G's gradient to zero; fixes include a smaller D, spectral norm, label smoothing on real labels (0.9 instead of 1.0), or switching to WGAN-GP",
+        "中文选项：The generator is correctly overfitting",
+        "中文选项：Nothing — this is the equilibrium"
+      ],
+      "correct": 1,
+      "explanation": "中文解析：D's loss near zero means D is perfect on both real and fake. At that point the BCE gradient to G vanishes: G sees a near-zero signal no matter what it outputs. The fix is to weaken D or use a loss that does not saturate. Spectral norm (limits D's Lipschitz constant) and WGAN-GP (uses Earth-Mover distance instead of BCE) are the two standard rescues."
+    }
+  ]
+}
