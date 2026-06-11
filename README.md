@@ -14,7 +14,7 @@
   <b>中文读者：</b>
   <a href="README.zh-CN.md">打开中文说明与目录</a>
   ·
-  <a href="README.zh-CN.md#现在怎么读">Phase 0 + Phase 1 + Phase 3 中文译文</a>
+  <a href="README.zh-CN.md#现在怎么读">Phase 0-4 中文译文</a>
   ·
   <a href="#contents">Jump to English Contents</a>
 </p>
@@ -311,6 +311,8 @@ Twenty phases. Click any phase to expand its lesson list.
 <summary><b>Phase 2 — ML Fundamentals</b> &nbsp;<code>18 lessons</code>&nbsp; <em>Classical ML — still the backbone of most production AI.</em></summary>
 <br/>
 
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
+
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
 | 01 | [What Is Machine Learning](phases/02-ml-fundamentals/01-what-is-machine-learning/) | Learn | Python |
@@ -359,6 +361,8 @@ Twenty phases. Click any phase to expand its lesson list.
 <details id="phase-4">
 <summary><b>Phase 4 — Computer Vision</b> &nbsp;<code>28 lessons</code>&nbsp; <em>From pixels to understanding — image, video, 3D, VLMs, and world models.</em></summary>
 <br/>
+
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|

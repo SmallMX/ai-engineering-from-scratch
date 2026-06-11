@@ -26,7 +26,7 @@ phases/<阶段>/<课程>/
 
 ## 现在怎么读
 
-推荐按照课程自然顺序从 Phase 0 开始看。Phase 0 和 Phase 1 已经补齐中文正文、中文测验和中文产物，可以直接按顺序学习。
+推荐按照课程自然顺序从 Phase 0 开始看。Phase 0 到 Phase 4 已经补齐中文正文、中文测验和中文产物，可以直接按顺序学习。
 
 ### Phase 0：环境搭建与工具
 
@@ -72,7 +72,28 @@ phases/<阶段>/<课程>/
 | 21 | [机器学习图论](phases/01-math-foundations/21-graph-theory/docs/zh-CN.md) | [Graph Theory for Machine Learning](phases/01-math-foundations/21-graph-theory/) | 已完成 |
 | 22 | [随机过程](phases/01-math-foundations/22-stochastic-processes/docs/zh-CN.md) | [Stochastic Processes](phases/01-math-foundations/22-stochastic-processes/) | 已完成 |
 
-Phase 3 也已经补齐中文正文、中文测验和中文产物，可以在完成前置基础后继续阅读。
+### Phase 2：机器学习基础
+
+| # | 中文入口 | 英文课程目录 | 状态 |
+|:---:|---|---|---|
+| 01 | [什么是机器学习](phases/02-ml-fundamentals/01-what-is-machine-learning/docs/zh-CN.md) | [What Is Machine Learning](phases/02-ml-fundamentals/01-what-is-machine-learning/) | 已完成 |
+| 02 | [线性回归](phases/02-ml-fundamentals/02-linear-regression/docs/zh-CN.md) | [Linear Regression from Scratch](phases/02-ml-fundamentals/02-linear-regression/) | 已完成 |
+| 03 | [逻辑回归](phases/02-ml-fundamentals/03-logistic-regression/docs/zh-CN.md) | [Logistic Regression & Classification](phases/02-ml-fundamentals/03-logistic-regression/) | 已完成 |
+| 04 | [决策树与随机森林](phases/02-ml-fundamentals/04-decision-trees/docs/zh-CN.md) | [Decision Trees & Random Forests](phases/02-ml-fundamentals/04-decision-trees/) | 已完成 |
+| 05 | [支持向量机](phases/02-ml-fundamentals/05-support-vector-machines/docs/zh-CN.md) | [Support Vector Machines](phases/02-ml-fundamentals/05-support-vector-machines/) | 已完成 |
+| 06 | [K 近邻与距离](phases/02-ml-fundamentals/06-knn-and-distances/docs/zh-CN.md) | [KNN & Distance Metrics](phases/02-ml-fundamentals/06-knn-and-distances/) | 已完成 |
+| 07 | [无监督学习](phases/02-ml-fundamentals/07-unsupervised-learning/docs/zh-CN.md) | [Unsupervised Learning: K-Means, DBSCAN](phases/02-ml-fundamentals/07-unsupervised-learning/) | 已完成 |
+| 08 | [特征工程与选择](phases/02-ml-fundamentals/08-feature-engineering/docs/zh-CN.md) | [Feature Engineering & Selection](phases/02-ml-fundamentals/08-feature-engineering/) | 已完成 |
+| 09 | [模型评估](phases/02-ml-fundamentals/09-model-evaluation/docs/zh-CN.md) | [Model Evaluation: Metrics, Cross-Validation](phases/02-ml-fundamentals/09-model-evaluation/) | 已完成 |
+| 10 | [偏差-方差权衡](phases/02-ml-fundamentals/10-bias-variance/docs/zh-CN.md) | [Bias, Variance & the Learning Curve](phases/02-ml-fundamentals/10-bias-variance/) | 已完成 |
+| 11 | [集成方法](phases/02-ml-fundamentals/11-ensemble-methods/docs/zh-CN.md) | [Ensemble Methods: Boosting, Bagging, Stacking](phases/02-ml-fundamentals/11-ensemble-methods/) | 已完成 |
+| 12 | [超参数调优](phases/02-ml-fundamentals/12-hyperparameter-tuning/docs/zh-CN.md) | [Hyperparameter Tuning](phases/02-ml-fundamentals/12-hyperparameter-tuning/) | 已完成 |
+| 13 | [机器学习流水线](phases/02-ml-fundamentals/13-ml-pipelines/docs/zh-CN.md) | [ML Pipelines & Experiment Tracking](phases/02-ml-fundamentals/13-ml-pipelines/) | 已完成 |
+| 14 | [朴素贝叶斯](phases/02-ml-fundamentals/14-naive-bayes/docs/zh-CN.md) | [Naive Bayes](phases/02-ml-fundamentals/14-naive-bayes/) | 已完成 |
+| 15 | [时间序列基础](phases/02-ml-fundamentals/15-time-series/docs/zh-CN.md) | [Time Series Fundamentals](phases/02-ml-fundamentals/15-time-series/) | 已完成 |
+| 16 | [异常检测](phases/02-ml-fundamentals/16-anomaly-detection/docs/zh-CN.md) | [Anomaly Detection](phases/02-ml-fundamentals/16-anomaly-detection/) | 已完成 |
+| 17 | [处理不平衡数据](phases/02-ml-fundamentals/17-imbalanced-data/docs/zh-CN.md) | [Handling Imbalanced Data](phases/02-ml-fundamentals/17-imbalanced-data/) | 已完成 |
+| 18 | [特征选择](phases/02-ml-fundamentals/18-feature-selection/docs/zh-CN.md) | [Feature Selection](phases/02-ml-fundamentals/18-feature-selection/) | 已完成 |
 
 ### Phase 3：深度学习核心
 
@@ -92,6 +113,39 @@ Phase 3 也已经补齐中文正文、中文测验和中文产物，可以在完
 | 12 | [JAX 入门](phases/03-deep-learning-core/12-intro-to-jax/docs/zh-CN.md) | [Introduction to JAX](phases/03-deep-learning-core/12-intro-to-jax/) | 已完成 |
 | 13 | [调试神经网络](phases/03-deep-learning-core/13-debugging-neural-networks/docs/zh-CN.md) | [Debugging Neural Networks](phases/03-deep-learning-core/13-debugging-neural-networks/) | 已完成 |
 
+### Phase 4：计算机视觉
+
+| # | 中文入口 | 英文课程目录 | 状态 |
+|:---:|---|---|---|
+| 01 | [图像基础：像素、通道与色彩空间](phases/04-computer-vision/01-image-fundamentals/docs/zh-CN.md) | [Image Fundamentals: Pixels, Channels, Color Spaces](phases/04-computer-vision/01-image-fundamentals/) | 已完成 |
+| 02 | [从零实现卷积](phases/04-computer-vision/02-convolutions-from-scratch/docs/zh-CN.md) | [Convolutions from Scratch](phases/04-computer-vision/02-convolutions-from-scratch/) | 已完成 |
+| 03 | [CNN：从 LeNet 到 ResNet](phases/04-computer-vision/03-cnns-lenet-to-resnet/docs/zh-CN.md) | [CNNs: LeNet to ResNet](phases/04-computer-vision/03-cnns-lenet-to-resnet/) | 已完成 |
+| 04 | [图像分类](phases/04-computer-vision/04-image-classification/docs/zh-CN.md) | [Image Classification](phases/04-computer-vision/04-image-classification/) | 已完成 |
+| 05 | [迁移学习与微调](phases/04-computer-vision/05-transfer-learning/docs/zh-CN.md) | [Transfer Learning & Fine-Tuning](phases/04-computer-vision/05-transfer-learning/) | 已完成 |
+| 06 | [目标检测：从零理解 YOLO](phases/04-computer-vision/06-object-detection-yolo/docs/zh-CN.md) | [Object Detection — YOLO from Scratch](phases/04-computer-vision/06-object-detection-yolo/) | 已完成 |
+| 07 | [语义分割：U-Net](phases/04-computer-vision/07-semantic-segmentation-unet/docs/zh-CN.md) | [Semantic Segmentation — U-Net](phases/04-computer-vision/07-semantic-segmentation-unet/) | 已完成 |
+| 08 | [实例分割：Mask R-CNN](phases/04-computer-vision/08-instance-segmentation-mask-rcnn/docs/zh-CN.md) | [Instance Segmentation — Mask R-CNN](phases/04-computer-vision/08-instance-segmentation-mask-rcnn/) | 已完成 |
+| 09 | [图像生成：GANs](phases/04-computer-vision/09-image-generation-gans/docs/zh-CN.md) | [Image Generation — GANs](phases/04-computer-vision/09-image-generation-gans/) | 已完成 |
+| 10 | [图像生成：扩散模型](phases/04-computer-vision/10-image-generation-diffusion/docs/zh-CN.md) | [Image Generation — Diffusion Models](phases/04-computer-vision/10-image-generation-diffusion/) | 已完成 |
+| 11 | [Stable Diffusion：架构与微调](phases/04-computer-vision/11-stable-diffusion/docs/zh-CN.md) | [Stable Diffusion — Architecture & Fine-Tuning](phases/04-computer-vision/11-stable-diffusion/) | 已完成 |
+| 12 | [视频理解：时间建模](phases/04-computer-vision/12-video-understanding/docs/zh-CN.md) | [Video Understanding — Temporal Modeling](phases/04-computer-vision/12-video-understanding/) | 已完成 |
+| 13 | [3D 视觉：点云与 NeRF](phases/04-computer-vision/13-3d-vision-nerf/docs/zh-CN.md) | [3D Vision: Point Clouds, NeRFs](phases/04-computer-vision/13-3d-vision-nerf/) | 已完成 |
+| 14 | [视觉 Transformer (ViT)](phases/04-computer-vision/14-vision-transformers/docs/zh-CN.md) | [Vision Transformers (ViT)](phases/04-computer-vision/14-vision-transformers/) | 已完成 |
+| 15 | [实时视觉：边缘部署](phases/04-computer-vision/15-real-time-edge/docs/zh-CN.md) | [Real-Time Vision: Edge Deployment](phases/04-computer-vision/15-real-time-edge/) | 已完成 |
+| 16 | [构建完整视觉流水线：Capstone](phases/04-computer-vision/16-vision-pipeline-capstone/docs/zh-CN.md) | [Build a Complete Vision Pipeline](phases/04-computer-vision/16-vision-pipeline-capstone/) | 已完成 |
+| 17 | [自监督视觉：SimCLR、DINO、MAE](phases/04-computer-vision/17-self-supervised-vision/docs/zh-CN.md) | [Self-Supervised Vision — SimCLR, DINO, MAE](phases/04-computer-vision/17-self-supervised-vision/) | 已完成 |
+| 18 | [开放词表视觉：CLIP](phases/04-computer-vision/18-open-vocab-clip/docs/zh-CN.md) | [Open-Vocabulary Vision — CLIP](phases/04-computer-vision/18-open-vocab-clip/) | 已完成 |
+| 19 | [OCR 与文档理解](phases/04-computer-vision/19-ocr-document-understanding/docs/zh-CN.md) | [OCR & Document Understanding](phases/04-computer-vision/19-ocr-document-understanding/) | 已完成 |
+| 20 | [图像检索与度量学习](phases/04-computer-vision/20-image-retrieval-metric/docs/zh-CN.md) | [Image Retrieval & Metric Learning](phases/04-computer-vision/20-image-retrieval-metric/) | 已完成 |
+| 21 | [关键点检测与姿态估计](phases/04-computer-vision/21-keypoint-pose/docs/zh-CN.md) | [Keypoint Detection & Pose Estimation](phases/04-computer-vision/21-keypoint-pose/) | 已完成 |
+| 22 | [从零理解 3D Gaussian Splatting](phases/04-computer-vision/22-3d-gaussian-splatting/docs/zh-CN.md) | [3D Gaussian Splatting from Scratch](phases/04-computer-vision/22-3d-gaussian-splatting/) | 已完成 |
+| 23 | [Diffusion Transformers 与 Rectified Flow](phases/04-computer-vision/23-diffusion-transformers-rectified-flow/docs/zh-CN.md) | [Diffusion Transformers & Rectified Flow](phases/04-computer-vision/23-diffusion-transformers-rectified-flow/) | 已完成 |
+| 24 | [SAM 3 与开放词表分割](phases/04-computer-vision/24-sam3-open-vocab-segmentation/docs/zh-CN.md) | [SAM 3 & Open-Vocabulary Segmentation](phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | 已完成 |
+| 25 | [视觉语言模型：ViT-MLP-LLM 模式](phases/04-computer-vision/25-vision-language-models/docs/zh-CN.md) | [Vision-Language Models (ViT-MLP-LLM)](phases/04-computer-vision/25-vision-language-models/) | 已完成 |
+| 26 | [单目深度与几何估计](phases/04-computer-vision/26-monocular-depth/docs/zh-CN.md) | [Monocular Depth & Geometry Estimation](phases/04-computer-vision/26-monocular-depth/) | 已完成 |
+| 27 | [多目标跟踪与视频记忆](phases/04-computer-vision/27-multi-object-tracking/docs/zh-CN.md) | [Multi-Object Tracking & Video Memory](phases/04-computer-vision/27-multi-object-tracking/) | 已完成 |
+| 28 | [世界模型与视频扩散](phases/04-computer-vision/28-world-models-video-diffusion/docs/zh-CN.md) | [World Models & Video Diffusion](phases/04-computer-vision/28-world-models-video-diffusion/) | 已完成 |
+
 每课都包含：
 
 - `docs/zh-CN.md`：中文正文
@@ -101,13 +155,13 @@ Phase 3 也已经补齐中文正文、中文测验和中文产物，可以在完
 查看中文化进度：
 
 ```bash
-python3 scripts/audit_translations.py --phase 1
+python3 scripts/audit_translations.py --phase 4
 ```
 
 查看原仓库课程结构是否仍然有效：
 
 ```bash
-python3 scripts/audit_lessons.py --phase 1
+python3 scripts/audit_lessons.py --phase 4
 ```
 
 ## 课程目录
