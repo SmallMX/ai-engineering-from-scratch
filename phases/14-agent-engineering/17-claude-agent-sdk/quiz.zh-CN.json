@@ -1,0 +1,90 @@
+{
+  "lesson": "17-claude-agent-sdk",
+  "title": "Claude 智能体 SDK：Subagents与Session Store",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the difference between the Anthropic Client SDK与the Claude 智能体 SDK?",
+      "options": [
+        "Client SDK is raw Messages API; 智能体 SDK is the Claude Code harness shape with built-in tools, MCP, hooks, subagents,与session store",
+        "Client SDK is paid; 智能体 SDK is free",
+        "Client SDK is for Python only",
+        "There is no difference"
+      ],
+      "correct": 0,
+      "explanation": "Client SDK gives you the loop; 智能体 SDK ships the loop pre-built."
+    },
+    {
+      "stage": "pre",
+      "question": "What are the two documented purposes of subagents?",
+      "options": [
+        "Parallelization与context isolation",
+        "缓存与rate limiting",
+        "Logging与metrics",
+        "Authn与authz"
+      ],
+      "correct": 0,
+      "explanation": "Subagents run independent work concurrently与preserve the orchestrator's context budget by isolating context."
+    },
+    {
+      "stage": "check",
+      "question": "Which method is NOT part of the session store surface?",
+      "options": [
+        "append",
+        "load",
+        "list_subkeys",
+        "compile_prompt"
+      ],
+      "correct": 3,
+      "explanation": "Session store ships append, load, list_sessions, delete, list_subkeys; compile_prompt is not a session API."
+    },
+    {
+      "stage": "check",
+      "question": "Which is NOT a Claude 智能体 SDK lifecycle hook?",
+      "options": [
+        "PreToolUse",
+        "PostToolUse",
+        "PreCompact",
+        "PreEmbedding"
+      ],
+      "correct": 3,
+      "explanation": "Hooks include PreToolUse, PostToolUse, SessionStart/End, UserPromptSubmit, PreCompact, Stop, Notification. PreEmbedding is not a hook."
+    },
+    {
+      "stage": "check",
+      "question": "How does trace context propagate across the agent与CLI subprocess?",
+      "options": [
+        "Through the file system",
+        "Through W3C trace context headers passed into the CLI subprocess",
+        "Only via the provider's dashboard",
+        "Through environment variables only"
+      ],
+      "correct": 1,
+      "explanation": "OTel spans on the caller propagate into the CLI subprocess via W3C trace context, so the whole multi-process run is one trace."
+    },
+    {
+      "stage": "post",
+      "question": "What is subagent over-spawn与when does it happen?",
+      "options": [
+        "Spawning 100 subagents for 100 tiny tasks where overhead dominates; batch instead",
+        "Forgetting to close subagents",
+        "Spawning before SessionStart",
+        "Spawning more subagents than CPU cores"
+      ],
+      "correct": 0,
+      "explanation": "Subagents have overhead; batch small tasks instead of spawning one each."
+    },
+    {
+      "stage": "post",
+      "question": "What does Claude Managed 智能体 trade off against the self-hosted SDK?",
+      "options": [
+        "Control for managed infrastructure (long-running async, built-in prompt caching, built-in compaction)",
+        "Latency for cost",
+        "工具 for memory",
+        "Tracing for streaming"
+      ],
+      "correct": 0,
+      "explanation": "Managed 智能体 is the hosted alternative for long-running async work; less control, less ops surface."
+    }
+  ]
+}
