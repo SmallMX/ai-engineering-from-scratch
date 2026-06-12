@@ -1,0 +1,78 @@
+{
+  "lesson": "61-cross-attention-fusion",
+  "title": "Cross-注意力 Fusion",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the operational difference between early fusion与late fusion in vision-language modeling?",
+      "options": [
+        "Early fusion runs first in wall-clock time",
+        "Early fusion concatenates image与text tokens into one sequence; late fusion keeps them separate与bridges via cross-attention at each block",
+        "Late fusion uses more memory",
+        "Early fusion is illegal"
+      ],
+      "correct": 1,
+      "explanation": "Chameleon与Emu3 are early-fusion; Flamingo与BLIP-2 are late-fusion. The architectural choice changes mask shapes与KV caching."
+    },
+    {
+      "stage": "pre",
+      "question": "In a decoder block with both self-attention与cross-attention, which one uses a causal mask?",
+      "options": [
+        "Both",
+        "Self-attention only; the image is fully observed与cross-attention has no temporal order",
+        "Cross-attention only",
+        "Neither"
+      ],
+      "correct": 1,
+      "explanation": "Text generation is autoregressive, so text self-attention is causal. 图像 tokens are all visible before any text is decoded."
+    },
+    {
+      "stage": "check",
+      "question": "Why is the cross-attention KV cache built once per image?",
+      "options": [
+        "PyTorch requires caching",
+        "图像 keys与values do not change as text is decoded, so projecting memory once与reusing the K与V across all decode steps is the whole inference speedup",
+        "缓存 saves disk space",
+        "It avoids using the GPU"
+      ],
+      "correct": 1,
+      "explanation": "The vision encoder runs once. Its KV projection is computed once. Each text token reuses the cache for free."
+    },
+    {
+      "stage": "check",
+      "question": "What is the output shape of cross-attention when text length is Nt=10与image length is Nv=197 with hidden=256?",
+      "options": [
+        "(B, 197, 256)",
+        "(B, 10, 256)",
+        "(B, 10, 197)",
+        "(B, 207, 256)"
+      ],
+      "correct": 1,
+      "explanation": "Cross-attention output shape follows the query stream, so output is (B, Nt, hidden) regardless of key length."
+    },
+    {
+      "stage": "check",
+      "question": "Why is no mask used on cross-attention?",
+      "options": [
+        "Masks are too expensive",
+        "The image is fully observed before text generation begins; every text position may attend to every patch",
+        "PyTorch does not support cross masks",
+        "Masks always cause NaN"
+      ],
+      "correct": 1,
+      "explanation": "There is no temporal order on image patches与no leakage to prevent, so cross-attention sees the whole image."
+    },
+    {
+      "stage": "post",
+      "question": "Which extension would you add to recover Flamingo-style stability during training?",
+      "options": [
+        "Drop the self-attention layer",
+        "Insert a learned tanh gate on the cross-attention residual so the model can start from text-only behavior与grow into the image stream",
+        "Remove the FFN",
+        "Use only one attention head"
+      ],
+      "correct": 1,
+      "explanation": "Flamingo's tanh gate starts at zero, recovers text-only behavior at init,与gives the model a smooth ramp into cross-attention."
+    }
+  ]
+}
