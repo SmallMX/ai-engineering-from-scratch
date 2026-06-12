@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Can LLM actually execute functions or access external systems?",
+    "options": [
+      "Yes, LLM can call API directly",
+      "No -- LLM only generate text (typically JSON) describing which function to call; your code must execute it",
+      "Only GPT-4 can execute functions",
+      "LLM execute functions through embeddings"
+    ],
+    "correct": 1,
+    "explanation": "LLM generate tokens. When 'calling a function,' the model outputs JSON specifying the function name与arguments. Your application code parses this JSON, executes the actual function,与sends the result back to the model.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is a tool schema in the context of function calling?",
+    "options": [
+      "The model's architecture diagram",
+      "A JSON description of a function's name, parameters, types,与purpose that tells the model what tools are available",
+      "A database schema",
+      "The API endpoint URL"
+    ],
+    "correct": 1,
+    "explanation": "Tool schemas describe available functions to the model：function name, parameter names与types, descriptions of what each parameter does,与what the function returns. The model uses these to decide when与how to call tools.",
+    "stage": "pre"
+  },
+  {
+    "question": "What is the standard pattern for a multi-turn function calling loop?",
+    "options": [
+      "Call all functions at once",
+      "Send message -> model requests tool call -> execute function -> send result back -> model generates final response (repeat if needed)",
+      "The model executes functions internally",
+      "Parse the entire conversation as a batch"
+    ],
+    "correct": 1,
+    "explanation": "The loop：(1) send user message + tool schemas, (2) model responds with a tool call request, (3) execute the function, (4) send the result back as a tool response, (5) model generates the next response or another tool call.",
+    "stage": "post"
+  },
+  {
+    "question": "How do you prevent infinite tool calling loops?",
+    "options": [
+      "Use a faster model",
+      "Set a maximum number of tool call iterations与implement a timeout, breaking the loop if the limit is reached",
+      "Infinite loops can't happen with function calling",
+      "Remove all tool schemas after the first call"
+    ],
+    "correct": 1,
+    "explanation": "Without limits, a model could repeatedly call tools (e.g., searching for information it can never find). A max iteration count (e.g., 10 rounds)与total timeout prevent runaway loops in production.",
+    "stage": "post"
+  },
+  {
+    "question": "Why are clear, descriptive parameter names与descriptions important in tool schemas?",
+    "options": [
+      "They make the code more readable",
+      "The model uses descriptions to decide which tool to call与how to fill in parameters -- vague descriptions lead to wrong tool selections与incorrect arguments",
+      "They are required by the API",
+      "They improve response time"
+    ],
+    "correct": 1,
+    "explanation": "The model reads tool descriptions to decide what to call与how. A parameter described as 'q' vs 'search_query：The user's search terms to look up in the knowledge base' gives vastly different results.",
+    "stage": "post"
+  }
+]
