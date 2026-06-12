@@ -1,0 +1,78 @@
+{
+  "lesson": "51-literature-retrieval",
+  "title": "Literature 检索",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does the retrieval client run a BM25 pass与a citation graph pass?",
+      "options": [
+        "Because BM25 needs the graph to build its index",
+        "Because lexical hits miss foundational papers with different vocabulary,与graph hits miss papers that share no citation with the seed",
+        "Because the mock API require it",
+        "Because the parser fails otherwise"
+      ],
+      "correct": 1,
+      "explanation": "Each pass catches what the other misses. Lexical covers shared vocabulary; the graph covers ancestor与descendant papers regardless of vocabulary."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is the citation graph traversal capped at two hops?",
+      "options": [
+        "Because beyond two hops the result set tends to drift off topic与overwhelm downstream ranking",
+        "Because the Python recursion limit forbids three hops",
+        "Because BM25 only scores two hops away",
+        "Because the corpus only stores two layers of citations"
+      ],
+      "correct": 0,
+      "explanation": "Two hops is the practical ceiling. Three hops blows up the result set on a connected graph与rarely returns more on topic papers."
+    },
+    {
+      "stage": "check",
+      "question": "What does idf evaluate to for a term that appears in every document?",
+      "options": [
+        "A large positive value",
+        "A value near zero",
+        "Negative infinity",
+        "Undefined; the BM25 implementation skips it"
+      ],
+      "correct": 1,
+      "explanation": "When df equals N the numerator与denominator inside the log are close,与the +1 keeps the term non negative but small. The contribution of universally common terms is near zero."
+    },
+    {
+      "stage": "check",
+      "question": "Which keys does the merge step use to dedup hits from the two passes?",
+      "options": [
+        "Title text",
+        "Stable paper id",
+        "Year与first author",
+        "BM25 score bucket"
+      ],
+      "correct": 1,
+      "explanation": "Paper id is the stable handle. Title与author are duplicated across versions, year alone is ambiguous."
+    },
+    {
+      "stage": "check",
+      "question": "What does graph_score return for a paper that is two hops from the seed set?",
+      "options": [
+        "Zero",
+        "0.3 by default",
+        "1.0 by default",
+        "The BM25 score divided by ten"
+      ],
+      "correct": 1,
+      "explanation": "The default graph score schedule is 1.0 at zero hops, 0.6 at one hop, 0.3 at two hops,与zero beyond that."
+    },
+    {
+      "stage": "check",
+      "question": "Why is the corpus loaded once into a RetrievalClient instead of refetched per query?",
+      "options": [
+        "Because the mock API are slow on every call",
+        "Because the BM25 index与citation graph are built once at construction time与reused across queries",
+        "Because the parser is global",
+        "Because the recency score requires it"
+      ],
+      "correct": 1,
+      "explanation": "Index construction is the expensive step. Reusing the index amortises that cost across every query the client handles."
+    }
+  ]
+}
