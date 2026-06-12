@@ -1,0 +1,78 @@
+{
+  "lesson": "62-vision-language-pretraining",
+  "title": "视觉-Language Pretraining",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What two distinct capabilities does combining InfoNCE与LM loss train into one model?",
+      "options": [
+        "Speed与accuracy",
+        "Ranking (find the right image for a caption)与generation (write a caption for an image)",
+        "Compression与decompression",
+        "分词与detokenization"
+      ],
+      "correct": 1,
+      "explanation": "InfoNCE handles ranking; LM loss handles generation. CoCa, BLIP,与friends combine both in one training pass."
+    },
+    {
+      "stage": "pre",
+      "question": "In InfoNCE for a batch of N pairs, how many positive pairs与negative pairs are formed?",
+      "options": [
+        "1 positive与N negatives",
+        "N positives along the diagonal of the similarity matrix与N*(N-1) negatives off-diagonal",
+        "N positives与N negatives",
+        "N^2 positives"
+      ],
+      "correct": 1,
+      "explanation": "The N matching pairs sit on the diagonal; everything off-diagonal is a negative."
+    },
+    {
+      "stage": "check",
+      "question": "Why is the contrastive temperature usually a learned parameter?",
+      "options": [
+        "PyTorch requires it",
+        "Hand-tuning is fragile; letting tau learn allows the model to find the right softmax peakedness as the embedding scale evolves during training",
+        "Learned tau is faster on GPU",
+        "It avoids using Adam"
+      ],
+      "correct": 1,
+      "explanation": "CLIP introduced learned log-tau so the contrastive softmax stays in the useful regime as embedding norms grow."
+    },
+    {
+      "stage": "check",
+      "question": "Which sub-modules receive gradient from the LM loss but not from the contrastive loss?",
+      "options": [
+        "The vision encoder",
+        "The cross-attention decoder",
+        "The MLP projector",
+        "The text-side encoder"
+      ],
+      "correct": 1,
+      "explanation": "Contrastive loss does not touch the decoder; LM loss does not touch the text-side mean-pool encoder."
+    },
+    {
+      "stage": "check",
+      "question": "What does ignore_index=PAD_ID accomplish in the LM cross-entropy?",
+      "options": [
+        "Speeds up the loss",
+        "Masks padding positions out of the loss so the model is not punished for predicting tokens after the caption ends",
+        "Encrypts pad tokens",
+        "Reorders tokens"
+      ],
+      "correct": 1,
+      "explanation": "Padding positions carry no signal; ignoring them stops the loss from learning to predict pad."
+    },
+    {
+      "stage": "post",
+      "question": "Why is a 50-step demo on synthetic data enough to call the lesson complete?",
+      "options": [
+        "The model reaches state of the art at 50 steps",
+        "The demo proves the gradient plumbing works end to end; production training shape is identical but runs for millions of steps on real data",
+        "50 steps is the maximum supported",
+        "Real data would change the architecture"
+      ],
+      "correct": 1,
+      "explanation": "The dynamics demonstrated (both losses decrease, no NaN, stable tau) are the same dynamics a billion-image run would show; just scaled up."
+    }
+  ]
+}
