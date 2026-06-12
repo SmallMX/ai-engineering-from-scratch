@@ -14,7 +14,7 @@
   <b>中文读者：</b>
   <a href="README.zh-CN.md">打开中文说明与目录</a>
   ·
-  <a href="README.zh-CN.md#现在怎么读">Phase 0-4 中文译文</a>
+  <a href="README.zh-CN.md#现在怎么读">Phase 0-19 中文译文</a>
   ·
   <a href="#contents">Jump to English Contents</a>
 </p>
@@ -401,6 +401,8 @@ Twenty phases. Click any phase to expand its lesson list.
 <summary><b>Phase 5 — NLP: Foundations to Advanced</b> &nbsp;<code>29 lessons</code>&nbsp; <em>Language is the interface to intelligence.</em></summary>
 <br/>
 
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
+
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
 | 01 | [Text Processing: Tokenization, Stemming, Lemmatization](phases/05-nlp-foundations-to-advanced/01-text-processing/) | Build | Python |
@@ -439,6 +441,8 @@ Twenty phases. Click any phase to expand its lesson list.
 <summary><b>Phase 6 — Speech & Audio</b> &nbsp;<code>17 lessons</code>&nbsp; <em>Hear, understand, speak.</em></summary>
 <br/>
 
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
+
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
 | 01 | [Audio Fundamentals: Waveforms, Sampling, FFT](phases/06-speech-and-audio/01-audio-fundamentals) | Learn | Python |
@@ -465,6 +469,8 @@ Twenty phases. Click any phase to expand its lesson list.
 <summary><b>Phase 7 — Transformers Deep Dive</b> &nbsp;<code>14 lessons</code>&nbsp; <em>The architecture that changed everything.</em></summary>
 <br/>
 
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
+
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
 | 01 | [Why Transformers: The Problems with RNNs](phases/07-transformers-deep-dive/01-why-transformers/) | Learn | Python |
@@ -490,6 +496,8 @@ Twenty phases. Click any phase to expand its lesson list.
 <summary><b>Phase 8 — Generative AI</b> &nbsp;<code>14 lessons</code>&nbsp; <em>Create images, video, audio, 3D, and more.</em></summary>
 <br/>
 
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
+
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
 | 01 | [Generative Models: Taxonomy & History](phases/08-generative-ai/01-generative-models-taxonomy-history/) | Learn | Python |
@@ -514,6 +522,8 @@ Twenty phases. Click any phase to expand its lesson list.
 <summary><b>Phase 9 — Reinforcement Learning</b> &nbsp;<code>12 lessons</code>&nbsp; <em>The foundation of RLHF and game-playing AI.</em></summary>
 <br/>
 
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
+
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
 | 01 | [MDPs, States, Actions & Rewards](phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Learn | Python |
@@ -534,6 +544,8 @@ Twenty phases. Click any phase to expand its lesson list.
 <details id="phase-10">
 <summary><b>Phase 10 — LLMs from Scratch</b> &nbsp;<code>22 lessons</code>&nbsp; <em>Build, train, and understand large language models.</em></summary>
 <br/>
+
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
@@ -568,6 +580,8 @@ Twenty phases. Click any phase to expand its lesson list.
 <summary><b>Phase 11 — LLM Engineering</b> &nbsp;<code>17 lessons</code>&nbsp; <em>Put LLMs to work in production.</em></summary>
 <br/>
 
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
+
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
 | 01 | [Prompt Engineering: Techniques & Patterns](phases/11-llm-engineering/01-prompt-engineering/) | Build | Python |
@@ -593,6 +607,8 @@ Twenty phases. Click any phase to expand its lesson list.
 <details id="phase-12">
 <summary><b>Phase 12 — Multimodal AI</b> &nbsp;<code>25 lessons</code>&nbsp; <em>See, hear, read, and reason across modalities — from ViT patches to computer-use agents.</em></summary>
 <br/>
+
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
@@ -628,6 +644,8 @@ Twenty phases. Click any phase to expand its lesson list.
 <summary><b>Phase 13 — Tools & Protocols</b> &nbsp;<code>23 lessons</code>&nbsp; <em>The interfaces between AI and the real world.</em></summary>
 <br/>
 
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
+
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
 | 01 | [The Tool Interface](phases/13-tools-and-protocols/01-the-tool-interface/) | Learn | Python |
@@ -659,6 +677,8 @@ Twenty phases. Click any phase to expand its lesson list.
 <details id="phase-14">
 <summary><b>Phase 14 — Agent Engineering</b> &nbsp;<code>42 lessons</code>&nbsp; <em>Build agents from first principles — loop, memory, planning, frameworks, benchmarks, production, workbench.</em></summary>
 <br/>
+
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
@@ -713,6 +733,8 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 <summary><b>Phase 15 — Autonomous Systems</b> &nbsp;<code>22 lessons</code>&nbsp; <em>Long-horizon agents, self-improvement, and the 2026 safety stack.</em></summary>
 <br/>
 
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
+
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
 | 01 | [From Chatbots to Long-Horizon Agents (METR)](phases/15-autonomous-systems/01-long-horizon-agents/) | Learn | Python |
@@ -743,6 +765,8 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 <details id="phase-16">
 <summary><b>Phase 16 — Multi-Agent & Swarms</b> &nbsp;<code>25 lessons</code>&nbsp; <em>Coordination, emergence, and collective intelligence.</em></summary>
 <br/>
+
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
@@ -777,6 +801,8 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 <details id="phase-17">
 <summary><b>Phase 17 — Infrastructure & Production</b> &nbsp;<code>28 lessons</code>&nbsp; <em>Ship AI to the real world.</em></summary>
 <br/>
+
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
@@ -814,6 +840,8 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 <details id="phase-18">
 <summary><b>Phase 18 — Ethics, Safety & Alignment</b> &nbsp;<code>30 lessons</code>&nbsp; <em>Build AI that helps humanity. Not optional.</em></summary>
 <br/>
+
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
@@ -853,6 +881,8 @@ Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent b
 <details id="phase-19">
 <summary><b>Phase 19 — Capstone Projects</b> &nbsp;<code>85 lessons</code>&nbsp; <em>17 end-to-end products + 9 deep-build tracks. 20-40 hours per project; 4-12 lessons per track.</em></summary>
 <br/>
+
+> Chinese companion files are complete for this phase: `docs/zh-CN.md`, `quiz.zh-CN.json`, and `outputs/*.zh-CN.md`.
 
 | # | Project | Combines | Lang |
 |:---:|---------|----------|------|
@@ -969,7 +999,7 @@ Real tools, not homework.
 
 ### Install every course skill into your agent
 
-The repo ships 388 skills and 99 prompts under `phases/**/outputs/`.
+The repo ships 392 skills and 117 prompts under `phases/**/outputs/`.
 
 **Recommended: install via [skills.sh](https://skills.sh).** No clone, no Python,
 detects your agent's skills directory automatically:
