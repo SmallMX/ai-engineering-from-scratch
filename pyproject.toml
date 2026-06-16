@@ -1,0 +1,28 @@
+[project]
+name = "ai-engineering-from-scratch"
+version = "0.1.0"
+description = "435 lessons — build every algorithm from raw math, then use the framework."
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.24",
+    "matplotlib>=3.7",
+    "jupyter>=1.0",
+    "torch>=2.0",
+    "torchvision>=0.15",
+    "torchaudio>=2.0",
+    "transformers>=4.30",
+    "datasets>=2.14",
+    "tokenizers>=0.13",
+    "accelerate>=0.20",
+    "scikit-learn>=1.3",
+    "pandas>=2.0",
+    "pillow>=10.0",
+    "librosa>=0.10",
+    "soundfile>=0.12",
+    "tiktoken>=0.5",
+    "anthropic>=0.25",
+    "openai>=1.0",
+]
+
+[dependency-groups]
+dev = []

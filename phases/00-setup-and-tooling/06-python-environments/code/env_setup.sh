@@ -97,14 +97,17 @@ echo ""
 echo "--- Installing core packages ---"
 echo ""
 
-if $HAS_UV; then
+if $HAS_UV && [ -f "pyproject.toml" ]; then
+    uv sync
+    pass "Installed dependencies from pyproject.toml via uv sync"
+elif $HAS_UV; then
     uv pip install $CORE_PACKAGES
+    pass "Installed: $CORE_PACKAGES"
 else
     pip install --upgrade pip
     pip install $CORE_PACKAGES
+    pass "Installed: $CORE_PACKAGES"
 fi
-
-pass "Installed: $CORE_PACKAGES"
 
 echo ""
 echo "--- Verifying installation ---"
@@ -156,7 +159,7 @@ echo ""
 echo "  Repo root:    $REPO_ROOT"
 echo "  Venv:         $REPO_ROOT/$VENV_DIR"
 echo "  Python:       $(python --version)"
-echo "  Packages:     $CORE_PACKAGES"
+echo "  Manager:      $($HAS_UV && echo 'uv (pyproject.toml)' || echo 'pip (manual)')"
 echo ""
 
 if [ "$FAILURES" -gt 0 ]; then
@@ -165,8 +168,14 @@ if [ "$FAILURES" -gt 0 ]; then
 else
     pass "All checks passed"
     echo ""
-    echo "Activate this environment in future sessions:"
+    echo "For future sessions:"
     echo ""
-    echo "  source $REPO_ROOT/$VENV_DIR/bin/activate"
+    if $HAS_UV; then
+        echo "  uv sync                      # install / update all deps"
+        echo "  uv run python <script.py>    # run a script inside the venv"
+        echo "  source $REPO_ROOT/$VENV_DIR/bin/activate  # or activate manually"
+    else
+        echo "  source $REPO_ROOT/$VENV_DIR/bin/activate"
+    fi
     echo ""
 fi
