@@ -1,6 +1,51 @@
 import os
 import json
 import urllib.request
+from pathlib import Path
+
+
+def load_dotenv(path: str | None = None) -> dict[str, str]:
+    """Read a .env file and return key-value pairs.
+
+    Supports KEY=VALUE per line, # comments, and optional surrounding quotes.
+    If *path* is None, looks for .env in the current working directory.
+    """
+    if path is None:
+        path = str(Path.cwd() / ".env")
+    try:
+        text = Path(path).read_text(encoding="utf-8")
+    except FileNotFoundError:
+        return {}
+    env: dict[str, str] = {}
+    for line in text.splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        eq = stripped.find("=")
+        if eq <= 0:
+            continue
+        key = stripped[:eq].strip()
+        value = stripped[eq + 1 :].strip()
+        if (
+            (value.startswith('"') and value.endswith('"'))
+            or (value.startswith("'") and value.endswith("'"))
+        ):
+            value = value[1:-1]
+        env[key] = value
+    return env
+
+
+def get_api_key() -> str | None:
+    """Return the API key from env var or .env config file.
+
+    Environment variables take precedence so users can override the file
+    without editing it.
+    """
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if api_key:
+        return api_key
+    dotenv = load_dotenv()
+    return dotenv.get("ANTHROPIC_API_KEY")
 
 
 def call_with_sdk():
@@ -10,7 +55,8 @@ def call_with_sdk():
         print("Install the SDK: pip install anthropic")
         return
 
-    client = anthropic.Anthropic()
+    api_key = get_api_key()
+    client = anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()
     response = client.messages.create(
         model="claude-sonnet-4-20250514",
         max_tokens=256,
@@ -21,9 +67,9 @@ def call_with_sdk():
 
 
 def call_raw_http():
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    api_key = get_api_key()
     if not api_key:
-        print("Set ANTHROPIC_API_KEY environment variable first")
+        print("Set ANTHROPIC_API_KEY in environment or .env config file first")
         return
 
     url = "https://api.anthropic.com/v1/messages"
