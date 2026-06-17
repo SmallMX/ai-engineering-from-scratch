@@ -1,0 +1,46 @@
+# -------------------------------------------------------
+# 面向 AI 的 Docker 开发环境 — macOS 版（CPU）
+# 课时：phases/00-setup-and-tooling/07-docker-for-ai
+# 使用 python:3.12-slim 替代 NVIDIA CUDA 基础镜像
+# 安装 CPU 版 PyTorch，镜像更小、构建更快
+# -------------------------------------------------------
+
+FROM python:3.12-slim
+
+ENV PYTHONUNBUFFERED=1
+
+# 安装系统依赖：git、curl 和 C 编译工具链（部分 Python 包需要编译 C 扩展）
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    curl \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN python -m pip install --no-cache-dir --upgrade pip setuptools wheel
+
+# 安装 CPU 版 PyTorch（Mac Docker 容器无法访问 GPU，使用 CPU 即可）
+RUN python -m pip install --no-cache-dir \
+    torch==2.3.1 \
+    torchvision==0.18.1 \
+    torchaudio==2.3.1 \
+    --index-url https://download.pytorch.org/whl/cpu
+
+# 安装 AI 开发常用库
+RUN python -m pip install --no-cache-dir \
+    numpy \
+    pandas \
+    scikit-learn \
+    matplotlib \
+    jupyter \
+    transformers \
+    datasets \
+    accelerate \
+    safetensors
+
+WORKDIR /workspace
+
+VOLUME ["/workspace", "/models"]
+
+EXPOSE 8888
+
+CMD ["python"]

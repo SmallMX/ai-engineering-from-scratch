@@ -1,0 +1,31 @@
+# -------------------------------------------------------
+# Docker Compose — macOS 版
+# 课时：phases/00-setup-and-tooling/07-docker-for-ai
+# 移除 NVIDIA GPU 预留配置（deploy.resources.reservations.devices）
+# -------------------------------------------------------
+
+services:
+  ai-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.mac
+    volumes:
+      - ../../../:/workspace:cached
+      - ~/models:/models:cached
+      - ~/datasets:/data:cached
+    ports:
+      - "8888:8888"
+    stdin_open: true
+    tty: true
+    command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+
+  qdrant:
+    image: qdrant/qdrant:v1.12.5
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+volumes:
+  qdrant_data:
