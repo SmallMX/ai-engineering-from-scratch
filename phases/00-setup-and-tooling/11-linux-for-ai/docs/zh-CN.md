@@ -44,28 +44,28 @@ graph TD
 ### 移动位置
 
 ```bash
-pwd                         # Where am I?
-ls                          # What's here?
-ls -la                      # What's here, including hidden files with details?
-cd /path/to/dir             # Go there
-cd ~                        # Go home
-cd ..                       # Go up one level
+pwd                         # 我在哪里？
+ls                          # 这里有什么？
+ls -la                      # 这里有什么，包括隐藏文件及详细信息？
+cd /path/to/dir             # 进入该目录
+cd ~                        # 回到家目录
+cd ..                       # 返回上一级目录
 ```
 
 ### 文件和目录
 
 ```bash
-mkdir my-project            # Create a directory
-mkdir -p a/b/c              # Create nested directories in one shot
+mkdir my-project            # 创建一个目录
+mkdir -p a/b/c              # 一次性创建多级嵌套目录
 
-cp file.txt backup.txt      # Copy a file
-cp -r src/ src-backup/      # Copy a directory (recursive)
+cp file.txt backup.txt      # 复制文件
+cp -r src/ src-backup/      # 递归复制目录
 
-mv old.txt new.txt          # Rename a file
-mv file.txt /tmp/           # Move a file
+mv old.txt new.txt          # 重命名文件
+mv file.txt /tmp/           # 移动文件
 
-rm file.txt                 # Delete a file (no trash, it's gone)
-rm -rf my-dir/              # Delete a directory and everything inside
+rm file.txt                 # 删除文件（不放入回收站，直接永久删除）
+rm -rf my-dir/              # 删除目录及其内部的所有内容
 ```
 
 `rm -rf` 是永久删除。没有撤销。按回车前再检查一遍路径。
@@ -73,22 +73,22 @@ rm -rf my-dir/              # Delete a directory and everything inside
 ### 读取文件
 
 ```bash
-cat file.txt                # Print entire file
-head -20 file.txt           # First 20 lines
-tail -20 file.txt           # Last 20 lines
-tail -f log.txt             # Follow a log file in real time (Ctrl+C to stop)
-less file.txt               # Scroll through a file (q to quit)
+cat file.txt                # 打印整个文件内容
+head -20 file.txt           # 查看前 20 行
+tail -20 file.txt           # 查看后 20 行
+tail -f log.txt             # 实时跟踪日志文件（按 Ctrl+C 停止）
+less file.txt               # 分页滚动查看文件（按 q 退出）
 ```
 
 ### 搜索
 
 ```bash
-grep "error" training.log           # Find lines containing "error"
-grep -r "learning_rate" .           # Search all files in current directory
-grep -i "cuda" config.yaml          # Case-insensitive search
+grep "error" training.log           # 查找包含 "error" 的行
+grep -r "learning_rate" .           # 在当前目录下的所有文件中搜索
+grep -i "cuda" config.yaml          # 忽略大小写进行搜索
 
-find . -name "*.py"                 # Find all Python files under current dir
-find . -name "*.ckpt" -size +1G     # Find checkpoint files larger than 1GB
+find . -name "*.py"                 # 查找当前目录下的所有 Python 文件
+find . -name "*.ckpt" -size +1G     # 查找大于 1GB 的权重检查点文件
 ```
 
 ## 权限
@@ -98,19 +98,19 @@ Linux 中每个文件都有 owner 和 permission bits。当脚本不能执行，
 ```bash
 ls -l train.py
 # -rwxr-xr-- 1 user group 2048 Mar 19 10:00 train.py
-#  ^^^             owner permissions: read, write, execute
-#     ^^^          group permissions: read, execute
-#        ^^        everyone else: read only
+#  ^^^             所有者权限：读、写、执行
+#     ^^^          用户组权限：读、执行
+#        ^^        其他所有人：只读
 ```
 
 常见修复：
 
 ```bash
-chmod +x train.sh           # Make a script executable
-chmod 755 deploy.sh         # Owner: full, others: read+execute
-chmod 644 config.yaml       # Owner: read+write, others: read only
+chmod +x train.sh           # 使脚本可执行
+chmod 755 deploy.sh         # 所有者：全部权限，其他人：读+执行权限
+chmod 644 config.yaml       # 所有者：读+写权限，其他人：只读权限
 
-chown user:group file.txt   # Change who owns a file (needs sudo)
+chown user:group file.txt   # 修改文件所有者（需要 sudo 权限）
 ```
 
 当某个东西提示 “Permission denied” 时，几乎总是权限问题。`chmod +x` 或 `sudo` 可以修复大多数情况。
@@ -120,13 +120,13 @@ chown user:group file.txt   # Change who owns a file (needs sudo)
 Ubuntu 使用 `apt`。这是安装系统级软件的方式。
 
 ```bash
-sudo apt update             # Refresh the package list (always do this first)
-sudo apt install -y htop    # Install a package (-y skips confirmation)
-sudo apt install -y build-essential  # C compiler, make, etc. Needed by many Python packages
-sudo apt install -y tmux    # Terminal multiplexer (keep sessions alive after disconnect)
+sudo apt update             # 刷新软件包列表（每次安装前必做）
+sudo apt install -y htop    # 安装软件包（-y 参数跳过确认提示）
+sudo apt install -y build-essential  # C 编译器、make 工具等。许多 Python 包构建时需要它
+sudo apt install -y tmux    # 终端复用器（断开连接后保持会话存活）
 
-apt list --installed        # What's installed?
-sudo apt remove htop        # Uninstall
+apt list --installed        # 列出已安装的软件包
+sudo apt remove htop        # 卸载软件包
 ```
 
 一台新的 GPU 机器上常见会安装这些包：
@@ -148,9 +148,9 @@ sudo apt update && sudo apt install -y \
 你通常会以普通用户登录。有些操作需要 root（管理员）权限。
 
 ```bash
-whoami                      # What user am I?
-sudo command                # Run a single command as root
-sudo su                     # Become root (exit to go back, use sparingly)
+whoami                      # 我当前是哪个用户？
+sudo command                # 以 root 身份运行单个命令
+sudo su                     # 切换为 root 用户（输入 exit 返回普通用户，请谨慎使用）
 ```
 
 在云 GPU 实例上，你通常是唯一用户，并且已经有 sudo 权限。不要把所有命令都用 root 运行。只在需要时使用 sudo。
@@ -160,21 +160,21 @@ sudo su                     # Become root (exit to go back, use sparingly)
 当训练卡住，或你需要检查正在运行什么时：
 
 ```bash
-htop                        # Interactive process viewer (q to quit)
-ps aux | grep python        # Find running Python processes
-kill 12345                  # Gracefully stop process with PID 12345
-kill -9 12345               # Force kill (use when graceful doesn't work)
-nvidia-smi                  # GPU processes and memory usage
+htop                        # 交互式进程查看器（按 q 退出）
+ps aux | grep python        # 查找正在运行的 Python 进程
+kill 12345                  # 优雅停止 PID 为 12345 的进程
+kill -9 12345               # 强制结束进程（在优雅停止无效时使用）
+nvidia-smi                  # GPU 进程和显存占用情况
 ```
 
 systemd 管理 services（后台 daemons）。如果你运行推理服务，会用到它：
 
 ```bash
-sudo systemctl start nginx          # Start a service
-sudo systemctl stop nginx           # Stop it
-sudo systemctl restart nginx        # Restart it
-sudo systemctl status nginx         # Check if it's running
-sudo systemctl enable nginx         # Start automatically on boot
+sudo systemctl start nginx          # 启动服务
+sudo systemctl stop nginx           # 停止服务
+sudo systemctl restart nginx        # 重启服务
+sudo systemctl status nginx         # 检查服务是否正在运行
+sudo systemctl enable nginx         # 设置服务开机自启
 ```
 
 ## 磁盘空间
@@ -182,12 +182,12 @@ sudo systemctl enable nginx         # Start automatically on boot
 GPU 机器的磁盘空间经常有限。模型和数据集会很快把它填满。
 
 ```bash
-df -h                       # Disk usage for all mounted drives
-df -h /home                 # Disk usage for /home specifically
+df -h                       # 查看所有已挂载磁盘的空间使用情况
+df -h /home                 # 专门查看 /home 目录的磁盘空间使用情况
 
-du -sh *                    # Size of each item in current directory
-du -sh ~/.cache             # Size of your cache (pip, huggingface models land here)
-du -sh /data/checkpoints/   # Check how big your checkpoints are
+du -sh *                    # 查看当前目录下每个文件/文件夹的大小
+du -sh ~/.cache             # 查看缓存大小（pip、huggingface 模型会下载到这里）
+du -sh /data/checkpoints/   # 检查检查点文件夹的大小
 
 # Find the biggest space hogs
 du -h --max-depth=1 / 2>/dev/null | sort -hr | head -20
@@ -196,13 +196,13 @@ du -h --max-depth=1 / 2>/dev/null | sort -hr | head -20
 常见节省空间方法：
 
 ```bash
-# Clear pip cache
+# 清理 pip 缓存
 pip cache purge
 
-# Clear apt cache
+# 清理 apt 缓存
 sudo apt clean
 
-# Remove old checkpoints you don't need
+# 删除不需要的旧检查点
 rm -rf checkpoints/epoch_01/ checkpoints/epoch_02/
 ```
 
@@ -211,17 +211,17 @@ rm -rf checkpoints/epoch_01/ checkpoints/epoch_02/
 你会从命令行下载模型、传输文件和调用 API。
 
 ```bash
-# Download files
-wget https://example.com/model.bin                   # Download a file
-curl -O https://example.com/data.tar.gz              # Same thing with curl
-curl -s https://api.example.com/health | python3 -m json.tool  # Hit an API, pretty-print JSON
+# 下载文件
+wget https://example.com/model.bin                   # 下载文件
+curl -O https://example.com/data.tar.gz              # 使用 curl 下载同一文件
+curl -s https://api.example.com/health | python3 -m json.tool  # 请求 API 并格式化输出 JSON
 
-# Transfer files between machines
-scp model.bin user@remote:/data/                     # Copy file to remote machine
-scp user@remote:/data/results.csv .                  # Copy file from remote to local
-scp -r user@remote:/data/checkpoints/ ./local-dir/   # Copy directory
+# 在机器之间传输文件
+scp model.bin user@remote:/data/                     # 将文件复制到远程机器
+scp user@remote:/data/results.csv .                  # 从远程机器复制文件到本地
+scp -r user@remote:/data/checkpoints/ ./local-dir/   # 复制目录
 
-# Sync directories (faster than scp for large transfers, resumes on failure)
+# 同步目录（传输大文件比 scp 快，且支持断点续传）
 rsync -avz --progress ./data/ user@remote:/data/
 rsync -avz --progress user@remote:/results/ ./results/
 ```
@@ -233,17 +233,17 @@ rsync -avz --progress user@remote:/results/ ./results/
 当你 SSH 到远程机器时，合上笔记本会 kill 掉训练运行。tmux 可以避免这件事。
 
 ```bash
-tmux new -s train           # Start a new session named "train"
-# ... start your training, then:
-# Ctrl+B, then D            # Detach (training keeps running)
+tmux new -s train           # 创建并启动名为 "train" 的新会话
+# ... 开始你的训练，然后：
+# Ctrl+B, then D            # 分离当前会话（训练进程在后台继续运行）
 
-tmux ls                     # List sessions
-tmux attach -t train        # Reattach to session
+tmux ls                     # 列出所有会话
+tmux attach -t train        # 重新连接到会话
 
-# Inside tmux:
-# Ctrl+B, then %            # Split pane vertically
-# Ctrl+B, then "            # Split pane horizontally
-# Ctrl+B, then arrow keys   # Switch between panes
+# 在 tmux 内部：
+# Ctrl+B, then %            # 垂直分割窗格
+# Ctrl+B, then "            # 水平分割窗格
+# Ctrl+B, then arrow keys   # 在窗格之间切换
 ```
 
 长时间训练任务一定要放在 tmux 里。一定要。
@@ -253,10 +253,10 @@ tmux attach -t train        # Reattach to session
 如果你在 Windows 上，WSL2 可以在不双系统启动的情况下给你一个真正的 Linux 环境。
 
 ```bash
-# In PowerShell (admin)
+# 在 PowerShell (以管理员身份)
 wsl --install -d Ubuntu-24.04
 
-# After restart, open Ubuntu from Start menu
+# 重启后，从开始菜单打开 Ubuntu
 sudo apt update && sudo apt upgrade -y
 ```
 
@@ -282,16 +282,16 @@ WSL2 运行真正的 Linux kernel。本课内容在其中都适用。从 WSL 内
 ## 快速参考卡
 
 ```text
-Navigation:     pwd, ls, cd, find
-Files:          cp, mv, rm, mkdir, cat, head, tail, less
-Search:         grep, find
-Permissions:    chmod, chown, sudo
-Packages:       apt update, apt install
-Processes:      htop, ps, kill, nvidia-smi
-Services:       systemctl start/stop/restart/status
-Disk:           df -h, du -sh
-Network:        curl, wget, scp, rsync
-Sessions:       tmux new/attach/detach
+导航:           pwd, ls, cd, find
+文件:           cp, mv, rm, mkdir, cat, head, tail, less
+搜索:           grep, find
+权限:           chmod, chown, sudo
+软件包:         apt update, apt install
+进程:           htop, ps, kill, nvidia-smi
+服务:           systemctl start/stop/restart/status
+磁盘:           df -h, du -sh
+网络:           curl, wget, scp, rsync
+会话:           tmux new/attach/detach
 ```
 
 ## 练习
