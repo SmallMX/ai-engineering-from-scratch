@@ -42,20 +42,20 @@
 
 ## 关键公式与代码片段
 
-以下片段保留自英文原文，便于直接复制运行或对照数学符号。
+以下片段为核心数学概念与代码实现，已添加详细的中文注释与说明，便于直接阅读、复制运行或对照数学符号。
 
 ```mermaid
 graph LR
-    subgraph Before["Standard Basis"]
-        e1["e1 = [1, 0] (along x)"]
-        e2["e2 = [0, 1] (along y)"]
+    subgraph Before["标准基底 (Standard Basis)"]
+        e1["e1 = [1, 0] (沿 x 轴方向)"]
+        e2["e2 = [0, 1] (沿 y 轴方向)"]
     end
-    subgraph Transform["Matrix M"]
-        M["M = columns are new basis vectors"]
+    subgraph Transform["变换矩阵 M (Matrix M)"]
+        M["M = 其列向量为新的基向量"]
     end
-    subgraph After["After Transformation M"]
-        e1p["e1' = new x-basis"]
-        e2p["e2' = new y-basis"]
+    subgraph After["变换后的基底 (After Transformation)"]
+        e1p["e1' = 新的 x 轴基底"]
+        e2p["e2' = 新的 y 轴基底"]
     end
     e1 --> M --> e1p
     e2 --> M --> e2p
@@ -63,14 +63,14 @@ graph LR
 
 ```mermaid
 graph LR
-    subgraph Before["Before Rotation"]
+    subgraph Before["旋转前 (Before Rotation)"]
         A["A(2, 1)"]
         B["B(0, 2)"]
     end
-    subgraph Rot["Rotate 45 degrees"]
+    subgraph Rot["逆时针旋转 45 度"]
         R["R(θ) = [[cos θ, -sin θ], [sin θ, cos θ]]"]
     end
-    subgraph After["After Rotation"]
+    subgraph After["旋转后 (After Rotation)"]
         Ap["A'(0.71, 2.12)"]
         Bp["B'(-1.41, 1.41)"]
     end
@@ -79,29 +79,32 @@ graph LR
 ```
 
 ```text
-Rz(theta) = | cos  -sin  0 |     Rotate around z-axis
-            | sin   cos  0 |     (x-y plane spins, z stays)
+-- 绕 z 轴旋转（x-y 平面旋转，z 轴保持不变）
+Rz(theta) = | cos  -sin  0 |
+            | sin   cos  0 |
             |  0     0   1 |
 
-Rx(theta) = | 1   0     0    |   Rotate around x-axis
-            | 0  cos  -sin   |   (y-z plane spins, x stays)
+-- 绕 x 轴旋转（y-z 平面旋转，x 轴保持不变）
+Rx(theta) = | 1   0     0    |
+            | 0  cos  -sin   |
             | 0  sin   cos   |
 
-Ry(theta) = |  cos  0  sin |     Rotate around y-axis
-            |   0   1   0  |     (x-z plane spins, y stays)
+-- 绕 y 轴旋转（x-z 平面旋转，y 轴保持不变）
+Ry(theta) = |  cos  0  sin |
+            |   0   1   0  |
             | -sin  0  cos |
 ```
 
 ```mermaid
 graph LR
-    subgraph Before["Before Scaling"]
+    subgraph Before["缩放前 (Before Scaling)"]
         A["A(2, 1)"]
         B["B(0, 2)"]
     end
-    subgraph Scale["Scale sx=2, sy=0.5"]
+    subgraph Scale["缩放比例 sx=2, sy=0.5"]
         S["S = [[2, 0], [0, 0.5]]"]
     end
-    subgraph After["After Scaling"]
+    subgraph After["缩放后 (After Scaling)"]
         Ap["A'(4, 0.5)"]
         Bp["B'(0, 1)"]
     end
@@ -111,16 +114,16 @@ graph LR
 
 ```mermaid
 graph LR
-    subgraph Before["Before Shear"]
+    subgraph Before["剪切前 (Before Shear)"]
         A["A(1, 0)"]
         B["B(0, 1)"]
     end
-    subgraph Shear["Shear in x, k=1"]
+    subgraph Shear["沿 x 轴剪切，系数 k=1"]
         Sh["Shx = [[1, k], [0, 1]]"]
     end
-    subgraph After["After Shear"]
-        Ap["A(1, 0) unchanged"]
-        Bp["B'(1, 1) shifted"]
+    subgraph After["剪切后 (After Shear)"]
+        Ap["A(1, 0) 保持不变"]
+        Bp["B'(1, 1) 发生偏移"]
     end
     A --> Sh --> Ap
     B --> Sh --> Bp
@@ -128,13 +131,13 @@ graph LR
 
 ```mermaid
 graph LR
-    subgraph Before["Before Reflection"]
+    subgraph Before["反射前 (Before Reflection)"]
         A["A(2, 1)"]
     end
-    subgraph Reflect["Reflect across y-axis"]
+    subgraph Reflect["关于 y 轴反射（镜像）"]
         R["[[-1, 0], [0, 1]]"]
     end
-    subgraph After["After Reflection"]
+    subgraph After["反射后 (After Reflection)"]
         Ap["A'(-2, 1)"]
     end
     A --> R --> Ap
@@ -142,82 +145,91 @@ graph LR
 
 ```mermaid
 graph LR
-    subgraph Path1["Rotate 90 then Scale (2, 0.5)"]
-        P1["(1, 0)"] -->|"Rotate 90"| P2["(0, 1)"] -->|"Scale"| P3["(0, 0.5)"]
+    subgraph Path1["先旋转 90 度再缩放 (2, 0.5)"]
+        P1["(1, 0)"] -->|"旋转 90 度"| P2["(0, 1)"] -->|"缩放"| P3["(0, 0.5)"]
     end
 ```
 
 ```mermaid
 graph LR
-    subgraph Path2["Scale (2, 0.5) then Rotate 90"]
-        Q1["(1, 0)"] -->|"Scale"| Q2["(2, 0)"] -->|"Rotate 90"| Q3["(0, 2)"]
+    subgraph Path2["先缩放 (2, 0.5) 再旋转 90 度"]
+        Q1["(1, 0)"] -->|"缩放"| Q2["(2, 0)"] -->|"旋转 90 度"| Q3["(0, 2)"]
     end
 ```
 
 ```text
+-- 特征值与特征向量的基本方程：A @ v = lambda * v
 A @ v = lambda * v
 
-v is the eigenvector (direction that survives)
-lambda is the eigenvalue (how much it stretches)
+v 是特征向量（变换后方向保持不变的向量）
+lambda 是特征值（向量在特征方向上的缩放比例）
 
-Example: A = | 2  1 |
-             | 1  2 |
+示例：A = | 2  1 |
+           | 1  2 |
 
-Eigenvector [1, 1] with eigenvalue 3:
-  A @ [1,1] = [3, 3] = 3 * [1, 1]     (same direction, scaled by 3)
+特征向量 [1, 1] 对应的特征值为 3：
+  A @ [1, 1] = [3, 3] = 3 * [1, 1]      -- 方向相同，长度拉伸为 3 倍
 
-Eigenvector [1, -1] with eigenvalue 1:
-  A @ [1,-1] = [1, -1] = 1 * [1, -1]  (same direction, unchanged)
+特征向量 [1, -1] 对应的特征值为 1：
+  A @ [1, -1] = [1, -1] = 1 * [1, -1]   -- 方向相同，长度保持不变
 ```
 
 ```text
+-- 特征分解（谱分解）：A = V @ D @ V^(-1)
 A = V @ D @ V^(-1)
 
-V = matrix whose columns are eigenvectors
-D = diagonal matrix of eigenvalues
-V^(-1) = inverse of V
+V = 以特征向量为列的矩阵
+D = 对角线为特征值的对角矩阵
+V^(-1) = V 的逆矩阵
 
-This says: rotate into eigenvector coordinates, scale along each axis, rotate back.
+物理含义：先变换到特征向量基底坐标系，沿各自对角轴进行拉伸缩放，最后再逆变换回原空间。
 ```
 
 ```text
-det = 1:   area preserved (rotation)
-det = 2:   area doubled
-det = 0:   space crushed to lower dimension (singular)
-det = -1:  area preserved but orientation flipped (reflection)
+det = 1:   面积/体积保持不变（如旋转变换）
+det = 2:   面积/体积扩大为 2 倍（如缩放变换）
+det = 0:   空间被压缩到低维，矩阵不可逆（退化/奇异变换）
+det = -1:  面积/体积保持不变，但空间方向发生翻转（如镜像/反射变换）
 
-| det(Rotation) | = 1        (always)
-| det(Scale sx, sy) | = sx * sy
-| det(Shear) | = 1           (area preserved)
-| det(Reflection) | = -1     (orientation flipped)
+| det(旋转变换) | = 1          -- 旋转始终保持面积不变
+| det(缩放变换 sx, sy) | = sx * sy  -- 缩放使面积变为 sx * sy 倍
+| det(剪切变换) | = 1          -- 剪切变换保持面积不变
+| det(反射变换) | = -1         -- 反射变换翻转了手性/方向
 ```
 
 ```python
 import math
 
 def rotation_2d(theta):
+    """生成 2D 旋转矩阵（逆时针旋转 theta 弧度）"""
     c, s = math.cos(theta), math.sin(theta)
     return [[c, -s], [s, c]]
 
 def scaling_2d(sx, sy):
+    """生成 2D 缩放矩阵"""
     return [[sx, 0], [0, sy]]
 
 def shearing_2d(kx, ky):
+    """生成 2D 剪切矩阵（kx 为 x 方向剪切系数，ky 为 y 方向剪切系数）"""
     return [[1, kx], [ky, 1]]
 
 def reflection_x():
+    """关于 x 轴（水平轴）进行镜像反射的矩阵"""
     return [[1, 0], [0, -1]]
 
 def reflection_y():
+    """关于 y 轴（垂直轴）进行镜像反射的矩阵"""
     return [[-1, 0], [0, 1]]
 
 def mat_vec_mul(matrix, vector):
+    """计算矩阵与向量的乘法（矩阵变换向量）"""
     return [
         sum(matrix[i][j] * vector[j] for j in range(len(vector)))
         for i in range(len(matrix))
     ]
 
 def mat_mul(a, b):
+    """计算两个矩阵的乘法（复合变换）"""
     rows_a, cols_b = len(a), len(b[0])
     cols_a = len(a[0])
     return [
@@ -225,18 +237,24 @@ def mat_mul(a, b):
         for i in range(rows_a)
     ]
 
+# 定义初始测试点 [1.0, 0.0]
 point = [1.0, 0.0]
+# 旋转角度（45度，即 pi/4 弧度）
 angle = math.pi / 4
 
+# 1. 旋转变换测试
 rotated = mat_vec_mul(rotation_2d(angle), point)
 print(f"Rotate (1,0) by 45 deg: ({rotated[0]:.4f}, {rotated[1]:.4f})")
 
+# 2. 缩放变换测试
 scaled = mat_vec_mul(scaling_2d(2, 3), [1.0, 1.0])
 print(f"Scale (1,1) by (2,3): ({scaled[0]:.1f}, {scaled[1]:.1f})")
 
+# 3. 剪切变换测试
 sheared = mat_vec_mul(shearing_2d(1, 0), [1.0, 1.0])
 print(f"Shear (1,1) kx=1: ({sheared[0]:.1f}, {sheared[1]:.1f})")
 
+# 4. 反射变换测试
 reflected = mat_vec_mul(reflection_y(), [2.0, 1.0])
 print(f"Reflect (2,1) across y: ({reflected[0]:.1f}, {reflected[1]:.1f})")
 ```
