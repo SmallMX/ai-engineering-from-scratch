@@ -96,6 +96,23 @@
       if (navLinks[4]) navLinks[4].textContent = currentLang === 'zh-CN' ? '关于' : 'About';
     }
 
+    var manualTitle = document.querySelector('.manual-title');
+    if (manualTitle) {
+      manualTitle.innerHTML = currentLang === 'zh-CN' ? '从零开始<br>手写 AI' : 'AI Engineering<br>from Scratch';
+    }
+
+    var ctaButtons = document.querySelectorAll('.masthead-cta > a');
+    if (ctaButtons.length >= 2) {
+      var starSpan = ctaButtons[0].querySelector('span');
+      if (starSpan) {
+        starSpan.textContent = currentLang === 'zh-CN' ? '在 GitHub 上 Star' : 'Star on GitHub';
+      }
+      var followSpan = ctaButtons[1].querySelector('span');
+      if (followSpan) {
+        followSpan.textContent = currentLang === 'zh-CN' ? '关注 @rohitg00' : 'Follow @rohitg00';
+      }
+    }
+
     var tagline = document.querySelector('.manual-tagline');
     if (tagline) tagline.textContent = t.tagline;
     var attr = document.querySelector('.manual-attribution');
@@ -138,6 +155,20 @@
     if (colophonEyebrow) colophonEyebrow.textContent = t.colophonTitle;
     var colophonP = document.querySelector('.colophon-grid p');
     if (colophonP) colophonP.textContent = t.colophonText;
+
+    var footerP = document.querySelector('.site-footer p');
+    if (footerP) {
+      footerP.textContent = currentLang === 'zh-CN' ? '© 2026 · 开源 · 永久免费' : '© 2026 · open source · free forever';
+    }
+
+    var footerLinks = document.querySelectorAll('.footer-links > a');
+    if (footerLinks.length >= 5) {
+      footerLinks[0].textContent = 'GitHub';
+      footerLinks[1].textContent = currentLang === 'zh-CN' ? '关于' : 'About';
+      footerLinks[2].textContent = currentLang === 'zh-CN' ? '目录' : 'Catalog';
+      footerLinks[3].textContent = currentLang === 'zh-CN' ? '术语表' : 'Glossary';
+      footerLinks[4].textContent = currentLang === 'zh-CN' ? '反馈' : 'Report';
+    }
 
     var note = document.querySelector('.modal-footer-note');
     if (note) note.textContent = t.progressSaved;

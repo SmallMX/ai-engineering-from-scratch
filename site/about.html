@@ -254,6 +254,19 @@
               '</ul>';
           }
         }
+
+        var footerP = document.querySelector('.site-footer p');
+        if (footerP) {
+          footerP.textContent = isZh ? 'AI 从零开始 · 开源 · 永久免费。' : 'AI Engineering from Scratch · open source · free forever.';
+        }
+        var footerLinks = document.querySelectorAll('.footer-links > a');
+        if (footerLinks.length >= 5) {
+          footerLinks[0].textContent = isZh ? '首页' : 'Home';
+          footerLinks[1].textContent = 'GitHub';
+          footerLinks[2].textContent = isZh ? '目录' : 'Catalog';
+          footerLinks[3].textContent = isZh ? '术语表' : 'Glossary';
+          footerLinks[4].textContent = isZh ? '反馈 / 建议' : 'Report / Suggest';
+        }
       }
 
       document.addEventListener('DOMContentLoaded', function () {
