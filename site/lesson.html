@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260525a">
+  <link rel="stylesheet" href="style.css?v=20260624a">
   <style>
     .scroll-progress {
       position: fixed;
@@ -1560,6 +1560,25 @@
       .timeline-item { min-width: 70px; }
       .timeline-line { width: 20px; }
     }
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--rule-soft);
+      height: 36px;
+      padding: 0 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--ink);
+      transition: border-color 0.15s, color 0.15s;
+      margin-left: 8px;
+    }
+    .lang-toggle:hover {
+      border-color: var(--blueprint);
+      color: var(--blueprint);
+    }
   </style>
 </head>
 <body>
@@ -1578,7 +1597,7 @@
         <a href="catalog.html">Catalog</a>
         <a href="prereqs.html">Roadmap</a>
         <a href="glossary.html">Glossary</a>
-        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
+        <a href="https://github.com/SmallMX/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
           <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
@@ -1595,6 +1614,9 @@
       </button>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
         <span class="theme-icon" id="themeIcon">N</span>
+      </button>
+      <button class="lang-toggle" id="langToggle" aria-label="Toggle language" type="button">
+        EN
       </button>
     </div>
   </header>
@@ -1626,10 +1648,10 @@
     <aside class="toc-sidebar" id="tocSidebar" aria-hidden="true"></aside>
   </div>
 
-  <script src="data.js?v=20260525a"></script>
-  <script src="progress.js?v=20260525a"></script>
-  <script src="header.js?v=20260525a" defer></script>
-  <script src="cmdpalette.js?v=20260525a" defer></script>
+  <script src="data.js?v=20260624a"></script>
+  <script src="progress.js?v=20260624a"></script>
+  <script src="header.js?v=20260624a" defer></script>
+  <script src="cmdpalette.js?v=20260624a" defer></script>
   <script src="figures.js?v=20260607a"></script>
   <script src="lesson-figures.js?v=20260607a"></script>
   <script type="module">
@@ -1653,8 +1675,23 @@
   </script>
   <script>
     (function () {
+      var storage = {
+        getItem: function (key) {
+          try {
+            return localStorage.getItem(key);
+          } catch (e) {
+            return null;
+          }
+        },
+        setItem: function (key, value) {
+          try {
+            localStorage.setItem(key, value);
+          } catch (e) {}
+        }
+      };
+
       var root = document.documentElement;
-      var stored = localStorage.getItem('theme');
+      var stored = storage.getItem('theme');
       if (stored) {
         root.setAttribute('data-theme', stored);
       } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -1677,9 +1714,24 @@
           var current = root.getAttribute('data-theme');
           var next = current === 'light' ? 'dark' : 'light';
           root.setAttribute('data-theme', next);
-          localStorage.setItem('theme', next);
+          storage.setItem('theme', next);
           updateThemeIcon();
           updateMermaidThemeAndRerender();
+        });
+      }
+
+      var currentLang = storage.getItem('aifs-lang') || 'zh-CN';
+      var langBtn = document.getElementById('langToggle');
+      if (langBtn) {
+        var updateLangButton = function() {
+          langBtn.textContent = currentLang === 'zh-CN' ? 'ZH-CN' : 'EN';
+        };
+        updateLangButton();
+        langBtn.addEventListener('click', function () {
+          currentLang = currentLang === 'en' ? 'zh-CN' : 'en';
+          storage.setItem('aifs-lang', currentLang);
+          updateLangButton();
+          fetchLesson(lessonPath);
         });
       }
 
@@ -1838,14 +1890,51 @@
       }
 
       function fetchLesson(path) {
-        var rawUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/docs/en.md';
-        var quizUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/' + path + '/quiz.json';
+        var isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        var currentLang = storage.getItem('aifs-lang') || 'zh-CN';
+        
+        var mdFile = currentLang === 'zh-CN' ? 'zh-CN.md' : 'en.md';
+        var quizFile = currentLang === 'zh-CN' ? 'quiz.zh-CN.json' : 'quiz.json';
 
-        fetch(rawUrl)
-          .then(function (res) {
-            if (!res.ok) throw new Error('fetch-failed');
-            return res.text();
-          })
+        var rawUrlLocal = '../' + path + '/docs/' + mdFile;
+        var quizUrlLocal = '../' + path + '/' + quizFile;
+
+        var rawUrlRemote = 'https://raw.githubusercontent.com/SmallMX/ai-engineering-from-scratch/main/' + path + '/docs/' + mdFile;
+        var quizUrlRemote = 'https://raw.githubusercontent.com/SmallMX/ai-engineering-from-scratch/main/' + path + '/' + quizFile;
+
+        var mdUrl = isLocal ? rawUrlLocal : rawUrlRemote;
+        var quizUrl = isLocal ? quizUrlLocal : quizUrlRemote;
+
+        function loadMD(url, fallbackUrl) {
+          return fetch(url)
+            .then(function (res) {
+              if (!res.ok) throw new Error('not-ok');
+              return res.text();
+            })
+            .catch(function (err) {
+              if (fallbackUrl) {
+                console.log('Local fetch failed, falling back to remote GitHub:', fallbackUrl);
+                return loadMD(fallbackUrl, null);
+              }
+              throw err;
+            });
+        }
+
+        function loadQuiz(url, fallbackUrl) {
+          return fetch(url)
+            .then(function (res) {
+              if (!res.ok) throw new Error('not-ok');
+              return res.json();
+            })
+            .catch(function (err) {
+              if (fallbackUrl) {
+                return loadQuiz(fallbackUrl, null);
+              }
+              return null;
+            });
+        }
+
+        loadMD(mdUrl, isLocal ? rawUrlRemote : null)
           .then(function (md) {
             try {
               renderLesson(md);
@@ -1854,9 +1943,8 @@
               showError('Render error', 'Loaded the lesson markdown but failed to render it. Details in the browser console.');
               return;
             }
-            fetch(quizUrl)
-              .then(function (res) { return res.ok ? res.json() : null; })
-              .catch(function () { return null; })
+            
+            loadQuiz(quizUrl, isLocal ? quizUrlRemote : null)
               .then(function (data) {
                 if (!data) return;
                 try { renderQuiz(data); }
@@ -1864,7 +1952,7 @@
               });
           })
           .catch(function () {
-            showError('Lesson not found', 'Could not fetch the lesson at <code>' + escapeHtml(path) + '</code>. It may not have been written yet.');
+            showError('Lesson not found', 'Could not fetch the lesson at <code>' + escapeHtml(path) + '</code> for language ' + currentLang + '. It may not have been translated or written yet.');
           });
       }
 
@@ -2992,7 +3080,7 @@
           cb(null, ghApiCache[apiPath]);
           return;
         }
-        fetch('https://api.github.com/repos/rohitg00/ai-engineering-from-scratch/contents/' + apiPath, {
+        fetch('https://api.github.com/repos/SmallMX/ai-engineering-from-scratch/contents/' + apiPath, {
           headers: { 'Accept': 'application/vnd.github.v3+json' }
         }).then(function (res) {
           if (!res.ok) throw new Error(res.status);
@@ -3050,7 +3138,7 @@
         ghApiFetch(lessonPath + '/outputs', function (err, data) {
           var el = document.getElementById('outputsContent');
           if (err || !data || !Array.isArray(data) || data.length === 0) {
-            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">View lesson on GitHub</a></div>';
+            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/SmallMX/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">View lesson on GitHub</a></div>';
             return;
           }
 
@@ -3065,7 +3153,7 @@
               installHint = 'Paste into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads prompts';
             } else if (type === 'skill') {
               var skillName = file.name.replace(/\.md$/, '').replace(/^skill-/, '');
-              installHint = 'npx skills add rohitg00/ai-engineering-from-scratch --skill ' + skillName;
+              installHint = 'npx skills add SmallMX/ai-engineering-from-scratch --skill ' + skillName;
             }
 
             html += '<div class="output-card">';
@@ -3108,7 +3196,7 @@
         ghApiFetch(lessonPath + '/code', function (err, data) {
           var el = document.getElementById('codeContent');
           if (err || !data || !Array.isArray(data) || data.length === 0) {
-            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">View lesson on GitHub</a></div>';
+            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/SmallMX/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">View lesson on GitHub</a></div>';
             return;
           }
 

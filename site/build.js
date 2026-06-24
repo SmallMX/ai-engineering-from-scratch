@@ -17,7 +17,7 @@ const ROADMAP_PATH = path.join(REPO_ROOT, 'ROADMAP.md');
 const GLOSSARY_PATH = path.join(REPO_ROOT, 'glossary', 'terms.md');
 const OUTPUT_PATH = path.join(__dirname, 'data.js');
 
-const GITHUB_BASE = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/';
+const GITHUB_BASE = 'https://github.com/SmallMX/ai-engineering-from-scratch/tree/main/';
 const SITE_ORIGIN = 'https://aiengineeringfromscratch.com';
 
 // GITHUB_BASE lesson url -> site path "phases/<phase>/<lesson>"
@@ -230,6 +230,109 @@ function parseReadme(content, roadmapStatuses) {
   return phases;
 }
 
+// Parse README.zh-CN.md and build the localized phases list
+function parseReadmeZh(content, englishPhases) {
+  // 深度克隆以避免改变原始的英文阶段数据
+  const phasesZh = JSON.parse(JSON.stringify(englishPhases));
+  const lines = content.split(/\r?\n/);
+  let currentPhase = null;
+
+  const PHASE_DESCS_ZH = {
+    0: "为后续的所有内容做好环境准备。",
+    1: "现代 AI 的语言。向量空间、微积分、概率与信息论。",
+    2: "深度学习之前。回归、决策树、SVM、模型评估与流水线。",
+    3: "从感知机到 JAX。反向传播、优化器、权重初始化与稳定性。",
+    4: "从像素到世界模型。卷积、YOLO、扩散模型、Transformer 与 NeRF。",
+    5: "从 Token 到结构化 RAG。BPE、Word2Vec、注意力机制、翻译与评估。",
+    6: "从波形到语义编解码器。声谱图、Whisper、TTS 与 Omni 统一模型。",
+    7: "吞噬世界的架构。自注意力机制、MoE、KV 缓存与扩展法则。",
+    8: "从噪声中创造。VAE、GAN、DDPM、流匹配与校正流。",
+    9: "通过行动学习。Q-learning、DQN、PPO、RLHF、AlphaZero 与博弈论。",
+    10: "从空文件到预训练权重。分词器、SFT、DPO 与 FSDP。",
+    11: "在最前沿模型之上构建。提示词、RAG、LoRA、MCP 与 LangGraph。",
+    12: "超越文本。CLIP、LLaVA、早期融合、具身 VLA 与文档 RAG。",
+    13: "赋予智能体双手。工具调用、JSON Schema、MCP 协议、安全与路由。",
+    14: "观察、思考、行动。ReWOO、记忆库、图、OSWorld 与工作台。",
+    15: "长程与自主。STaR、自我改进、浏览器智能体与 RSP 安全。",
+    16: "辩论、共识与群体。转交、投票、心智理论与共识协议。",
+    17: "服务数百万请求。vLLM、Blackwell、指标、FinOps 与 SRE。",
+    18: "潜伏智能体与双重用途。谄媚、越狱、水印与治理。",
+    19: "从零构建一个完整的端到端系统，证明你已彻底掌握该概念。"
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+
+    // Match "### Phase 0：环境搭建与工具" or "### Phase 0: 环境搭建与工具"
+    const phaseHeaderMatch = line.match(/^###\s+Phase\s+(\d+)\s*[：:—\-]\s*(.+)/i);
+    if (phaseHeaderMatch) {
+      const id = parseInt(phaseHeaderMatch[1], 10);
+      const name = phaseHeaderMatch[2].trim();
+      
+      currentPhase = phasesZh.find(p => p.id === id);
+      if (currentPhase) {
+        currentPhase.name = name;
+        if (PHASE_DESCS_ZH[id] !== undefined) {
+          currentPhase.desc = PHASE_DESCS_ZH[id];
+        } else {
+          // Look for the description on the next line (blockquote)
+          let desc = '';
+          for (let j = i + 1; j < Math.min(i + 5, lines.length); j++) {
+            const l = lines[j].trim();
+            if (l.startsWith('>')) {
+              desc = l.replace(/^>\s*/, '').trim();
+              break;
+            }
+          }
+          if (desc) {
+            currentPhase.desc = desc;
+          }
+        }
+      }
+      continue;
+    }
+
+    // Parse lesson rows
+    if (currentPhase && line.startsWith('|')) {
+      const cols = line.split('|').map(c => c.trim()).filter(c => c.length > 0);
+      if (cols.length >= 2) {
+        const idStr = cols[0];
+        const lessonNum = parseInt(idStr, 10);
+        if (!isNaN(lessonNum)) {
+          const lessonCol = cols[1];
+          const linkMatch = lessonCol.match(/\[(.+?)\]\((.+?)\)/);
+          const lessonName = linkMatch ? linkMatch[1].trim() : lessonCol.trim();
+
+          // Try path matching first for absolute precision
+          let matched = false;
+          if (linkMatch && currentPhase.lessons) {
+            const relativePath = linkMatch[2];
+            const cleanPath = relativePath.replace(/\/docs\/zh-CN\.md$/, '').replace(/\/$/, '').trim().toLowerCase();
+
+            for (const lesson of currentPhase.lessons) {
+              if (lesson.url) {
+                const lessonRelPath = lesson.url.replace(GITHUB_BASE, '').replace(/\/$/, '').trim().toLowerCase();
+                if (lessonRelPath === cleanPath) {
+                  lesson.name = lessonName;
+                  matched = true;
+                  break;
+                }
+              }
+            }
+          }
+
+          // Fallback to index matching
+          if (!matched && currentPhase.lessons && currentPhase.lessons[lessonNum - 1]) {
+            currentPhase.lessons[lessonNum - 1].name = lessonName;
+          }
+        }
+      }
+    }
+  }
+
+  return phasesZh;
+}
+
 // ─── Extract lesson summary + keywords from docs/en.md ───────────────
 /**
  * Single-pass read of a lesson's docs/en.md.
@@ -244,8 +347,9 @@ function parseReadme(content, roadmapStatuses) {
  * Both fields are empty strings when the file is absent or has no
  * matching content — expected for planned lessons with no docs yet.
  */
-function extractLessonMeta(relPath) {
-  const docPath = path.join(REPO_ROOT, relPath, 'docs', 'en.md');
+function extractLessonMeta(relPath, lang = 'en') {
+  const file = lang === 'zh-CN' ? 'zh-CN.md' : 'en.md';
+  const docPath = path.join(REPO_ROOT, relPath, 'docs', file);
   const result = { summary: '', keywords: '' };
   try {
     const lines = fs.readFileSync(docPath, 'utf8').split(/\r?\n/);
@@ -304,6 +408,67 @@ function parseGlossary(content) {
   // Push the last term
   if (currentTerm && currentTerm.says && currentTerm.means) {
     terms.push(currentTerm);
+  }
+
+  return terms;
+}
+
+// Parse glossary/terms.zh-CN.md
+function parseGlossaryZh(content, englishTerms) {
+  const terms = [];
+  let currentTerm = null;
+
+  for (const line of content.split(/\r?\n/)) {
+    const termMatch = line.match(/^###\s+(.+)/);
+    if (termMatch) {
+      if (currentTerm && currentTerm.says && currentTerm.means) {
+        terms.push(currentTerm);
+      }
+      currentTerm = { term: termMatch[1].trim(), translation: '', says: '', means: '' };
+      continue;
+    }
+
+    if (!currentTerm) continue;
+
+    const transMatch = line.match(/^\-\s*\*\*中文译名：\*\*\s*(.+)/);
+    if (transMatch) {
+      currentTerm.translation = transMatch[1].trim();
+      continue;
+    }
+
+    const saysMatch = line.match(/^\-\s*\*\*常见说法：\*\*\s*"?(.+?)"?\s*$/);
+    if (saysMatch) {
+      currentTerm.says = saysMatch[1].replace(/^"/, '').replace(/"$/, '').trim();
+      continue;
+    }
+
+    const meansMatch = line.match(/^\-\s*\*\*实际含义：\*\*\s*(.+)/);
+    if (meansMatch) {
+      currentTerm.means = meansMatch[1].trim();
+      continue;
+    }
+  }
+
+  if (currentTerm && currentTerm.says && currentTerm.means) {
+    terms.push(currentTerm);
+  }
+
+  if (englishTerms) {
+    const merged = [];
+    for (const eng of englishTerms) {
+      const zh = terms.find(t => t.term.toLowerCase() === eng.term.toLowerCase());
+      if (zh) {
+        merged.push(zh);
+      } else {
+        merged.push({
+          term: eng.term,
+          translation: '',
+          says: eng.says,
+          means: eng.means
+        });
+      }
+    }
+    return merged;
   }
 
   return terms;
@@ -411,8 +576,26 @@ function build() {
   console.log('🔍 Parsing README.md...');
   const phases = parseReadme(readme, roadmapStatuses);
 
+  console.log('🔍 Parsing README.zh-CN.md...');
+  let phasesZh = [];
+  try {
+    const readmeZh = fs.readFileSync(path.join(REPO_ROOT, 'README.zh-CN.md'), 'utf8');
+    phasesZh = parseReadmeZh(readmeZh, phases);
+  } catch (err) {
+    console.warn('⚠️  Could not read README.zh-CN.md:', err.message);
+  }
+
   console.log('🔍 Parsing glossary/terms.md...');
   const glossaryTerms = parseGlossary(glossary);
+
+  console.log('🔍 Parsing glossary/terms.zh-CN.md...');
+  let glossaryTermsZh = [];
+  try {
+    const glossaryZh = fs.readFileSync(path.join(REPO_ROOT, 'glossary', 'terms.zh-CN.md'), 'utf8');
+    glossaryTermsZh = parseGlossaryZh(glossaryZh, glossaryTerms);
+  } catch (err) {
+    console.warn('⚠️  Could not read glossary/terms.zh-CN.md:', err.message);
+  }
 
   console.log('🔍 Discovering outputs + Phase 14 missions...');
   const artifacts = discoverArtifacts();
@@ -423,9 +606,22 @@ function build() {
     for (const lesson of phase.lessons) {
       if (lesson.url) {
         const relPath = lesson.url.replace(GITHUB_BASE, '').replace(/\/+$/, '');
-        const meta = extractLessonMeta(relPath);
+        const meta = extractLessonMeta(relPath, 'en');
         if (meta.summary)  { lesson.summary  = meta.summary;  summarized++;   }
         if (meta.keywords) { lesson.keywords = meta.keywords; withKeywords++; }
+      }
+    }
+  }
+
+  console.log('📚 Extracting lesson summaries + keywords from docs/zh-CN.md...');
+  for (const phase of phasesZh) {
+    for (const lesson of phase.lessons) {
+      if (lesson.url) {
+        const relPath = lesson.url.replace(GITHUB_BASE, '').replace(/\/+$/, '');
+        const metaZh = extractLessonMeta(relPath, 'zh-CN');
+        const metaEn = extractLessonMeta(relPath, 'en');
+        lesson.summary = metaZh.summary || metaEn.summary;
+        lesson.keywords = metaZh.keywords || metaEn.keywords;
       }
     }
   }
@@ -452,7 +648,11 @@ function build() {
 
 const PHASES = ${JSON.stringify(phases, null, 2)};
 
+const PHASES_ZH = ${JSON.stringify(phasesZh, null, 2)};
+
 const GLOSSARY = ${JSON.stringify(glossaryTerms, null, 2)};
+
+const GLOSSARY_ZH = ${JSON.stringify(glossaryTermsZh, null, 2)};
 
 const ARTIFACTS = ${JSON.stringify(artifacts, null, 2)};
 `;
@@ -498,7 +698,7 @@ function writeLlms(phases, glossaryCount, artifactCount) {
   let out = `# AI Engineering from Scratch\n\n`;
   out += `> A free, open-source curriculum that builds every core AI algorithm by hand — ${total} lessons across ${phases.length} phases, from linear algebra to autonomous agents. Python, TypeScript, Rust, Julia.\n\n`;
   out += `Canonical site: ${SITE_ORIGIN}\n`;
-  out += `Source: https://github.com/rohitg00/ai-engineering-from-scratch\n`;
+  out += `Source: https://github.com/SmallMX/ai-engineering-from-scratch\n`;
   out += `Glossary terms: ${glossaryCount} · Reusable outputs (prompts/skills/agents): ${artifactCount}\n\n`;
   for (const phase of phases) {
     out += `## Phase ${phase.id}: ${phase.name}\n`;

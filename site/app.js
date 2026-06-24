@@ -1,6 +1,21 @@
 (function () {
+  var storage = {
+    getItem: function (key) {
+      try {
+        return localStorage.getItem(key);
+      } catch (e) {
+        return null;
+      }
+    },
+    setItem: function (key, value) {
+      try {
+        localStorage.setItem(key, value);
+      } catch (e) {}
+    }
+  };
+
   var root = document.documentElement;
-  var stored = localStorage.getItem('theme');
+  var stored = storage.getItem('theme');
   if (stored) {
     root.setAttribute('data-theme', stored);
   } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -10,8 +25,129 @@
   }
   updateThemeIcon();
 
+  var currentLang = storage.getItem('aifs-lang') || 'zh-CN';
+
+  var i18n = {
+    en: {
+      tagline: "503 lessons. 20 phases. Every algorithm built from raw math before a single framework gets imported.",
+      attribution: "Maintained by Rohit Ghumare and contributors. Run on your own machine.",
+      finishedLessons: "Finished Lessons",
+      phases: "Phases",
+      languages: "Languages",
+      glossaryTerms: "Glossary Terms",
+      curriculum: "Curriculum · 20 phases · 503 lessons",
+      tapPhase: "Tap a phase to expand its lessons. Each one ships when its math, code, and test are all written.",
+      legendComplete: "Complete",
+      legendInProgress: "In progress",
+      legendPlanned: "Planned",
+      colophonTitle: "Colophon",
+      colophonText: "The entire curriculum is on GitHub. Clone it, fork it, learn at your own pace. No paywall, no signup. Every lesson has runnable code in Python, TypeScript, Rust, or Julia, depending on what fits the concept best.",
+      howThisWorks: "How this works",
+      preface1: "Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't explain its loss curve. You hook a function to an agent but can't say what attention does inside the model that's calling it.",
+      preface2: "This curriculum is the spine. 20 phases, 503 lessons, four languages: Python, TypeScript, Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time PyTorch shows up, you already know what it's doing under the hood.",
+      preface3: "Each lesson runs the same loop: read the problem, derive the math, write the code, run the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding. Free, open source, and built to run on your own laptop.",
+      currentProgress: "Current Progress",
+      progressSaved: "Progress saved in browser only",
+      resetProgress: "Reset progress",
+      review: "Review",
+      read: "Read",
+      completed: "completed"
+    },
+    'zh-CN': {
+      tagline: "503 课时，20 个阶段。在导入任何框架之前，全部由手写数学公式和代码构建每一个核心 AI 算法。",
+      attribution: "由 Rohit Ghumare 与众多贡献者共同维护。在您自己的本地机器上运行。",
+      finishedLessons: "已完成课时",
+      phases: "完成阶段",
+      languages: "使用语言",
+      glossaryTerms: "术语表词条",
+      curriculum: "课程大纲 · 20 个阶段 · 503 课时",
+      tapPhase: "点击阶段卡片展开课时列表。每个课时在其数学原理、代码实现和测试用例全部完成后即可使用。",
+      legendComplete: "已完成",
+      legendInProgress: "进行中",
+      legendPlanned: "已计划",
+      colophonTitle: "关于项目",
+      colophonText: "完整课程均在 GitHub 上开源。克隆、分叉并以您自己的节奏学习。无付费墙，无需注册。每一课都包含 Python、TypeScript、Rust 或 Julia 的可运行代码，以最契合概念的语言实现。",
+      howThisWorks: "教学理念",
+      preface1: "大多数 AI 教程都是零散的。这里一篇论文，那里一篇微调文章，或者某个炫酷的智能体演示。这些碎片很难拼凑完整。你开发了一个聊天机器人，却无法解释它的损失曲线。你给智能体挂载了一个函数，却说不清楚调用它的模型内部，注意力机制到底在干什么。",
+      preface2: "而本课程则是主干。20 个阶段，503 个课时，四种语言：Python、TypeScript、Rust、Julia。从最基础的线性代数，到最前沿的自主多智能体协作。每个算法都先从手写数学推导开始。反向传播、分词器、注意力机制、智能体循环。在 PyTorch 登场前，你已经完全看透了它底层的运作方式。",
+      preface3: "每个课时都遵循同一个循环：阅读问题、推导数学、手写代码、运行测试、保留产出。没有五分钟的快餐视频，没有一键复制部署，没有保姆式教学。完全免费、开源，为在您自己的笔记本上运行而生。",
+      currentProgress: "当前进度",
+      progressSaved: "进度仅保存在当前浏览器",
+      resetProgress: "重置所有进度",
+      review: "复习",
+      read: "阅读",
+      completed: "已完成"
+    }
+  };
+
+  function getPhases() {
+    return (currentLang === 'zh-CN' && typeof PHASES_ZH !== 'undefined') ? PHASES_ZH : PHASES;
+  }
+
+  function updateStaticTranslations() {
+    var t = i18n[currentLang] || i18n.en;
+    
+    var navLinks = document.querySelectorAll('.header-nav > a');
+    if (navLinks.length >= 4) {
+      navLinks[0].textContent = currentLang === 'zh-CN' ? '课程大纲' : 'Contents';
+      navLinks[1].textContent = currentLang === 'zh-CN' ? '课程目录' : 'Catalog';
+      navLinks[2].textContent = currentLang === 'zh-CN' ? '学习路径' : 'Roadmap';
+      navLinks[3].textContent = currentLang === 'zh-CN' ? '术语表' : 'Glossary';
+      if (navLinks[4]) navLinks[4].textContent = currentLang === 'zh-CN' ? '关于' : 'About';
+    }
+
+    var tagline = document.querySelector('.manual-tagline');
+    if (tagline) tagline.textContent = t.tagline;
+    var attr = document.querySelector('.manual-attribution');
+    if (attr) attr.textContent = t.attribution;
+    
+    var prefaceEyebrow = document.querySelector('.preface-eyebrow');
+    if (prefaceEyebrow) prefaceEyebrow.textContent = t.howThisWorks;
+    var prefacePs = document.querySelectorAll('.preface-body p');
+    if (prefacePs.length >= 3) {
+      prefacePs[0].textContent = t.preface1;
+      prefacePs[1].textContent = t.preface2;
+      prefacePs[2].textContent = t.preface3;
+    }
+
+    var statRows = document.querySelectorAll('.stat-row');
+    if (statRows.length >= 4) {
+      statRows[0].querySelector('.stat-row-label').textContent = t.finishedLessons;
+      statRows[1].querySelector('.stat-row-label').textContent = t.phases;
+      statRows[2].querySelector('.stat-row-label').textContent = t.languages;
+      statRows[3].querySelector('.stat-row-label').textContent = t.glossaryTerms;
+    }
+    var statBlockTitle = document.querySelector('.stat-block-title');
+    if (statBlockTitle) statBlockTitle.textContent = t.currentProgress;
+
+    var tocTitle = document.querySelector('.toc-title');
+    if (tocTitle) {
+      var totalL = getPhases().reduce(function (acc, p) { return acc + p.lessons.length; }, 0);
+      tocTitle.textContent = currentLang === 'zh-CN' ? ('课程大纲 · 20 个阶段 · ' + totalL + ' 课时') : t.curriculum;
+    }
+    var tocSubtitle = document.querySelector('.toc-subtitle');
+    if (tocSubtitle) tocSubtitle.textContent = t.tapPhase;
+    var legendItems = document.querySelectorAll('.legend-item');
+    if (legendItems.length >= 3) {
+      legendItems[0].childNodes[1].nodeValue = ' ' + t.legendComplete;
+      legendItems[1].childNodes[1].nodeValue = ' ' + t.legendInProgress;
+      legendItems[2].childNodes[1].nodeValue = ' ' + t.legendPlanned;
+    }
+
+    var colophonEyebrow = document.querySelector('.colophon-eyebrow');
+    if (colophonEyebrow) colophonEyebrow.textContent = t.colophonTitle;
+    var colophonP = document.querySelector('.colophon-grid p');
+    if (colophonP) colophonP.textContent = t.colophonText;
+
+    var note = document.querySelector('.modal-footer-note');
+    if (note) note.textContent = t.progressSaved;
+    var reset = document.getElementById('modalReset');
+    if (reset) reset.textContent = t.resetProgress;
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     initThemeToggle();
+    initLangToggle();
     populateStats();
     renderPhases();
     initStaggerIndex();
@@ -36,18 +172,40 @@
       var current = root.getAttribute('data-theme');
       var next = current === 'light' ? 'dark' : 'light';
       root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
+      storage.setItem('theme', next);
       updateThemeIcon();
     });
     updateThemeIcon();
   }
 
+  function initLangToggle() {
+    var langBtn = document.getElementById('langToggle');
+    if (!langBtn) return;
+    
+    var updateLangButton = function() {
+      langBtn.textContent = currentLang === 'zh-CN' ? 'ZH-CN' : 'EN';
+    };
+    
+    updateLangButton();
+    updateStaticTranslations();
+
+    langBtn.addEventListener('click', function () {
+      currentLang = currentLang === 'en' ? 'zh-CN' : 'en';
+      storage.setItem('aifs-lang', currentLang);
+      updateLangButton();
+      updateStaticTranslations();
+      populateStats();
+      renderPhases();
+    });
+  }
+
   function computeStats() {
+    var phasesList = getPhases();
     var totalLessons = 0;
     var completeLessons = 0;
     var hasProgress = !!window.AIFSProgress;
-    for (var i = 0; i < PHASES.length; i++) {
-      var lessons = PHASES[i].lessons;
+    for (var i = 0; i < phasesList.length; i++) {
+      var lessons = phasesList[i].lessons;
       totalLessons += lessons.length;
       for (var j = 0; j < lessons.length; j++) {
         var staticDone = lessons[j].status === 'complete';
@@ -60,12 +218,12 @@
       }
     }
     var completePhases = 0;
-    for (var p = 0; p < PHASES.length; p++) {
-      if (PHASES[p].status === 'complete') completePhases++;
+    for (var p = 0; p < phasesList.length; p++) {
+      if (phasesList[p].status === 'complete') completePhases++;
     }
     return {
       lessons: totalLessons,
-      phases: PHASES.length,
+      phases: phasesList.length,
       complete: completeLessons,
       completePhases: completePhases
     };
@@ -108,8 +266,9 @@
     if (!grid) return;
     var hasProgress = !!window.AIFSProgress;
     var html = '';
-    for (var i = 0; i < PHASES.length; i++) {
-      var p = PHASES[i];
+    var phasesList = getPhases();
+    for (var i = 0; i < phasesList.length; i++) {
+      var p = phasesList[i];
       var total = p.lessons.length;
       var done = 0;
       for (var j = 0; j < p.lessons.length; j++) {
@@ -133,17 +292,8 @@
     }
     grid.innerHTML = html;
 
-    // Re-apply per-row stagger delays for the freshly created rows.
     initStaggerIndex();
 
-    // If the reveal observer has already initialised (body.js-anim is set),
-    // the IntersectionObserver is only watching the *original* rows it was
-    // given at startup. Re-rendering via innerHTML replaces those nodes with
-    // brand-new elements that are NOT being observed, so they would otherwise
-    // stay hidden forever under `body.js-anim .toc-row { opacity: 0 }`.
-    //
-    // Since the user has already seen the initial reveal animation, just mark
-    // the rebuilt rows as visible immediately (no second fade-in).
     if (document.body.classList.contains('js-anim')) {
       var newRows = grid.querySelectorAll('.toc-row');
       for (var r = 0; r < newRows.length; r++) {
@@ -205,7 +355,8 @@
   var currentPhaseIdx = -1;
 
   function openModal(idx) {
-    var p = PHASES[idx];
+    var phasesList = getPhases();
+    var p = phasesList[idx];
     if (!p) return;
     currentPhaseIdx = idx;
 
@@ -249,7 +400,8 @@
 
       var actionHtml = '';
       if ((l.status === 'complete' || userComplete) && lessonPath) {
-        actionHtml = '<a href="lesson.html?path=' + lessonPath + '" class="modal-lesson-read">' + (userComplete ? 'Review' : 'Read') + '</a>';
+        var actionText = userComplete ? (currentLang === 'zh-CN' ? '复习' : 'Review') : (currentLang === 'zh-CN' ? '阅读' : 'Read');
+        actionHtml = '<a href="lesson.html?path=' + lessonPath + '" class="modal-lesson-read">' + actionText + '</a>';
       }
       var toggleHtml = '';
       if (hasProgress && lessonPath) {
@@ -283,7 +435,8 @@
       var pct = Math.round((userDone / p.lessons.length) * 100);
       if (progEl) {
         progEl.style.display = '';
-        progEl.innerHTML = '<span class="modal-progress-count">' + userDone + ' / ' + p.lessons.length + '</span> <span class="modal-progress-label">completed</span> <span class="modal-progress-pct">' + pct + '%</span>';
+        var completedText = currentLang === 'zh-CN' ? '已完成' : 'completed';
+        progEl.innerHTML = '<span class="modal-progress-count">' + userDone + ' / ' + p.lessons.length + '</span> <span class="modal-progress-label">' + completedText + '</span> <span class="modal-progress-pct">' + pct + '%</span>';
       }
       if (barEl && barFill) {
         barEl.style.display = '';
@@ -297,8 +450,9 @@
 
   if (window.AIFSProgress) {
     window.AIFSProgress.onChange(function () {
-      if (currentPhaseIdx >= 0 && PHASES[currentPhaseIdx]) {
-        renderModalLessons(PHASES[currentPhaseIdx]);
+      var phasesList = getPhases();
+      if (currentPhaseIdx >= 0 && phasesList[currentPhaseIdx]) {
+        renderModalLessons(phasesList[currentPhaseIdx]);
       }
       populateStats();
       renderPhases();
@@ -349,32 +503,28 @@
       return;
     }
 
-    document.body.classList.add('js-anim');
-
-    var els = document.querySelectorAll('.reveal, .fade-in, .stat-row-bar, .ascii-rule, .toc-row');
-    if (!els.length) return;
     var observer = new IntersectionObserver(function (entries) {
-      for (var i = 0; i < entries.length; i++) {
-        if (entries[i].isIntersecting) {
-          var el = entries[i].target;
-          el.classList.add('in-view', 'visible');
-          var target = el.getAttribute('data-target-pct');
-          if (target !== null) {
-            el.style.setProperty('--bar-pct', target + '%');
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          if (entry.target.classList.contains('stat-row-bar')) {
+            var target = entry.target.getAttribute('data-target-pct');
+            if (target !== null) entry.target.style.setProperty('--bar-pct', target + '%');
           }
-          observer.unobserve(el);
+          observer.unobserve(entry.target);
         }
-      }
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    for (var i = 0; i < els.length; i++) {
-      observer.observe(els[i]);
-    }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal, .fade-in, .stat-row-bar').forEach(function (el) {
+      observer.observe(el);
+    });
   }
 
   function initStaggerIndex() {
-    var rows = document.querySelectorAll('.toc-list .toc-row');
+    var rows = document.querySelectorAll('.toc-row');
     for (var i = 0; i < rows.length; i++) {
-      rows[i].style.setProperty('--stagger-delay', (i * 30) + 'ms');
+      rows[i].style.setProperty('--stagger-index', i);
     }
   }
 

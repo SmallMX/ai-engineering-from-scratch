@@ -344,7 +344,7 @@
     if (!query) {
       list.innerHTML =
         '<li class="cp-empty" role="option" aria-disabled="true">' +
-        'Type to search 503 lessons, 499 outputs, and glossary terms' +
+        'Type to search 503 lessons, 986 outputs, and glossary terms' +
         '</li>';
       _activeIdx = -1;
       return;
@@ -376,7 +376,7 @@
         // Jump to the lesson that produced this artifact
         dest = r.lessonPath
           ? 'lesson.html?path=' + encodeURIComponent(r.lessonPath)
-          : ('https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + r.file);
+          : ('https://github.com/SmallMX/ai-engineering-from-scratch/tree/main/' + r.file);
         var ak = (r.artKind || 'artifact');
         chip = ak.charAt(0).toUpperCase() + ak.slice(1);
         chipClass += ' cp-item-chip--alt';

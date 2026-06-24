@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260525a">
+  <link rel="stylesheet" href="style.css?v=20260624a">
   <style>
     /* ===================================================
        Learning Path — Page Styles
@@ -408,7 +408,7 @@
         <a href="prereqs.html">Roadmap</a>
         <a href="glossary.html">Glossary</a>
         <a href="about.html">About</a>
-        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
+        <a href="https://github.com/SmallMX/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
           <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
@@ -425,6 +425,9 @@
       </button>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
         <span class="theme-icon" id="themeIcon">N</span>
+      </button>
+      <button class="lang-toggle" id="langToggle" aria-label="Toggle language" type="button">
+        EN
       </button>
     </div>
   </header>
@@ -462,25 +465,40 @@
       <p>AI Engineering from Scratch · open source · free forever.</p>
       <div class="footer-links">
         <a href="index.html">Home</a>
-        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/SmallMX/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
         <a href="catalog.html">Catalog</a>
         <a href="glossary.html">Glossary</a>
-              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report / Suggest</a>
+              <a href="https://github.com/SmallMX/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report / Suggest</a>
       </div>
     </div>
   </footer>
 
-  <script src="data.js?v=20260525a"></script>
-  <script src="progress.js?v=20260525a"></script>
-  <script src="header.js?v=20260525a" defer></script>
-  <script src="cmdpalette.js?v=20260525a" defer></script>
+  <script src="data.js?v=20260624a"></script>
+  <script src="progress.js?v=20260624a"></script>
+  <script src="header.js?v=20260624a" defer></script>
+  <script src="cmdpalette.js?v=20260624a" defer></script>
   <script>
   (function () {
     /* ===================================================
        Theme Toggle — matches site-wide pattern
     =================================================== */
+    var storage = {
+      getItem: function (key) {
+        try {
+          return localStorage.getItem(key);
+        } catch (e) {
+          return null;
+        }
+      },
+      setItem: function (key, value) {
+        try {
+          localStorage.setItem(key, value);
+        } catch (e) {}
+      }
+    };
+
     var root   = document.documentElement;
-    var stored = localStorage.getItem('theme');
+    var stored = storage.getItem('theme');
     if (stored) {
       root.setAttribute('data-theme', stored);
     } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -497,6 +515,41 @@
 
     updateIcon();
 
+    var currentLang = storage.getItem('aifs-lang') || 'zh-CN';
+
+    function translatePage() {
+      var isZh = currentLang === 'zh-CN';
+      document.title = isZh ? '学习路径 - AI Engineering from Scratch' : 'Roadmap - AI Engineering from Scratch';
+      
+      var h1 = document.querySelector('.prereqs-header h1');
+      if (h1) h1.textContent = isZh ? '学习路径' : 'Roadmap';
+      
+      var p = document.querySelector('.prereqs-header p');
+      if (p) p.textContent = isZh ? '点击任意阶段卡片，查看其前置依赖与后续解锁路径。' : 'Click any phase to see its prerequisites and what it unlocks downstream.';
+      
+      var legendItems = document.querySelectorAll('.legend-item');
+      if (legendItems.length >= 3) {
+        legendItems[0].childNodes[1].nodeValue = isZh ? ' 已完成' : ' Complete';
+        legendItems[1].childNodes[1].nodeValue = isZh ? ' 进行中' : ' In Progress';
+        legendItems[2].childNodes[1].nodeValue = isZh ? ' 已计划' : ' Planned';
+      }
+      
+      var resetBtn = document.getElementById('resetBtn');
+      if (resetBtn) resetBtn.innerHTML = isZh ? '&#10005; 清除选择' : '&#10005; Clear selection';
+      
+      var scrollHint = document.querySelector('.graph-scroll-hint');
+      if (scrollHint) scrollHint.textContent = isZh ? '↔ 左右滑动以探索完整图表' : '↔ Scroll to explore the full graph';
+
+      var navLinks = document.querySelectorAll('.header-nav > a');
+      if (navLinks.length >= 4) {
+        navLinks[0].textContent = isZh ? '课程大纲' : 'Contents';
+        navLinks[1].textContent = isZh ? '课程目录' : 'Catalog';
+        navLinks[2].textContent = isZh ? '学习路径' : 'Roadmap';
+        navLinks[3].textContent = isZh ? '术语表' : 'Glossary';
+        if (navLinks[4]) navLinks[4].textContent = isZh ? '关于' : 'About';
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
       updateIcon();
       var btn = document.getElementById('themeToggle');
@@ -504,10 +557,29 @@
         btn.addEventListener('click', function () {
           var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
           root.setAttribute('data-theme', next);
-          localStorage.setItem('theme', next);
+          storage.setItem('theme', next);
           updateIcon();
         });
       }
+
+      var langBtn = document.getElementById('langToggle');
+      if (langBtn) {
+        var updateLangBtnText = function() {
+          langBtn.textContent = currentLang === 'zh-CN' ? 'ZH-CN' : 'EN';
+        };
+        updateLangBtnText();
+        langBtn.addEventListener('click', function () {
+          currentLang = currentLang === 'en' ? 'zh-CN' : 'en';
+          storage.setItem('aifs-lang', currentLang);
+          updateLangBtnText();
+          translatePage();
+          buildGraph();
+          var panel = document.getElementById('detailPanel');
+          if (panel) panel.classList.remove('open');
+        });
+      }
+
+      translatePage();
       buildGraph();
     });
 
@@ -579,9 +651,10 @@
     =================================================== */
     var PHASE_MAP   = {};
     var allPhaseIds = {};
-    for (var i = 0; i < PHASES.length; i++) {
-      PHASE_MAP[PHASES[i].id] = PHASES[i];
-      allPhaseIds[PHASES[i].id] = true;
+    var phasesList = (currentLang === 'zh-CN' && typeof PHASES_ZH !== 'undefined') ? PHASES_ZH : PHASES;
+    for (var i = 0; i < phasesList.length; i++) {
+      PHASE_MAP[phasesList[i].id] = phasesList[i];
+      allPhaseIds[phasesList[i].id] = true;
     }
 
     /* Ensure every phase in PHASES has a PREREQS entry */
@@ -743,8 +816,20 @@
     var edgeArrowEls = [];
 
     function buildGraph() {
+      // 根据当前语言重新构建 PHASE_MAP
+      PHASE_MAP = {};
+      var phasesList = (currentLang === 'zh-CN' && typeof PHASES_ZH !== 'undefined') ? PHASES_ZH : PHASES;
+      for (var i = 0; i < phasesList.length; i++) {
+        PHASE_MAP[phasesList[i].id] = phasesList[i];
+      }
+
       var svg       = document.getElementById('graphSvg');
       var container = document.getElementById('graphContainer');
+      
+      svg.innerHTML = '';
+      nodeEls      = {};
+      edgePathEls  = [];
+      edgeArrowEls = [];
 
       svg.setAttribute('viewBox', '0 0 ' + SVG_W + ' ' + SVG_H);
       svg.setAttribute('width', SVG_W);
@@ -939,6 +1024,7 @@
       /* Prerequisites list */
       var directPrereqs = PREREQS[id] || [];
       var prereqHtml    = '';
+      var isZh = currentLang === 'zh-CN';
       if (directPrereqs.length) {
         prereqHtml = '<ul class="detail-prereq-list">';
         for (var i = 0; i < directPrereqs.length; i++) {
@@ -948,7 +1034,9 @@
         }
         prereqHtml += '</ul>';
       } else {
-        prereqHtml = '<div class="detail-empty">None. This is a starting point.</div>';
+        prereqHtml = isZh ? 
+          '<div class="detail-empty">无。这是一个起点。</div>' : 
+          '<div class="detail-empty">None. This is a starting point.</div>';
       }
 
       /* Unlocks list */
@@ -963,11 +1051,13 @@
         }
         unlockHtml += '</ul>';
       } else {
-        unlockHtml = '<div class="detail-empty">Final destination. End of the curriculum.</div>';
+        unlockHtml = isZh ? 
+          '<div class="detail-empty">终点。课程体系的末尾。</div>' : 
+          '<div class="detail-empty">Final destination. End of the curriculum.</div>';
       }
 
       /* Compute exact GitHub tree URL using standard slug logic */
-      var phaseGithubUrl = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/' + extractPhaseSlug(phase);
+      var phaseGithubUrl = 'https://github.com/SmallMX/ai-engineering-from-scratch/tree/main/phases/' + extractPhaseSlug(phase);
 
       /* Find first readable lesson for Read button */
       var readLink = '';
@@ -985,25 +1075,44 @@
       var ancestorCount   = Object.keys(ancestors).length;
       var descendantCount = Object.keys(descendants).length;
 
+      var isZh = currentLang === 'zh-CN';
+      var statusLabel = phase.status;
+      if (isZh) {
+        if (statusLabel === 'complete') statusLabel = '已完成';
+        else if (statusLabel === 'in-progress') statusLabel = '进行中';
+        else if (statusLabel === 'planned') statusLabel = '已计划';
+      } else {
+        statusLabel = statusLabel.replace('-', ' ');
+      }
+      
+      var statsText = isZh ? 
+        ('已完成 <strong>' + stats.done + '</strong> / <strong>' + stats.total + '</strong> 课时' +
+         ' &nbsp;·&nbsp; <strong>' + ancestorCount + '</strong> 个前置阶段' +
+         ' &nbsp;·&nbsp; <strong>' + descendantCount + '</strong> 个解锁阶段') :
+        ('<strong>' + stats.done + '</strong> of <strong>' + stats.total + '</strong> lessons complete' +
+         ' &nbsp;·&nbsp; <strong>' + ancestorCount + '</strong> prerequisite phases' +
+         ' &nbsp;·&nbsp; <strong>' + descendantCount + '</strong> phases unlocked');
+
+      var prereqTitle = isZh ? '前置阶段' : 'Prerequisites';
+      var unlockTitle = isZh ? '解锁阶段' : 'Unlocks';
+      var readText = isZh ? '阅读' : 'Read';
+      var viewOnGhText = isZh ? '在 GitHub 上查看' : 'View on GitHub';
+
       panel.innerHTML =
         '<div class="detail-top">' +
-          '<span class="detail-phase-num">Phase ' + String(id).padStart(2, '0') + '</span>' +
-          '<span class="detail-status ' + phase.status + '">' + phase.status.replace('-', ' ') + '</span>' +
+          '<span class="detail-phase-num">' + (isZh ? '阶段 ' : 'Phase ') + String(id).padStart(2, '0') + '</span>' +
+          '<span class="detail-status ' + phase.status + '">' + statusLabel + '</span>' +
         '</div>' +
         '<div class="detail-title">' + escapeHtml(phase.name) + '</div>' +
         '<div class="detail-desc">' + escapeHtml(phase.desc) + '</div>' +
-        '<div class="detail-stats">' +
-          '<strong>' + stats.done + '</strong> of <strong>' + stats.total + '</strong> lessons complete' +
-          ' &nbsp;·&nbsp; <strong>' + ancestorCount + '</strong> prerequisite phases' +
-          ' &nbsp;·&nbsp; <strong>' + descendantCount + '</strong> phases unlocked' +
-        '</div>' +
+        '<div class="detail-stats">' + statsText + '</div>' +
         '<div class="detail-sections">' +
-          '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--accent)">&#9664;</span> Prerequisites</div>' + prereqHtml + '</div>' +
-          '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--complete)">&#9654;</span> Unlocks</div>' + unlockHtml + '</div>' +
+          '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--accent)">&#9664;</span> ' + prereqTitle + '</div>' + prereqHtml + '</div>' +
+          '<div><div class="detail-section-title"><span class="title-icon" style="color:var(--complete)">&#9654;</span> ' + unlockTitle + '</div>' + unlockHtml + '</div>' +
         '</div>' +
         '<div class="detail-actions">' +
-          (readLink ? '<a href="' + readLink + '" class="detail-link detail-link-read">Read</a>' : '') +
-          '<a href="' + phaseGithubUrl + '" target="_blank" rel="noopener" class="detail-link">View on GitHub</a>' +
+          (readLink ? '<a href="' + readLink + '" class="detail-link detail-link-read">' + readText + '</a>' : '') +
+          '<a href="' + phaseGithubUrl + '" target="_blank" rel="noopener" class="detail-link">' + viewOnGhText + '</a>' +
         '</div>';
 
       panel.classList.add('open');
