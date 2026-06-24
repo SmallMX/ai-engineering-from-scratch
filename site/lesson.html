@@ -1721,6 +1721,19 @@
       }
 
       var currentLang = storage.getItem('aifs-lang') || 'zh-CN';
+
+      function translateHeader() {
+        var isZh = currentLang === 'zh-CN';
+        var navLinks = document.querySelectorAll('.header-nav > a');
+        if (navLinks.length >= 4) {
+          navLinks[0].textContent = isZh ? '课程大纲' : 'Contents';
+          navLinks[1].textContent = isZh ? '课程目录' : 'Catalog';
+          navLinks[2].textContent = isZh ? '学习路径' : 'Roadmap';
+          navLinks[3].textContent = isZh ? '术语表' : 'Glossary';
+          if (navLinks[4]) navLinks[4].textContent = isZh ? '关于' : 'About';
+        }
+      }
+
       var langBtn = document.getElementById('langToggle');
       if (langBtn) {
         var updateLangButton = function() {
@@ -1731,6 +1744,9 @@
           currentLang = currentLang === 'en' ? 'zh-CN' : 'en';
           storage.setItem('aifs-lang', currentLang);
           updateLangButton();
+          translateHeader();
+          initLessonData();
+          buildSidebar();
           fetchLesson(lessonPath);
         });
       }
@@ -1756,36 +1772,45 @@
       var currentLessonIndex = -1;
       var flatLessons = [];
 
-      if (typeof PHASES !== 'undefined') {
-        for (var i = 0; i < PHASES.length; i++) {
-          var p = PHASES[i];
-          var pSlug = extractPhaseSlug(p, i);
-          for (var j = 0; j < p.lessons.length; j++) {
-            var l = p.lessons[j];
-            var lSlug = extractLessonSlug(l, j);
-            flatLessons.push({
-              phaseIndex: i,
-              lessonIndex: j,
-              phaseName: p.name,
-              phaseId: p.id,
-              phaseSlug: pSlug,
-              lessonName: l.name,
-              lessonSlug: lSlug,
-              status: l.status,
-              type: l.type,
-              lang: l.lang,
-              url: l.url,
-              path: 'phases/' + pSlug + '/' + lSlug,
-              isReadable: l.status === 'complete' || !!l.url
-            });
-            if (pSlug === currentPhaseSlug && lSlug === currentLessonSlug) {
-              currentPhaseIndex = i;
-              currentLessonIndex = flatLessons.length - 1;
+      function initLessonData() {
+        var phasesList = (currentLang === 'zh-CN' && typeof PHASES_ZH !== 'undefined') ? PHASES_ZH : PHASES;
+        currentPhaseIndex = -1;
+        currentLessonIndex = -1;
+        flatLessons = [];
+
+        if (typeof phasesList !== 'undefined') {
+          for (var i = 0; i < phasesList.length; i++) {
+            var p = phasesList[i];
+            var pSlug = extractPhaseSlug(p, i);
+            for (var j = 0; j < p.lessons.length; j++) {
+              var l = p.lessons[j];
+              var lSlug = extractLessonSlug(l, j);
+              flatLessons.push({
+                phaseIndex: i,
+                lessonIndex: j,
+                phaseName: p.name,
+                phaseId: p.id,
+                phaseSlug: pSlug,
+                lessonName: l.name,
+                lessonSlug: lSlug,
+                status: l.status,
+                type: l.type,
+                lang: l.lang,
+                url: l.url,
+                path: 'phases/' + pSlug + '/' + lSlug,
+                isReadable: l.status === 'complete' || !!l.url
+              });
+              if (pSlug === currentPhaseSlug && lSlug === currentLessonSlug) {
+                currentPhaseIndex = i;
+                currentLessonIndex = flatLessons.length - 1;
+              }
             }
           }
         }
       }
 
+      initLessonData();
+      translateHeader();
       buildSidebar();
       initSidebarToggle();
       initScrollProgress();
@@ -1813,33 +1838,36 @@
 
       function buildSidebar() {
         var sidebar = document.getElementById('lessonSidebar');
-        if (!sidebar || typeof PHASES === 'undefined') return;
+        var phasesList = (currentLang === 'zh-CN' && typeof PHASES_ZH !== 'undefined') ? PHASES_ZH : PHASES;
+        if (!sidebar || typeof phasesList === 'undefined') return;
 
         var html = '';
 
         var prevPhaseIdx = currentPhaseIndex > 0 ? currentPhaseIndex - 1 : -1;
-        var nextPhaseIdx = (currentPhaseIndex >= 0 && currentPhaseIndex < PHASES.length - 1) ? currentPhaseIndex + 1 : -1;
+        var nextPhaseIdx = (currentPhaseIndex >= 0 && currentPhaseIndex < phasesList.length - 1) ? currentPhaseIndex + 1 : -1;
+
+        var phasePrefix = currentLang === 'zh-CN' ? '阶段 ' : 'Phase ';
 
         if (prevPhaseIdx >= 0 || nextPhaseIdx >= 0) {
           html += '<div class="sidebar-phase-nav">';
           if (prevPhaseIdx >= 0) {
-            var pp = PHASES[prevPhaseIdx];
+            var pp = phasesList[prevPhaseIdx];
             var ppSlug = extractPhaseSlug(pp, prevPhaseIdx);
             var ppFirstLesson = pp.lessons[0] ? extractLessonSlug(pp.lessons[0], 0) : '';
-            html += '<a href="lesson.html?path=phases/' + ppSlug + '/' + ppFirstLesson + '">&larr; Phase ' + String(pp.id).padStart(2, '0') + ': ' + escapeHtml(pp.name) + '</a>';
+            html += '<a href="lesson.html?path=phases/' + ppSlug + '/' + ppFirstLesson + '">&larr; ' + phasePrefix + String(pp.id).padStart(2, '0') + ': ' + escapeHtml(pp.name) + '</a>';
           }
           if (nextPhaseIdx >= 0) {
-            var np = PHASES[nextPhaseIdx];
+            var np = phasesList[nextPhaseIdx];
             var npSlug = extractPhaseSlug(np, nextPhaseIdx);
             var npFirstLesson = np.lessons[0] ? extractLessonSlug(np.lessons[0], 0) : '';
-            html += '<a href="lesson.html?path=phases/' + npSlug + '/' + npFirstLesson + '">Phase ' + String(np.id).padStart(2, '0') + ': ' + escapeHtml(np.name) + ' &rarr;</a>';
+            html += '<a href="lesson.html?path=phases/' + npSlug + '/' + npFirstLesson + '">' + phasePrefix + String(np.id).padStart(2, '0') + ': ' + escapeHtml(np.name) + ' &rarr;</a>';
           }
           html += '</div>';
         }
 
         if (currentPhaseIndex >= 0) {
-          var phase = PHASES[currentPhaseIndex];
-          html += '<div class="sidebar-phase-header">Phase ' + String(phase.id).padStart(2, '0') + ' · ' + escapeHtml(phase.name) + '</div>';
+          var phase = phasesList[currentPhaseIndex];
+          html += '<div class="sidebar-phase-header">' + phasePrefix + String(phase.id).padStart(2, '0') + ' · ' + escapeHtml(phase.name) + '</div>';
           for (var k = 0; k < phase.lessons.length; k++) {
             var les = phase.lessons[k];
             var lesSlug = extractLessonSlug(les, k);
@@ -2093,8 +2121,10 @@
           return candidate;
         }
 
-        var html = '<div class="toc-header">On this page</div>';
-        html += '<nav aria-label="On this page"><ul class="toc-nav">';
+        var isZh = currentLang === 'zh-CN';
+        var tocTitle = isZh ? '本页目录' : 'On this page';
+        var html = '<div class="toc-header">' + tocTitle + '</div>';
+        html += '<nav aria-label="' + tocTitle + '"><ul class="toc-nav">';
         for (var i = 0; i < headings.length; i++) {
           var heading = headings[i];
           var level = heading.tagName.toLowerCase();
@@ -2878,12 +2908,18 @@
         var buildH2 = article.querySelector('#build-it, #build');
         var keyTermsH2 = article.querySelector('#key-terms');
 
-        var preQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'pre'; }), 'pre', 'Pre-Lesson Check');
-        var checkQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'check'; }), 'check', 'Mid-Lesson Check');
-        var postQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'post'; }), 'post', 'Post-Lesson Quiz');
+        var isZh = currentLang === 'zh-CN';
+        var preTitle = isZh ? '课前自测' : 'Pre-Lesson Check';
+        var midTitle = isZh ? '随堂检测' : 'Mid-Lesson Check';
+        var postTitle = isZh ? '课后评估' : 'Post-Lesson Quiz';
+        var genericTitle = isZh ? '测试' : 'Quiz';
+
+        var preQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'pre'; }), 'pre', preTitle);
+        var checkQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'check'; }), 'check', midTitle);
+        var postQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'post'; }), 'post', postTitle);
 
         if (!preQuizHtml && !checkQuizHtml && !postQuizHtml) {
-          var allHtml = buildQuizHtml(questions, 'all', 'Quiz');
+          var allHtml = buildQuizHtml(questions, 'all', genericTitle);
           if (allHtml && keyTermsH2) {
             keyTermsH2.insertAdjacentHTML('beforebegin', allHtml);
           } else if (allHtml) {
@@ -3001,7 +3037,8 @@
         }
         var scoreEl = section.querySelector('.quiz-score');
         if (scoreEl) {
-          scoreEl.textContent = correctCount + '/' + allQs.length + ' correct';
+          var isZh = currentLang === 'zh-CN';
+          scoreEl.textContent = isZh ? ('答对 ' + correctCount + '/' + allQs.length + ' 题') : (correctCount + '/' + allQs.length + ' correct');
           scoreEl.style.display = 'block';
         }
       }
@@ -3043,10 +3080,11 @@
           if (flatLessons[ni].isReadable) { next = flatLessons[ni]; break; }
         }
 
+        var isZh = currentLang === 'zh-CN';
         var nav = '<div class="lesson-nav-bottom">';
         if (prev) {
           nav += '<a class="lesson-nav-btn prev" href="lesson.html?path=' + prev.path + '">';
-          nav += '<span class="nav-label">&larr; Previous</span>';
+          nav += '<span class="nav-label">' + (isZh ? '&larr; 上一课' : '&larr; Previous') + '</span>';
           nav += '<span class="nav-title">' + escapeHtml(prev.lessonName) + '</span>';
           nav += '</a>';
         } else {
@@ -3054,7 +3092,7 @@
         }
         if (next) {
           nav += '<a class="lesson-nav-btn next" href="lesson.html?path=' + next.path + '">';
-          nav += '<span class="nav-label">Next &rarr;</span>';
+          nav += '<span class="nav-label">' + (isZh ? '下一课 &rarr;' : 'Next &rarr;') + '</span>';
           nav += '<span class="nav-title">' + escapeHtml(next.lessonName) + '</span>';
           nav += '</a>';
         }
@@ -3132,13 +3170,18 @@
       function renderOutputsPanel(container) {
         var panel = document.createElement('div');
         panel.className = 'ai-panel';
-        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">O</div><div class="ai-panel-title">What This Lesson Ships</div></div><div class="ai-panel-subtitle">Prompts, skills, and artifacts you can use right now</div><div id="outputsContent" class="panel-loading">Loading outputs...</div>';
+        var isZh = currentLang === 'zh-CN';
+        var title = isZh ? '本课交付产物' : 'What This Lesson Ships';
+        var subtitle = isZh ? '您可以立即使用的提示词、技能文件和产物' : 'Prompts, skills, and artifacts you can use right now';
+        var loading = isZh ? '正在加载产物...' : 'Loading outputs...';
+        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">O</div><div class="ai-panel-title">' + title + '</div></div><div class="ai-panel-subtitle">' + subtitle + '</div><div id="outputsContent" class="panel-loading">' + loading + '</div>';
         container.appendChild(panel);
 
         ghApiFetch(lessonPath + '/outputs', function (err, data) {
           var el = document.getElementById('outputsContent');
           if (err || !data || !Array.isArray(data) || data.length === 0) {
-            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/SmallMX/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">View lesson on GitHub</a></div>';
+            var githubText = isZh ? '在 GitHub 上查看课程' : 'View lesson on GitHub';
+            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/SmallMX/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">' + githubText + '</a></div>';
             return;
           }
 
@@ -3146,24 +3189,28 @@
           data.forEach(function (file, idx) {
             var type = classifyOutput(file.name);
             var badgeClass = type;
-            var badgeText = type === 'prompt' ? 'Prompt' : type === 'skill' ? 'Skill' : 'Output';
+            var badgeText = type === 'prompt' ? (isZh ? '提示词' : 'Prompt') : type === 'skill' ? (isZh ? '技能' : 'Skill') : (isZh ? '产物' : 'Output');
             var installId = 'install-hint-' + idx;
             var installHint = '';
             if (type === 'prompt') {
-              installHint = 'Paste into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads prompts';
+              installHint = isZh ? '粘贴到 Claude, Cursor, Codex, OpenClaw, Hermes 或任何可以读取提示词的智能体中' : 'Paste into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads prompts';
             } else if (type === 'skill') {
               var skillName = file.name.replace(/\.md$/, '').replace(/^skill-/, '');
               installHint = 'npx skills add SmallMX/ai-engineering-from-scratch --skill ' + skillName;
             }
 
+            var viewGhText = isZh ? '在 GitHub 上查看' : 'View on GitHub';
+            var installText = isZh ? '安装' : 'Install';
+            var loadingDescText = isZh ? '正在加载描述...' : 'Loading description...';
+
             html += '<div class="output-card">';
             html += '<div class="output-badge ' + badgeClass + '">' + badgeText + '</div>';
             html += '<div class="output-card-name">' + escapeHtml(file.name) + '</div>';
-            html += '<div class="output-desc" id="desc-' + idx + '">Loading description...</div>';
+            html += '<div class="output-desc" id="desc-' + idx + '">' + loadingDescText + '</div>';
             html += '<div class="output-actions">';
-            html += '<a class="output-btn" href="' + file.html_url + '" target="_blank" rel="noopener">View on GitHub</a>';
+            html += '<a class="output-btn" href="' + file.html_url + '" target="_blank" rel="noopener">' + viewGhText + '</a>';
             if (installHint) {
-              html += '<button class="output-btn" onclick="var h=document.getElementById(\'' + installId + '\');h.classList.toggle(\'visible\')">Install</button>';
+              html += '<button class="output-btn" onclick="var h=document.getElementById(\'' + installId + '\');h.classList.toggle(\'visible\')">' + installText + '</button>';
             }
             html += '</div>';
             if (installHint) {
@@ -3190,13 +3237,18 @@
       function renderCodePanel(container) {
         var panel = document.createElement('div');
         panel.className = 'ai-panel';
-        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">Run the Code</div></div><div class="ai-panel-subtitle">Executable files from this lesson</div><div id="codeContent" class="panel-loading">Loading code files...</div>';
+        var isZh = currentLang === 'zh-CN';
+        var title = isZh ? '运行代码' : 'Run the Code';
+        var subtitle = isZh ? '本课的可执行文件' : 'Executable files from this lesson';
+        var loading = isZh ? '正在加载代码文件...' : 'Loading code files...';
+        panel.innerHTML = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">' + title + '</div></div><div class="ai-panel-subtitle">' + subtitle + '</div><div id="codeContent" class="panel-loading">' + loading + '</div>';
         container.appendChild(panel);
 
         ghApiFetch(lessonPath + '/code', function (err, data) {
           var el = document.getElementById('codeContent');
           if (err || !data || !Array.isArray(data) || data.length === 0) {
-            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/SmallMX/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">View lesson on GitHub</a></div>';
+            var githubText = isZh ? '在 GitHub 上查看课程' : 'View lesson on GitHub';
+            el.innerHTML = '<div class="panel-fallback"><a href="https://github.com/SmallMX/ai-engineering-from-scratch/tree/main/' + lessonPath + '" target="_blank" rel="noopener">' + githubText + '</a></div>';
             return;
           }
 
@@ -3205,13 +3257,16 @@
             var icon = langIcon(file.name);
             var cmd = langCommand(file.name);
             var runCmd = cmd + ' ' + lessonPath + '/code/' + file.name;
+            var viewGhText = isZh ? '在 GitHub 上查看' : 'View on GitHub';
+            var copyText = isZh ? '复制命令' : 'Copy command';
+
             html += '<div class="code-card">';
             html += '<div class="code-card-header"><span class="code-lang-icon">' + icon + '</span><span class="code-card-name">' + escapeHtml(file.name) + '</span></div>';
             html += '<div class="code-card-size">' + formatSize(file.size) + '</div>';
             html += '<div class="code-card-run">' + escapeHtml(runCmd) + '</div>';
             html += '<div class="code-card-actions">';
-            html += '<a class="code-card-btn" href="' + file.html_url + '" target="_blank" rel="noopener">View on GitHub</a>';
-            html += '<button class="code-card-btn code-card-copy" data-command="' + escapeAttr(runCmd) + '">Copy command</button>';
+            html += '<a class="code-card-btn" href="' + file.html_url + '" target="_blank" rel="noopener">' + viewGhText + '</a>';
+            html += '<button class="code-card-btn code-card-copy" data-command="' + escapeAttr(runCmd) + '">' + copyText + '</button>';
             html += '</div>';
             html += '</div>';
           });
@@ -3220,9 +3275,12 @@
           el.querySelectorAll('.code-card-copy').forEach(function (btn) {
             btn.addEventListener('click', function () {
               var command = btn.getAttribute('data-command');
+              var isZh = currentLang === 'zh-CN';
+              var copiedText = isZh ? '已复制!' : 'Copied!';
+              var copyText = isZh ? '复制命令' : 'Copy command';
               navigator.clipboard.writeText(command).then(function () {
-                btn.textContent = 'Copied!';
-                setTimeout(function () { btn.textContent = 'Copy command'; }, 1500);
+                btn.textContent = copiedText;
+                setTimeout(function () { btn.textContent = copyText; }, 1500);
               });
             });
           });
@@ -3253,47 +3311,47 @@
         if (pathLower.indexOf('deep-learning') >= 0 || pathLower.indexOf('neural') >= 0 || pathLower.indexOf('backprop') >= 0 || pathLower.indexOf('activation') >= 0) {
           return [
             { q: 'What does backpropagation compute?', opts: ['Forward predictions', 'The gradient of the loss with respect to each weight', 'The learning rate', 'New training data'], answer: 1, explain: 'Backpropagation uses the chain rule to compute how much each weight contributed to the error, then adjusts weights accordingly.' },
-            { q: 'Why do neural networks need non-linear activation functions?', opts: ['To speed up training', 'Without them, stacking layers is equivalent to a single linear layer', 'To reduce memory usage', 'To normalize outputs'], answer: 1, explain: 'Without non-linearities, any composition of linear layers collapses to a single linear transformation. Activations like ReLU let the network learn complex patterns.' },
-            { q: 'What does the learning rate control?', opts: ['How many epochs to train', 'The size of each weight update step', 'The number of layers', 'The batch size'], answer: 1, explain: 'The learning rate scales the gradient update. Too large causes divergence, too small causes slow or stuck training.' }
+            { q: 'Why do neural networks need non-linear activation functions?', opts: ['To speed up training', 'Without them, stacking layers is equivalent to a single linear layer', 'To reduce memory usage', 'To normalize outputs'], answer: 1, explain: 'Without non-linearities, stacking layers is equivalent to a single linear layer, restricting the network from learning complex, non-linear mappings.' },
+            { q: 'What does the learning rate control?', opts: ['How many epochs to train', 'The size of each weight update step', 'The number of layers', 'The batch size'], answer: 1, explain: 'The learning rate scales the gradient updates. Too high causes divergence, too low makes training extremely slow.' }
           ];
         }
 
         if (pathLower.indexOf('llm') >= 0 || pathLower.indexOf('transformer') >= 0 || pathLower.indexOf('attention') >= 0 || pathLower.indexOf('tokeniz') >= 0 || pathLower.indexOf('fine-tun') >= 0) {
           return [
-            { q: 'What does self-attention allow a transformer to do?', opts: ['Process tokens in order', 'Weight the importance of every token relative to every other token', 'Reduce vocabulary size', 'Compress the model'], answer: 1, explain: 'Self-attention computes pairwise relevance scores across all positions, allowing the model to relate distant tokens without recurrence.' },
-            { q: 'Why do LLMs use tokenizers instead of raw characters?', opts: ['Characters are too large', 'Tokens compress frequent patterns into single units, reducing sequence length', 'Tokenizers are faster to train', 'Characters cannot be embedded'], answer: 1, explain: 'Subword tokenizers like BPE balance vocabulary size against sequence length, making common words single tokens while handling rare words as pieces.' },
-            { q: 'What is the key difference between pre-training and fine-tuning?', opts: ['Pre-training uses labeled data', 'Pre-training learns general language; fine-tuning adapts to a specific task', 'Fine-tuning uses more data', 'There is no difference'], answer: 1, explain: 'Pre-training learns language patterns from massive unlabeled text. Fine-tuning takes that foundation and specializes it on smaller, task-specific data.' }
+            { q: 'What does self-attention allow a transformer to do?', opts: ['Process tokens in order', 'Weight the importance of every token relative to every other token', 'Reduce vocabulary size', 'Compress the model'], answer: 1, explain: 'Self-attention calculates alignment scores between all tokens in a sequence, allowing the model to focus on contextually relevant words regardless of distance.' },
+            { q: 'Why do LLMs use tokenizers instead of raw characters?', opts: ['Characters are too large', 'Tokens compress frequent patterns into single units, reducing sequence length', 'Tokenizers are faster to train', 'Characters cannot be embedded'], answer: 1, explain: 'Tokenization maps text into subword units, striking a balance between memory efficiency (vocabulary size) and semantic representation (sequence length).' },
+            { q: 'What is the key difference between pre-training and fine-tuning?', opts: ['Pre-training uses labeled data', 'Pre-training learns general language; fine-tuning adapts to a specific task', 'Fine-tuning uses more data', 'There is no difference'], answer: 1, explain: 'Pre-training trains the model on raw text to build a base model; fine-tuning specializes the weights on a supervised, task-specific dataset.' }
           ];
         }
 
         if (pathLower.indexOf('rag') >= 0 || pathLower.indexOf('retrieval') >= 0 || pathLower.indexOf('embed') >= 0 || pathLower.indexOf('vector') >= 0) {
           return [
-            { q: 'What is the core idea behind RAG?', opts: ['Training a larger model', 'Retrieving relevant context before generating a response', 'Using more GPUs', 'Reducing model size'], answer: 1, explain: 'RAG (Retrieval-Augmented Generation) grounds LLM responses in retrieved documents, reducing hallucination and enabling knowledge updates without retraining.' },
-            { q: 'What do embedding models produce?', opts: ['Text summaries', 'Dense vector representations of text', 'Token counts', 'Grammar corrections'], answer: 1, explain: 'Embedding models map text into fixed-dimensional vectors where semantic similarity corresponds to geometric proximity.' },
-            { q: 'Why use cosine similarity for comparing embeddings?', opts: ['It is the only metric', 'It measures angular similarity regardless of vector magnitude', 'It is faster than dot product', 'It works with integers only'], answer: 1, explain: 'Cosine similarity normalizes for magnitude, focusing on direction. Two texts about the same topic will have high cosine similarity regardless of length.' }
+            { q: 'What is the core idea behind RAG?', opts: ['Training a larger model', 'Retrieving relevant context before generating a response', 'Using more GPUs', 'Reducing model size'], answer: 1, explain: 'RAG retrieves documents matching the query, prepending them to the LLM prompt to ground the output in fact.' },
+            { q: 'What do embedding models produce?', opts: ['Text summaries', 'Dense vector representations of text', 'Token counts', 'Grammar corrections'], answer: 1, explain: 'Embeddings map words or documents into dense numerical vectors in a semantic space where geometric distance reflects meaning similarity.' },
+            { q: 'Why use cosine similarity for comparing embeddings?', opts: ['It is the only metric', 'It measures angular similarity regardless of vector magnitude', 'It is faster than dot product', 'It works with integers only'], answer: 1, explain: 'Cosine similarity computes the cosine of the angle between vectors, normalizing for text length and magnitude.' }
           ];
         }
 
         if (pathLower.indexOf('agent') >= 0 || pathLower.indexOf('tool') >= 0 || pathLower.indexOf('mcp') >= 0) {
           return [
-            { q: 'What distinguishes an AI agent from a simple chatbot?', opts: ['Agents are faster', 'Agents can take actions and use tools autonomously', 'Agents use bigger models', 'There is no difference'], answer: 1, explain: 'Agents have a loop: observe, decide, act. They can call tools, read files, search the web, and chain multiple steps to complete complex tasks.' },
-            { q: 'What is MCP (Model Context Protocol)?', opts: ['A model training format', 'A standardized protocol for connecting AI models to tools and data sources', 'A compression algorithm', 'A testing framework'], answer: 1, explain: 'MCP provides a universal interface between AI assistants and external tools/data, replacing one-off integrations with a standard protocol.' },
-            { q: 'Why is tool-use important for LLMs?', opts: ['It reduces cost', 'It lets LLMs access real-time information and take actions beyond text generation', 'It makes responses shorter', 'It removes hallucinations entirely'], answer: 1, explain: 'Tools extend LLMs beyond their training data cutoff, enabling real-time lookups, calculations, code execution, and interaction with external systems.' }
+            { q: 'What distinguishes an AI agent from a simple chatbot?', opts: ['Agents are faster', 'Agents can take actions and use tools autonomously', 'Agents use bigger models', 'There is no difference'], answer: 1, explain: 'Agents possess a loop (planning, memory, execution) allowing them to act, reflect, and make tool calls dynamically.' },
+            { q: 'What is MCP (Model Context Protocol)?', opts: ['A model training format', 'A standardized protocol for connecting AI models to tools and data sources', 'A compression algorithm', 'A testing framework'], answer: 1, explain: 'MCP is an open standard designed to connect models securely to desktop files, database servers, and custom tools.' },
+            { q: 'Why is tool-use important for LLMs?', opts: ['It reduces cost', 'It lets LLMs access real-time information and take actions beyond text generation', 'It makes responses shorter', 'It removes hallucinations entirely'], answer: 1, explain: 'Tools allow LLMs to break out of their static weights, calculating math, executing sandboxed code, or searching the live web.' }
           ];
         }
 
         if (pathLower.indexOf('eval') >= 0 || pathLower.indexOf('safety') >= 0 || pathLower.indexOf('alignment') >= 0 || pathLower.indexOf('deploy') >= 0) {
           return [
-            { q: 'Why are evals critical for production AI systems?', opts: ['To save money', 'To measure performance objectively before and after changes', 'To make the model bigger', 'Evals are optional'], answer: 1, explain: 'Evals are the tests of AI engineering. Without them, you cannot know if a change improved or regressed quality. They should run on every code change.' },
-            { q: 'What does "alignment" mean in AI safety?', opts: ['Aligning text on screen', 'Ensuring AI systems act according to human intentions and values', 'Making models faster', 'Using the same training data'], answer: 1, explain: 'Alignment ensures that as AI systems become more capable, they remain helpful, honest, and harmless, acting in accordance with human goals.' },
-            { q: 'What is a guardrail in the context of deployed LLMs?', opts: ['A physical barrier', 'A check that prevents harmful, off-topic, or policy-violating outputs', 'A backup model', 'A caching layer'], answer: 1, explain: 'Guardrails filter inputs and outputs at runtime, catching toxicity, prompt injection, PII leaks, and other risks before they reach the user.' }
+            { q: 'Why are evals critical for production AI systems?', opts: ['To save money', 'To measure performance objectively before and after changes', 'To make the model bigger', 'Evals are optional'], answer: 1, explain: 'Without unit and regression tests (evals), you cannot safely modify prompts, system instructions, or models without silent quality degradation.' },
+            { q: 'What does "alignment" mean in AI safety?', opts: ['Aligning text on screen', 'Ensuring AI systems act according to human intentions and values', 'Making models faster', 'Using the same training data'], answer: 1, explain: 'Alignment studies how to ensure that advanced AI models remain helpful, honest, harmless, and aligned with human values.' },
+            { q: 'What is a guardrail in the context of deployed LLMs?', opts: ['A physical barrier', 'A check that prevents harmful, off-topic, or policy-violating outputs', 'A backup model', 'A caching layer'], answer: 1, explain: 'Guardrails intercept prompt inputs and LLM completions to filter toxic inputs, mask PII, or catch structural errors.' }
           ];
         }
 
         return [
-          { q: 'What does "from scratch" mean in this course?', opts: ['Using no computer', 'Building each concept by implementing it yourself, not just reading theory', 'Starting from assembly language', 'Only using pen and paper'], answer: 1, explain: 'This course follows a Build-Use-Ship methodology: first understand by building it, then apply it, then ship it as a real artifact.' },
-          { q: 'Why does this course combine math, ML, and engineering?', opts: ['To make it longer', 'Because real AI engineering requires all three to build production systems', 'Math is just for fun', 'Engineering is optional'], answer: 1, explain: 'Production AI systems require mathematical foundations (for understanding), ML knowledge (for modeling), and engineering skills (for deployment and reliability).' },
-          { q: 'What is the "Ship" step in the Build-Use-Ship framework?', opts: ['Mailing physical goods', 'Creating a reusable artifact like a prompt, skill, or tool from what you learned', 'Publishing a paper', 'Deleting your code'], answer: 2, explain: 'The Ship step turns your learning into something tangible: a prompt, skill file, MCP tool, or CLI utility that others (or future you) can use immediately.' }
+          { q: 'What does "from scratch" mean in this course?', opts: ['Using no computer', 'Building each concept by implementing it yourself, not just reading theory', 'Starting from assembly language', 'Only using pen and paper'], answer: 1, explain: 'Instead of importing black-box libraries, you build backprop, tokenizers, attention mechanisms, and agents step-by-step from raw math.' },
+          { q: 'Why does this course combine math, ML, and engineering?', opts: ['To make it longer', 'Because real AI engineering requires all three to build production systems', 'Math is just for fun', 'Engineering is optional'], answer: 1, explain: 'To go beyond basic API wrappers, you must master the math (why it works), ML (how it scales), and engineering (how it ships).' },
+          { q: 'What is the "Ship" step in the Build-Use-Ship framework?', opts: ['Mailing physical goods', 'Creating a reusable artifact like a prompt, skill, or tool from what you learned', 'Publishing a paper', 'Deleting your code'], answer: 2, explain: 'Shipping turns raw code into reusable value—packaging your implementations as CLI tools, prompt templates, or MCP servers.' }
         ];
       }
 
@@ -3308,14 +3366,18 @@
           phase = fl.phaseSlug || '';
         }
 
-        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">Q</div><div class="ai-panel-title">Test Your Understanding</div></div>';
-        html += '<div class="ai-panel-subtitle">Did you get it?</div>';
+        var isZh = currentLang === 'zh-CN';
+        var title = isZh ? '测试您的理解' : 'Test Your Understanding';
+        var subtitle = isZh ? '您掌握了吗？' : 'Did you get it?';
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">Q</div><div class="ai-panel-title">' + title + '</div></div>';
+        html += '<div class="ai-panel-subtitle">' + subtitle + '</div>';
         html += '<div class="quiz-container" id="quizContainer">';
 
         var letters = ['A', 'B', 'C', 'D'];
         questions.forEach(function (q, qi) {
+          var qNumText = isZh ? ('第 ' + (qi + 1) + ' 题，共 ' + questions.length + ' 题') : ('Question ' + (qi + 1) + ' of ' + questions.length);
           html += '<div class="quiz-question" id="quiz-q-' + qi + '">';
-          html += '<div class="quiz-question-num">Question ' + (qi + 1) + ' of ' + questions.length + '</div>';
+          html += '<div class="quiz-question-num">' + qNumText + '</div>';
           html += '<div class="quiz-question-text">' + escapeHtml(q.q) + '</div>';
           html += '<div class="quiz-options">';
           q.opts.forEach(function (opt, oi) {
@@ -3329,8 +3391,11 @@
           html += '</div>';
         });
 
-        html += '<div class="quiz-score" id="quizScore"><div class="quiz-score-number" id="quizScoreNum">0/' + questions.length + '</div><div class="quiz-score-label">Complete all questions to see your score</div></div>';
-        html += '<div class="quiz-deeper">Want a deeper quiz? Run <code>/check-understanding ' + escapeHtml(phase) + '</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed</div>';
+        var scoreLabelText = isZh ? '完成所有问题以查看您的得分' : 'Complete all questions to see your score';
+        var deeperText = isZh ? ('想要更深入的测试？在 Claude、Cursor、Codex、OpenClaw, Hermes 或任何安装了课程技能的智能体中运行 <code>/check-understanding ' + escapeHtml(phase) + '</code>') : ('Want a deeper quiz? Run <code>/check-understanding ' + escapeHtml(phase) + '</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed');
+
+        html += '<div class="quiz-score" id="quizScore"><div class="quiz-score-number" id="quizScoreNum">0/' + questions.length + '</div><div class="quiz-score-label">' + scoreLabelText + '</div></div>';
+        html += '<div class="quiz-deeper">' + deeperText + '</div>';
         html += '</div>';
 
         panel.innerHTML = html;
@@ -3373,23 +3438,31 @@
           var scoreNum = document.getElementById('quizScoreNum');
           if (scoreEl && scoreNum) {
             scoreNum.textContent = window._quizCorrect + '/' + questions.length;
-            scoreEl.querySelector('.quiz-score-label').textContent =
-              window._quizCorrect === questions.length ? 'Perfect score!' :
-              window._quizCorrect >= 2 ? 'Great work!' : 'Keep studying!';
+            var isZh = currentLang === 'zh-CN';
+            var msg = '';
+            if (window._quizCorrect === questions.length) {
+              msg = isZh ? '满分！太棒了！' : 'Perfect score!';
+            } else if (window._quizCorrect >= 2) {
+              msg = isZh ? '做得好！' : 'Great work!';
+            } else {
+              msg = isZh ? '继续努力！' : 'Keep studying!';
+            }
+            scoreEl.querySelector('.quiz-score-label').textContent = msg;
             scoreEl.classList.add('visible');
           }
         }
       };
 
       function renderLearningPathPanel(container) {
-        if (currentLessonIndex < 0 || typeof PHASES === 'undefined') return;
+        var phasesList = (currentLang === 'zh-CN' && typeof PHASES_ZH !== 'undefined') ? PHASES_ZH : PHASES;
+        if (currentLessonIndex < 0 || typeof phasesList === 'undefined') return;
 
         var panel = document.createElement('div');
         panel.className = 'ai-panel';
 
         var current = flatLessons[currentLessonIndex];
         var phaseIdx = current.phaseIndex;
-        var phase = PHASES[phaseIdx];
+        var phase = phasesList[phaseIdx];
         var lessonsInPhase = [];
         var currentIdxInPhase = -1;
 
@@ -3400,8 +3473,11 @@
           }
         }
 
-        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">P</div><div class="ai-panel-title">Learning Path</div></div>';
-        html += '<div class="ai-panel-subtitle">Phase ' + String(phase.id).padStart(2, '0') + ': ' + escapeHtml(phase.name) + '</div>';
+        var isZh = currentLang === 'zh-CN';
+        var title = isZh ? '学习路径' : 'Learning Path';
+        var phasePrefix = isZh ? '阶段 ' : 'Phase ';
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">P</div><div class="ai-panel-title">' + title + '</div></div>';
+        html += '<div class="ai-panel-subtitle">' + phasePrefix + String(phase.id).padStart(2, '0') + ': ' + escapeHtml(phase.name) + '</div>';
 
         // Window: 2 before current + current + 2 after, cap at 5 visible.
         var windowSize = 5;
@@ -3414,7 +3490,8 @@
 
         html += '<div class="learning-timeline">';
         if (hiddenBefore > 0) {
-          html += '<span class="timeline-ellipsis" title="' + hiddenBefore + ' earlier lessons">&laquo; ' + hiddenBefore + '</span>';
+          var titleText = isZh ? (hiddenBefore + ' 节更早的课程') : (hiddenBefore + ' earlier lessons');
+          html += '<span class="timeline-ellipsis" title="' + titleText + '">&laquo; ' + hiddenBefore + '</span>';
           html += '<div class="timeline-line done"></div>';
         }
         visible.forEach(function (item, vIdx) {
@@ -3439,7 +3516,8 @@
         });
         if (hiddenAfter > 0) {
           html += '<div class="timeline-line"></div>';
-          html += '<span class="timeline-ellipsis" title="' + hiddenAfter + ' later lessons">' + hiddenAfter + ' &raquo;</span>';
+          var titleText = isZh ? (hiddenAfter + ' 节更晚的课程') : (hiddenAfter + ' later lessons');
+          html += '<span class="timeline-ellipsis" title="' + titleText + '">' + hiddenAfter + ' &raquo;</span>';
         }
         html += '</div>';
 
@@ -3448,11 +3526,13 @@
         var pct = Math.round((completedCount / totalCount) * 100);
 
         html += '<div class="phase-progress-bar"><div class="phase-progress-fill" style="width:' + pct + '%"></div></div>';
-        html += '<div class="phase-progress-text">You\'ve completed ' + completedCount + ' of ' + totalCount + ' lessons in this phase</div>';
+        var progressText = isZh ? ('您已完成该阶段中的 ' + completedCount + ' / ' + totalCount + ' 课时') : ('You\'ve completed ' + completedCount + ' of ' + totalCount + ' lessons in this phase');
+        html += '<div class="phase-progress-text">' + progressText + '</div>';
 
-        if (completedCount >= totalCount && phaseIdx < PHASES.length - 1) {
-          var nextPhase = PHASES[phaseIdx + 1];
-          html += '<div class="phase-complete-callout visible">Ready for Phase ' + String(nextPhase.id).padStart(2, '0') + ': ' + escapeHtml(nextPhase.name) + '</div>';
+        if (completedCount >= totalCount && phaseIdx < phasesList.length - 1) {
+          var nextPhase = phasesList[phaseIdx + 1];
+          var nextPhaseText = isZh ? ('准备好进入 阶段 ' + String(nextPhase.id).padStart(2, '0') + ': ' + escapeHtml(nextPhase.name) + ' 了吗') : ('Ready for Phase ' + String(nextPhase.id).padStart(2, '0') + ': ' + escapeHtml(nextPhase.name));
+          html += '<div class="phase-complete-callout visible">' + nextPhaseText + '</div>';
         }
 
         panel.innerHTML = html;
@@ -3471,24 +3551,32 @@
         }
         var current = flatLessons[currentLessonIndex];
         var phaseIdx = current.phaseIndex;
-        var phase = PHASES[phaseIdx];
+        var phasesList = (currentLang === 'zh-CN' && typeof PHASES_ZH !== 'undefined') ? PHASES_ZH : PHASES;
+        var phase = phasesList[phaseIdx];
 
-        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">N</div><div class="ai-panel-title">Continue Learning</div></div>';
+        var isZh = currentLang === 'zh-CN';
+        var title = isZh ? '继续学习' : 'Continue Learning';
+        var finishedText = isZh ? '✅ 您已完成该阶段！' : '\u2705 You finished this phase!';
+
+        var html = '<div class="ai-panel-header"><div class="ai-panel-icon">N</div><div class="ai-panel-title">' + title + '</div></div>';
         html += '<div class="continue-panel">';
 
         if (!next || !next.path) {
-          html += '<div class="phase-finished">\u2705 You finished this phase!</div>';
+          html += '<div class="phase-finished">' + finishedText + '</div>';
         }
 
         html += '<div class="continue-links">';
 
         var phaseSlug = extractPhaseSlug(phase, phaseIdx);
         var firstLesson = phase.lessons[0] ? extractLessonSlug(phase.lessons[0], 0) : '';
-        html += '<a class="continue-link" href="lesson.html?path=phases/' + phaseSlug + '/' + firstLesson + '">Browse all Phase ' + String(phase.id).padStart(2, '0') + ' lessons</a>';
-        html += '<a class="continue-link" href="catalog.html">Full course catalog</a>';
+        var browseText = isZh ? ('浏览 阶段 ' + String(phase.id).padStart(2, '0') + ' 的所有课程') : ('Browse all Phase ' + String(phase.id).padStart(2, '0') + ' lessons');
+        var catalogText = isZh ? '完整课程目录' : 'Full course catalog';
+        html += '<a class="continue-link" href="lesson.html?path=phases/' + phaseSlug + '/' + firstLesson + '">' + browseText + '</a>';
+        html += '<a class="continue-link" href="catalog.html">' + catalogText + '</a>';
         html += '</div>';
 
-        html += '<div class="continue-callout">Run <code>/find-your-level</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed for a personalized learning path</div>';
+        var calloutText = isZh ? '在 Claude、Cursor、Codex、OpenClaw、Hermes 或任何安装了课程技能的智能体中运行 <code>/find-your-level</code> 以获取个性化学习路径' : 'Run <code>/find-your-level</code> in Claude, Cursor, Codex, OpenClaw, Hermes, or any agent with the curriculum skills installed for a personalized learning path';
+        html += '<div class="continue-callout">' + calloutText + '</div>';
         html += '</div>';
 
         panel.innerHTML = html;
