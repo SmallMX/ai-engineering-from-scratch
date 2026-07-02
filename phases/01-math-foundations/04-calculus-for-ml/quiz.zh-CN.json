@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "中文导读：What does the derivative of a function at a point tell you?",
+      "question": "函数在一点的导数告诉你什么？",
       "options": [
-        "中文选项：The value of the function at that point",
-        "中文选项：The rate of change (slope) of the function at that point",
-        "中文选项：The area under the function up to that point",
-        "中文选项：The maximum value the function can reach"
+        "该点函数的值",
+        "该点函数的变化率（斜率）",
+        "到该点为止函数下的面积",
+        "函数可以达到的最大值"
       ],
       "correct": 1,
-      "explanation": "中文解析：The derivative f'(x) measures how much the output changes per unit change in input. Geometrically, it is the slope of the tangent line at that point."
+      "explanation": "导数 f'(x) 衡量输入每发生单位变化，输出发生多少变化。从几何上讲，它是该点切线的斜率。"
     },
     {
       "stage": "pre",
-      "question": "中文导读：What is a gradient in the context of machine learning?",
+      "question": "机器学习中的梯度是什么？",
       "options": [
-        "中文选项：A measure of model accuracy",
-        "中文选项：A vector of all partial derivatives that points in the direction of steepest ascent",
-        "中文选项：The learning rate used during training",
-        "中文选项：The difference between predicted and actual values"
+        "模型准确性的衡量标准",
+        "指向最陡上升方向的所有偏导数的向量",
+        "训练时使用的学习率",
+        "预测值与实际值的差异"
       ],
       "correct": 1,
-      "explanation": "中文解析：The gradient collects every partial derivative into one vector. It points in the direction that increases the function fastest. To minimize loss, you move opposite the gradient."
+      "explanation": "梯度将每个偏导数收集到一个向量中。它指向功能增加最快的方向。为了最大限度地减少损失，您可以逆梯度移动。"
     },
     {
       "stage": "post",
-      "question": "中文导读：In gradient descent, what does the update rule 'w = w - lr * dL/dw' accomplish?",
+      "question": "在梯度下降中，更新规则“w = w - lr * dL/dw”的作用是什么？",
       "options": [
-        "中文选项：It increases the loss to test model robustness",
-        "中文选项：It adjusts each weight in the direction that reduces the loss, scaled by the learning rate",
-        "中文选项：It resets the weight to its initial value minus the gradient",
-        "中文选项：It normalizes the weight to have magnitude 1"
+        "增加了测试模型鲁棒性的损失",
+        "它按照减少损失的方向调整每个权重，并按学习率缩放",
+        "它将权重重置为其初始值减去梯度",
+        "将权重标准化为大小为 1"
       ],
       "correct": 1,
-      "explanation": "中文解析：dL/dw tells you which direction increases the loss. Subtracting it (times the learning rate) moves the weight in the direction that decreases the loss. This is repeated for every weight in the model."
+      "explanation": "dL/dw 告诉您哪个方向会增加损耗。减去它（乘以学习率）会将权重移向减少损失的方向。对模型中的每个权重重复此操作。"
     },
     {
       "stage": "post",
-      "question": "中文导读：Why can't Newton's method (which uses the Hessian matrix) be directly applied to neural networks with millions of parameters?",
+      "question": "为什么牛顿法（使用Hessian矩阵）不能直接应用于具有数百万参数的神经网络？",
       "options": [
-        "中文选项：Newton's method only works for convex functions",
-        "中文选项：The Hessian is an N x N matrix, requiring O(N^2) storage and O(N^3) computation per step, which is intractable for millions of parameters",
-        "中文选项：Newton's method requires analytical derivatives which cannot be computed for neural networks",
-        "中文选项：Newton's method converges too slowly for deep networks"
+        "牛顿法仅适用于凸函数",
+        "Hessian 是一个 N x N 矩阵，每步需要 O(N^2) 存储和 O(N^3) 计算，这对于数百万个参数来说是很棘手的",
+        "牛顿法需要分析导数，而神经网络无法计算这些导数",
+        "牛顿法对于深度网络收敛太慢"
       ],
       "correct": 1,
-      "explanation": "中文解析：For N=1 million parameters, the Hessian has 1 trillion entries. Computing and inverting it is impossible. This is why we use first-order methods (SGD, Adam) that approximate second-order information cheaply."
+      "explanation": "对于 N=100 万个参数，Hessian 矩阵有 1 万亿个条目。计算和反转它是不可能的。这就是为什么我们使用一阶方法（SGD、Adam）来廉价地近似二阶信息。"
     },
     {
       "stage": "post",
-      "question": "中文导读：What is the numerical (central difference) approximation for f'(x)?",
+      "question": "f'(x) 的数值（中心差）近似值是多少？",
       "options": [
-        "中文选项：f(x+h) / h",
-        "中文选项：(f(x+h) - f(x)) / h",
-        "中文选项：(f(x+h) - f(x-h)) / (2*h)",
-        "中文选项：f(x) * h"
+        "f(x+h)/h",
+        "(f(x+h) - f(x)) / h",
+        "(f(x+h) - f(x-h)) / (2*h)",
+        "f(x) * h"
       ],
       "correct": 2,
-      "explanation": "中文解析：The central difference (f(x+h) - f(x-h)) / (2h) is more accurate than the forward difference because it averages the slope on both sides of x, canceling out the leading error term."
+      "explanation": "中心差值 (f(x+h) - f(x-h)) / (2h) 比前向差值更准确，因为它平均了 x 两侧的斜率，抵消了前导误差项。"
     }
   ]
 }

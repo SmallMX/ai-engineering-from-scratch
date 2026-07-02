@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "中文导读：What does the adjacency matrix A[i][j] = 1 represent?",
+      "question": "邻接矩阵 A[i][j] = 1 代表什么？",
       "options": [
-        "中文选项：Node i has degree j",
-        "中文选项：There is an edge from node i to node j",
-        "中文选项：Node i and node j have the same label",
-        "中文选项：The shortest path from i to j has length 1"
+        "节点 i 的度数为 j",
+        "节点i到节点j有一条边",
+        "节点i和节点j具有相同的标签",
+        "从 i 到 j 的最短路径长度为 1"
       ],
       "correct": 1,
-      "explanation": "中文解析：The adjacency matrix is the core representation of a graph. A[i][j] = 1 means there is an edge connecting node i to node j. For undirected graphs, the matrix is symmetric (A[i][j] = A[j][i])."
+      "explanation": "邻接矩阵是图的核心表示形式。 A[i][j] = 1 表示有一条边连接节点 i 和节点 j。对于无向图，矩阵是对称的 (A[i][j] = A[j][i])。"
     },
     {
       "stage": "pre",
-      "question": "中文导读：What data structure does BFS use and what does it find?",
+      "question": "BFS 使用什么数据结构以及它找到什么？",
       "options": [
-        "中文选项：Stack; finds connected components",
-        "中文选项：Queue; finds shortest paths in unweighted graphs",
-        "中文选项：Priority queue; finds minimum spanning tree",
-        "中文选项：Hash map; finds duplicate nodes"
+        "堆栈；找到连接的组件",
+        "队列；查找未加权图中的最短路径",
+        "优先队列；找到最小生成树",
+        "哈希图；查找重复节点"
       ],
       "correct": 1,
-      "explanation": "中文解析：BFS uses a queue (FIFO) to explore all neighbors at distance k before moving to distance k+1. This guarantees that the first time a node is discovered, it is via a shortest path from the source."
+      "explanation": "BFS 使用队列 (FIFO) 在移动到距离 k+1 之前探索距离 k 处的所有邻居。这保证了第一次发现节点时，它是通过来自源的最短路径。"
     },
     {
       "stage": "post",
-      "question": "中文导读：The graph Laplacian L = D - A of a connected graph has how many zero eigenvalues?",
+      "question": "连通图的拉普拉斯图 L = D - A 有多少个零特征值？",
       "options": [
-        "中文选项：Zero",
-        "中文选项：Exactly one",
-        "中文选项：Equal to the number of nodes",
-        "中文选项：Equal to the number of edges"
+        "零",
+        "正好一个",
+        "等于节点数",
+        "等于边数"
       ],
       "correct": 1,
-      "explanation": "中文解析：The number of zero eigenvalues of the Laplacian equals the number of connected components. A connected graph has exactly one connected component, so exactly one zero eigenvalue. A graph with k disconnected pieces has k zero eigenvalues."
+      "explanation": "拉普拉斯算子的零特征值的数量等于连通分量的数量。连通图恰好具有一个连通分量，因此恰好有一个零特征值。具有 k 个不相连部分的图有 k 个零特征值。"
     },
     {
       "stage": "post",
-      "question": "中文导读：In GNN message passing, what does h_v^(k+1) = sigma(W * mean({h_u^(k) : u in neighbors(v)})) compute?",
+      "question": "在 GNN 消息传递中， h_v^(k+1) = sigma(W *mean({h_u^(k) : u in Neighbors(v)})) 计算什么？",
       "options": [
-        "中文选项：The shortest path from v to all other nodes",
-        "中文选项：A new feature vector for node v by aggregating neighbor features, transforming with learned weights, and applying a nonlinearity",
-        "中文选项：The degree of node v at layer k+1",
-        "中文选项：The PageRank score of node v"
+        "v 到所有其他节点的最短路径",
+        "节点 v 的新特征向量，通过聚合邻居特征、使用学习到的权重进行变换并应用非线性",
+        "节点v在k+1层的度",
+        "节点v的PageRank得分"
       ],
       "correct": 1,
-      "explanation": "中文解析：Each node collects features from its neighbors (mean aggregation), multiplies by a learned weight matrix W, and applies an activation function sigma. After k rounds, each node has information from its k-hop neighborhood."
+      "explanation": "每个节点从其邻居收集特征（平均聚合），乘以学习的权重矩阵 W，并应用激活函数 sigma。经过 k 轮后，每个节点都拥有来自其 k 跳邻域的信息。"
     },
     {
       "stage": "post",
-      "question": "中文导读：How does spectral clustering use the Fiedler vector (eigenvector of the second-smallest eigenvalue of L)?",
+      "question": "谱聚类如何使用 Fiedler 向量（L 的第二小特征值的特征向量）？",
       "options": [
-        "中文选项：Nodes with the largest Fiedler vector entries form one cluster",
-        "中文选项：Nodes with positive Fiedler vector values go in one group, nodes with negative values go in the other",
-        "中文选项：The Fiedler vector is used as edge weights",
-        "中文选项：The Fiedler vector determines the number of clusters"
+        "具有最大 Fiedler 向量条目的节点形成一个簇",
+        "具有正费德勒向量值的节点属于一组，具有负值的节点属于另一组",
+        "Fiedler向量用作边缘权重",
+        "Fiedler向量决定簇的数量"
       ],
       "correct": 1,
-      "explanation": "中文解析：The Fiedler vector encodes the smoothest non-trivial function on the graph. Nodes in the same tightly-connected cluster get similar values, while nodes separated by a bottleneck get values with opposite signs. The sign split partitions the graph into two clusters."
+      "explanation": "Fiedler 向量编码图上最平滑的非平凡函数。同一紧密连接集群中的节点获得相似的值，而被瓶颈分开的节点获得符号相反的值。符号分割将图分成两个簇。"
     }
   ]
 }

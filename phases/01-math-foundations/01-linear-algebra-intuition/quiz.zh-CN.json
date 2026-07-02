@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "中文导读：What does the dot product of two vectors measure?",
+      "question": "两个向量的点积测量什么？",
       "options": [
-        "中文选项：The distance between the two vectors",
-        "中文选项：How similar or aligned the two vectors are",
-        "中文选项：The angle between the vectors in degrees",
-        "中文选项：The number of dimensions the vectors share"
+        "两个向量之间的距离",
+        "两个向量的相似程度或对齐程度",
+        "向量之间的角度（以度为单位）",
+        "向量共享的维度数"
       ],
       "correct": 1,
-      "explanation": "中文解析：The dot product measures alignment: positive means same direction (similar), zero means perpendicular (unrelated), negative means opposite direction (dissimilar). This is the basis of similarity search in AI."
+      "explanation": "点积衡量对齐情况：正值表示方向相同（相似），零表示垂直（不相关），负值表示方向相反（不相似）。这是人工智能中相似性搜索的基础。"
     },
     {
       "stage": "pre",
-      "question": "中文导读：In AI, what does 'embedding' refer to?",
+      "question": "在人工智能中，“嵌入”指的是什么？",
       "options": [
-        "中文选项：Inserting one model inside another",
-        "中文选项：A vector representation that captures the meaning of something (word, image, user)",
-        "中文选项：A technique for compressing model weights",
-        "中文选项：The process of converting code to machine instructions"
+        "将一个模型插入另一个模型",
+        "捕捉事物含义（单词、图像、用户）的向量表示",
+        "一种压缩模型权重的技术",
+        "代码转换为机器指令的过程"
       ],
       "correct": 1,
-      "explanation": "中文解析：An embedding maps discrete objects (words, images, users) to continuous vectors in a high-dimensional space where similar items are close together. It is the bridge between real-world concepts and mathematical operations."
+      "explanation": "嵌入将离散对象（单词、图像、用户）映射到高维空间中的连续向量，其中相似的项目靠近在一起。它是现实世界概念和数学运算之间的桥梁。"
     },
     {
       "stage": "post",
-      "question": "中文导读：Three vectors v1=[1,0,0], v2=[0,1,0], v3=[2,1,0] are given. Are they linearly independent?",
+      "question": "给出三个向量 v1=[1,0,0], v2=[0,1,0], v3=[2,1,0]。它们是线性独立的吗？",
       "options": [
-        "中文选项：Yes, because there are three vectors in 3D space",
-        "中文选项：No, because v3 = 2*v1 + v2, so v3 is a linear combination of the others",
-        "中文选项：Yes, because none of the vectors are identical",
-        "中文选项：No, because they all have a zero component"
+        "是的，因为 3D 空间中有三个向量",
+        "不是，因为 v3 = 2*v1 + v2，所以 v3 是其他的线性组合",
+        "是的，因为没有一个向量是相同的",
+        "不，因为它们都有一个零分量"
       ],
       "correct": 1,
-      "explanation": "中文解析：v3 = 2*v1 + v2, making the set linearly dependent. All three vectors lie in the xy-plane and cannot reach [0,0,1]. Despite having 3 vectors in 3D, they only span a 2D subspace."
+      "explanation": "v3 = 2*v1 + v2，使集合线性相关。所有三个向量都位于 xy 平面内，并且不能到达 [0,0,1]。尽管 3D 中有 3 个向量，但它们仅跨越 2D 子空间。"
     },
     {
       "stage": "post",
-      "question": "中文导读：What does the rank of a matrix tell you in the context of machine learning?",
+      "question": "在机器学习的背景下，矩阵的秩告诉你什么？",
       "options": [
-        "中文选项：How fast the matrix can be multiplied",
-        "中文选项：The number of linearly independent columns, indicating how many dimensions of useful information it contains",
-        "中文选项：The maximum value in the matrix",
-        "中文选项：The number of non-zero entries in the matrix"
+        "矩阵相乘的速度有多快",
+        "线性独立列的数量，表示其包含多少维度的有用信息",
+        "矩阵中的最大值",
+        "矩阵中非零条目的数量"
       ],
       "correct": 1,
-      "explanation": "中文解析：Rank equals the number of linearly independent columns. In ML, a rank-deficient feature matrix means redundant features, infinitely many weight solutions, and the need for regularization."
+      "explanation": "等级等于线性独立列的数量。在机器学习中，缺秩特征矩阵意味着冗余特征、无限多个权重解决方案以及正则化的需要。"
     },
     {
       "stage": "post",
-      "question": "中文导读：How does LoRA (Low-Rank Adaptation) use linear algebra to efficiently fine-tune large language models?",
+      "question": "LoRA（低秩适应）如何使用线性代数来高效地微调大型语言模型？",
       "options": [
-        "中文选项：It removes unused rows from weight matrices to shrink the model",
-        "中文选项：It decomposes weight updates into two small low-rank matrices instead of updating the full weight matrix",
-        "中文选项：It converts all weights from float32 to int8",
-        "中文选项：It freezes the embedding layer and only trains the output head"
+        "它从权重矩阵中删除未使用的行以缩小模型",
+        "它将权重更新分解为两个小的低秩矩阵，而不是更新完整的权重矩阵",
+        "它将所有权重从 float32 转换为 int8",
+        "它冻结嵌入层并仅训练输出头"
       ],
       "correct": 1,
-      "explanation": "中文解析：LoRA decomposes a 4096x4096 weight update into two matrices of size 4096x16 and 16x4096 (rank-16), reducing trainable parameters from 16M to 131K by assuming updates live in a low-dimensional subspace."
+      "explanation": "LoRA 将 4096x4096 权重更新分解为两个大小为 4096x16 和 16x4096 (rank-16) 的矩阵，通过假设更新存在于低维子空间中，将可训练参数从 16M 减少到 131K。"
     }
   ]
 }

@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "中文导读：What does the 'shape' of a tensor describe?",
+      "question": "张量的“形状”描述什么？",
       "options": [
-        "中文选项：A tuple listing the size along each axis",
-        "中文选项：The total number of elements in the tensor",
-        "中文选项：The data type of the tensor elements",
-        "中文选项：The memory address of the tensor"
+        "列出沿每个轴的尺寸的元组",
+        "张量的元素总数",
+        "张量元素的数据类型",
+        "张量的内存地址"
       ],
       "correct": 0,
-      "explanation": "中文解析：The shape is a tuple listing the size along each axis. For example, a tensor with shape (2, 3, 4) has 2 elements along axis 0, 3 along axis 1, and 4 along axis 2."
+      "explanation": "形状是一个元组，列出了沿每个轴的尺寸。例如，形状为 (2, 3, 4) 的张量沿轴 0 有 2 个元素，沿轴 1 具有 3 个元素，沿轴 2 具有 4 个元素。"
     },
     {
       "stage": "pre",
-      "question": "中文导读：In PyTorch, what layout does an image batch tensor use by default?",
+      "question": "在 PyTorch 中，图像批量张量默认使用什么布局？",
       "options": [
-        "中文选项：NHWC (batch, height, width, channels)",
-        "中文选项：NCHW (batch, channels, height, width)",
-        "中文选项：CHWN (channels, height, width, batch)",
-        "中文选项：WHCN (width, height, channels, batch)"
+        "NHWC（批次、高度、宽度、通道）",
+        "NCHW（批次、通道、高度、宽度）",
+        "CHWN（通道、高度、宽度、批次）",
+        "WHCN（宽度、高度、通道、批次）"
       ],
       "correct": 1,
-      "explanation": "中文解析：PyTorch defaults to NCHW (channels-first) layout. TensorFlow defaults to NHWC (channels-last). Mismatched layouts cause silent errors or performance issues."
+      "explanation": "PyTorch 默认为 NCHW（通道优先）布局。 TensorFlow 默认为 NHWC（通道最后）。不匹配的布局会导致无提示错误或性能问题。"
     },
     {
       "stage": "post",
-      "question": "中文导读：What is the result shape when broadcasting tensors of shape (8, 1, 6, 1) and (7, 1, 5)?",
+      "question": "广播形状为 (8, 1, 6, 1) 和 (7, 1, 5) 的张量时，结果形状是什么？",
       "options": [
-        "中文选项：(8, 7, 6, 1)",
-        "中文选项：(8, 1, 6, 5)",
-        "中文选项：(8, 7, 6, 5)",
-        "中文选项：Broadcasting fails — shapes are incompatible"
+        "（8、7、6、1）",
+        "（8、1、6、5）",
+        "（8、7、6、5）",
+        "广播失败——形状不兼容"
       ],
       "correct": 2,
-      "explanation": "中文解析：Align shapes from the right: (8,1,6,1) and (1,7,1,5). Dimensions are compatible when equal or one is 1. The result takes the maximum along each axis: (8, 7, 6, 5)."
+      "explanation": "从右侧对齐形状：(8,1,6,1) 和 (1,7,1,5)。当相等或 1 为 1 时，尺寸是兼容的。结果取沿每个轴的最大值：(8,7,6,5)。"
     },
     {
       "stage": "post",
-      "question": "中文导读：In the einsum expression 'bhtd,bhsd->bhts', what happens to the index 'd'?",
+      "question": "在 einsum 表达式 'bhtd,bhsd->bhts' 中，索引 'd' 会发生什么？",
       "options": [
-        "中文选项：It is kept in the output as a new axis",
-        "中文选项：It is summed over (contracted) because it appears in both inputs but not the output",
-        "中文选项：It is broadcast across both tensors",
-        "中文选项：It is transposed between the two input tensors"
+        "它作为新轴保留在输出中",
+        "它被求和（收缩），因为它出现在两个输入中，但不出现在输出中",
+        "它在两个张量上广播",
+        "在两个输入张量之间转置"
       ],
       "correct": 1,
-      "explanation": "中文解析：In einsum, any index that appears in the inputs but not the output is summed over. Index 'd' appears in both 'bhtd' and 'bhsd' but not in the output 'bhts', so it is contracted (multiplied and summed)."
+      "explanation": "在 einsum 中，出现在输入中但未出现在输出中的任何索引都会被求和。索引“d”出现在“bhtd”和“bhsd”中，但不在输出“bhts”中，因此它是收缩的（相乘和求和）。"
     },
     {
       "stage": "post",
-      "question": "中文导读：Why does calling .view() fail on a transposed tensor in PyTorch?",
+      "question": "为什么在 PyTorch 中对转置张量调用 .view() 失败？",
       "options": [
-        "中文选项：Transposed tensors have a different data type",
-        "中文选项：The tensor is non-contiguous in memory after transpose, and view requires contiguous data",
-        "中文选项：View only works on 2D tensors",
-        "中文选项：Transpose changes the total number of elements"
+        "转置张量具有不同的数据类型",
+        "转置后张量在内存中不连续，视图需要连续数据",
+        "View 仅适用于 2D 张量",
+        "转置改变元素总数"
       ],
       "correct": 1,
-      "explanation": "中文解析：Transpose swaps strides without moving data, making the tensor non-contiguous. The .view() operation requires contiguous memory layout. Use .reshape() or call .contiguous() first."
+      "explanation": "Transpose 交换步幅而不移动数据，使得张量不连续。 .view() 操作需要连续的内存布局。首先使用 .reshape() 或调用 .contigious() 。"
     }
   ]
 }

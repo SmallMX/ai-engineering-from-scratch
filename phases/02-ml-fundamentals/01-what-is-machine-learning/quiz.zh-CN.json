@@ -2,66 +2,66 @@
   {
     "id": "ml-intro-pre-1",
     "stage": "pre",
-    "question": "中文导读：In supervised learning, what does the model receive during training?",
+    "question": "在监督学习中，模型在训练过程中接收到什么？",
     "options": [
-      "中文选项：Only input data with no labels",
-      "中文选项：Input-output pairs where the correct answer is provided",
-      "中文选项：A reward signal for each action taken",
-      "中文选项：A set of rules written by a human expert"
+      "只输入没有标签的数据",
+      "提供正确答案的输入输出对",
+      "每采取行动的奖励信号",
+      "人类专家编写的一组规则"
     ],
     "correct": 1,
-    "explanation": "中文解析：Supervised learning trains on input-output pairs (labeled data). The model learns to map inputs to known correct outputs."
+    "explanation": "在输入输出对（标记数据）上进行监督学习训练。该模型学习将输入映射到已知的正确输出。"
   },
   {
     "id": "ml-intro-pre-2",
     "stage": "pre",
-    "question": "中文导读：What is the purpose of splitting data into training and test sets?",
+    "question": "将数据分为训练集和测试集的目的是什么？",
     "options": [
-      "中文选项：To make training faster by using less data",
-      "中文选项：To have backup data in case the training data is lost",
-      "中文选项：To evaluate whether the model generalizes to data it has never seen during training",
-      "中文选项：To balance the classes in the dataset"
+      "使用更少的数据使训练更快",
+      "要有备份数据，以防训练数据丢失",
+      "评估模型是否能够泛化到训练期间从未见过的数据",
+      "平衡数据集中的类"
     ],
     "correct": 2,
-    "explanation": "中文解析：The test set measures generalization. If you evaluate on training data, you measure memorization, not learning."
+    "explanation": "测试集衡量泛化能力。如果你评估训练数据，你衡量的是记忆，而不是学习。"
   },
   {
     "id": "ml-intro-post-1",
     "stage": "post",
-    "question": "中文导读：A model gets 98% accuracy on training data but 55% on test data. What is this an example of?",
+    "question": "模型在训练数据上的准确度为 98%，但在测试数据上的准确度为 55%。这是什么例子？",
     "options": [
-      "中文选项：Underfitting: the model is too simple",
-      "中文选项：Overfitting: the model memorized training noise instead of learning general patterns",
-      "中文选项：Data drift: the test distribution changed",
-      "中文选项：Good generalization: the model learned the true patterns"
+      "欠拟合：模型过于简单",
+      "过度拟合：模型记住训练噪声而不是学习一般模式",
+      "数据漂移：测试分布发生变化",
+      "良好的泛化能力：模型学习了真实的模式"
     ],
     "correct": 1,
-    "explanation": "中文解析：A large gap between training accuracy (high) and test accuracy (low) is the hallmark of overfitting. The model memorized the training data."
+    "explanation": "训练精度（高）和测试精度（低）之间的巨大差距是过度拟合的标志。该模型记住了训练数据。"
   },
   {
     "id": "ml-intro-post-2",
     "stage": "post",
-    "question": "中文导读：An e-commerce site wants to group customers into segments based on purchase behavior without any predefined labels. Which type of ML is this?",
+    "question": "一个电子商务网站希望根据购买行为将客户分组，而不需要任何预定义的标签。这是哪种类型的机器学习？",
     "options": [
-      "中文选项：Supervised learning (classification)",
-      "中文选项：Supervised learning (regression)",
-      "中文选项：Unsupervised learning (clustering)",
-      "中文选项：Reinforcement learning"
+      "监督学习（分类）",
+      "监督学习（回归）",
+      "无监督学习（聚类）",
+      "强化学习"
     ],
     "correct": 2,
-    "explanation": "中文解析：Finding natural groupings in data without predefined labels is clustering, which is a form of unsupervised learning."
+    "explanation": "在没有预定义标签的数据中寻找自然分组就是聚类，它是无监督学习的一种形式。"
   },
   {
     "id": "ml-intro-post-3",
     "stage": "post",
-    "question": "中文导读：Which scenario is NOT a good use case for machine learning?",
+    "question": "哪种场景不是机器学习的良好用例？",
     "options": [
-      "中文选项：Predicting customer churn from historical behavior data",
-      "中文选项：Detecting fraudulent transactions in a stream of millions of payments",
-      "中文选项：Converting temperatures from Celsius to Fahrenheit",
-      "中文选项：Classifying images of skin lesions as benign or malignant"
+      "根据历史行为数据预测客户流失",
+      "检测数百万笔支付流中的欺诈交易",
+      "将温度从摄氏度转换为华氏度",
+      "将皮肤病变图像分类为良性或恶性"
     ],
     "correct": 2,
-    "explanation": "中文解析：Celsius to Fahrenheit is a fixed formula (F = 9/5 * C + 32). Simple, well-defined rules do not need ML. ML adds complexity with no benefit."
+    "explanation": "摄氏度到华氏度是一个固定公式（F = 9/5 * C + 32）。简单、定义明确的规则不需要机器学习。机器学习增加了复杂性，但没有任何好处。"
   }
 ]

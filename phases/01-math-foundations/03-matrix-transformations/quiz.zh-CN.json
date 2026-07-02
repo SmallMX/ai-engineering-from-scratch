@@ -2,63 +2,63 @@
   "questions": [
     {
       "stage": "pre",
-      "question": "中文导读：What is an eigenvector of a matrix?",
+      "question": "什么是矩阵的特征向量？",
       "options": [
-        "中文选项：The largest row in the matrix",
-        "中文选项：A vector that the matrix only scales (never rotates) when multiplied",
-        "中文选项：A vector perpendicular to all columns of the matrix",
-        "中文选项：The diagonal entries of the matrix expressed as a vector"
+        "矩阵中最大的行",
+        "矩阵相乘时仅缩放（从不旋转）的向量",
+        "垂直于矩阵所有列的向量",
+        "表示为向量的矩阵的对角线项"
       ],
       "correct": 1,
-      "explanation": "中文解析：An eigenvector v satisfies Av = lambda*v, meaning the matrix A only stretches v by the scalar factor lambda (the eigenvalue) without changing its direction."
+      "explanation": "特征向量 v 满足 Av = lambda*v，这意味着矩阵 A 仅将 v 拉伸标量因子 lambda（特征值），而不改变其方向。"
     },
     {
       "stage": "pre",
-      "question": "中文导读：What does the determinant of a 2D transformation matrix represent geometrically?",
+      "question": "二维变换矩阵的行列式在几何上表示什么？",
       "options": [
-        "中文选项：The angle of rotation applied by the matrix",
-        "中文选项：The factor by which the matrix scales area",
-        "中文选项：The number of eigenvectors the matrix has",
-        "中文选项：The trace of the matrix"
+        "矩阵应用的旋转角度",
+        "矩阵缩放面积的因子",
+        "矩阵的特征向量数量",
+        "矩阵的迹"
       ],
       "correct": 1,
-      "explanation": "中文解析：The determinant measures how much the transformation scales area. det=1 preserves area (rotation), det=2 doubles area, det=0 crushes to a lower dimension, and det=-1 preserves area but flips orientation."
+      "explanation": "行列式衡量变换缩放面积的大小。 det=1 保留面积（旋转），det=2 使面积加倍，det=0 压缩至较低维度，det=-1 保留面积但翻转方向。"
     },
     {
       "stage": "post",
-      "question": "中文导读：Why does the order of matrix transformations matter? (i.e., why is R @ S different from S @ R?)",
+      "question": "为什么矩阵变换的顺序很重要？ （即为什么 R @ S 与 S @ R 不同？）",
       "options": [
-        "中文选项：Matrix addition is not commutative",
-        "中文选项：Matrix multiplication is not commutative: rotating then scaling gives a different result than scaling then rotating",
-        "中文选项：The determinants are different for each order",
-        "中文选项：One order produces a larger matrix than the other"
+        "矩阵加法不可交换",
+        "矩阵乘法不可交换：旋转然后缩放给出的结果与缩放然后旋转的结果不同",
+        "每个阶次的决定因素都不同",
+        "一个阶次产生的矩阵比另一个阶次更大"
       ],
       "correct": 1,
-      "explanation": "中文解析：Matrix multiplication is not commutative. Rotating (1,0) by 90 degrees then scaling by (2,0.5) gives (0,0.5), but scaling first then rotating gives (0,2). The geometric operations compose differently."
+      "explanation": "矩阵乘法不可交换。将 (1,0) 旋转 90 度，然后缩放 (2,0.5) 得到 (0,0.5)，但先缩放然后旋转得到 (0,2)。几何运算的组成不同。"
     },
     {
       "stage": "post",
-      "question": "中文导读：In a recurrent neural network, what happens when the weight matrix has eigenvalues with magnitude greater than 1?",
+      "question": "在循环神经网络中，当权重矩阵的特征值大于 1 时会发生什么？",
       "options": [
-        "中文选项：The network learns faster",
-        "中文选项：Outputs explode exponentially over time steps (exploding gradient problem)",
-        "中文选项：The network becomes more stable",
-        "中文选项：The eigenvalues converge to 1 over training"
+        "网络学习得更快",
+        "输出随着时间步长呈指数爆炸（梯度爆炸问题）",
+        "网络变得更加稳定",
+        "训练后特征值收敛到 1"
       ],
       "correct": 1,
-      "explanation": "中文解析：Repeated multiplication by a matrix amplifies the eigenvalue directions. Eigenvalues > 1 cause exponential growth (exploding gradients), while eigenvalues < 1 cause exponential decay (vanishing gradients)."
+      "explanation": "与矩阵的重复相乘会放大特征值方向。特征值 > 1 会导致指数增长（梯度爆炸），而特征值 < 1 会导致指数衰减（梯度消失）。"
     },
     {
       "stage": "post",
-      "question": "中文导读：The matrix A = [[2, 1], [1, 2]] has eigenvalues 3 and 1. What does eigendecomposition A = V @ D @ V^(-1) reveal?",
+      "question": "矩阵 A = [[2, 1], [1, 2]] 具有特征值 3 和 1。特征分解 A = V @ D @ V^(-1) 揭示了什么？",
       "options": [
-        "中文选项：A is equivalent to two rotations",
-        "中文选项：A stretches space by 3x along the [1,1] direction and leaves the [1,-1] direction unchanged",
-        "中文选项：A compresses all vectors by a factor of 2",
-        "中文选项：A has rank 1 and maps all vectors to a line"
+        "A相当于旋转两次",
+        "A 沿 [1,1] 方向将空间拉伸 3 倍，并保持 [1,-1] 方向不变",
+        "A 将所有向量压缩 2 倍",
+        "A 的秩为 1，并将所有向量映射到一条线上"
       ],
       "correct": 1,
-      "explanation": "中文解析：The eigenvalue 3 with eigenvector [1,1] means A stretches 3x along the diagonal. The eigenvalue 1 with eigenvector [1,-1] means A leaves the anti-diagonal unchanged. D holds {3,1}, V holds the eigenvectors."
+      "explanation": "特征向量为 [1,1] 的特征值 3 表示 A 沿对角线拉伸 3 倍。特征向量为 [1,-1] 的特征值 1 意味着 A 的反对角线不变。 D 保存 {3,1}，V 保存特征向量。"
     }
   ]
 }

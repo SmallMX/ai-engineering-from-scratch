@@ -2,66 +2,66 @@
   {
     "id": "linreg-pre-1",
     "stage": "pre",
-    "question": "中文导读：What does the learning rate control in gradient descent?",
+    "question": "梯度下降中学习率控制什么？",
     "options": [
-      "中文选项：The number of features used by the model",
-      "中文选项：How many epochs the model trains for",
-      "中文选项：The size of each parameter update step",
-      "中文选项：The ratio of training to test data"
+      "模型使用的特征数量",
+      "模型训练了多少个epoch",
+      "各参数更新步长的大小",
+      "训练数据与测试数据的比例"
     ],
     "correct": 2,
-    "explanation": "中文解析：The learning rate is a scalar that controls how much weights change per gradient descent step. Too large causes divergence, too small causes slow convergence."
+    "explanation": "学习率是一个标量，控制每个梯度下降步骤权重的变化量。太大会导致发散，太小会导致收敛速度慢。"
   },
   {
     "id": "linreg-pre-2",
     "stage": "pre",
-    "question": "中文导读：What does R-squared = 0 mean for a regression model?",
+    "question": "R 平方 = 0 对于回归模型意味着什么？",
     "options": [
-      "中文选项：The model makes perfect predictions",
-      "中文选项：The model is no better than always predicting the mean of the target",
-      "中文选项：The model has negative error",
-      "中文选项：The model has not been trained yet"
+      "模型做出了完美的预测",
+      "该模型并不比总是预测目标的平均值更好",
+      "模型存在负误差",
+      "模型尚未训练"
     ],
     "correct": 1,
-    "explanation": "中文解析：R-squared = 0 means the model explains none of the variance in the target. It performs exactly as well as simply predicting the mean every time."
+    "explanation": "R 平方 = 0 表示模型无法解释目标中的任何方差。它每次的表现与简单地预测平均值一样准确。"
   },
   {
     "id": "linreg-post-1",
     "stage": "post",
-    "question": "中文导读：Why is feature scaling important for gradient descent in multiple linear regression?",
+    "question": "为什么特征缩放对于多元线性回归中的梯度下降很重要？",
     "options": [
-      "中文选项：It makes the model more interpretable",
-      "中文选项：It prevents the cost surface from being elongated, allowing faster convergence",
-      "中文选项：It reduces the number of features needed",
-      "中文选项：It guarantees the model will find the global minimum"
+      "它使模型更具可解释性",
+      "它可以防止成本面拉长，从而实现更快的收敛",
+      "它减少了所需功能的数量",
+      "它保证模型会找到全局最小值"
     ],
     "correct": 1,
-    "explanation": "中文解析：When features have very different scales, the cost surface becomes elongated. Gradient descent takes many more steps to converge. Standardizing features makes the surface more spherical."
+    "explanation": "当要素具有非常不同的尺度时，成本面就会变长。梯度下降需要更多步骤才能收敛。标准化特征使表面更加球形。"
   },
   {
     "id": "linreg-post-2",
     "stage": "post",
-    "question": "中文导读：The normal equation gives optimal weights directly. Why would you prefer gradient descent instead?",
+    "question": "正规方程直接给出最优权重。为什么你更喜欢梯度下降？",
     "options": [
-      "中文选项：Gradient descent always gives more accurate results",
-      "中文选项：The normal equation does not work for linear regression",
-      "中文选项：Matrix inversion in the normal equation is O(n^3) in features, which is too slow for thousands of features",
-      "中文选项：Gradient descent requires less memory than storing the data"
+      "梯度下降总是给出更准确的结果",
+      "正规方程不适用于线性回归",
+      "正规方程中的矩阵求逆在特征上是 O(n^3)，对于数千个特征来说太慢了",
+      "梯度下降比存储数据需要更少的内存"
     ],
     "correct": 2,
-    "explanation": "中文解析：The normal equation requires inverting X^T * X, which is O(n^3) in the number of features. For large feature counts, gradient descent is more efficient."
+    "explanation": "正规方程需要反转 X^T * X，其特征数量为 O(n^3)。对于大量特征，梯度下降更有效。"
   },
   {
     "id": "linreg-post-3",
     "stage": "post",
-    "question": "中文导读：A degree-10 polynomial regression model fits training data perfectly (R^2 = 1.0) but has R^2 = 0.3 on test data. What should you do?",
+    "question": "10 次多项式回归模型完美拟合训练数据 (R^2 = 1.0)，但测试数据的 R^2 = 0.3。你应该做什么？",
     "options": [
-      "中文选项：Increase the polynomial degree to 20 for even better training fit",
-      "中文选项：Reduce model complexity (lower degree) or add regularization (Ridge) to prevent overfitting",
-      "中文选项：Collect less training data so the model cannot memorize",
-      "中文选项：Remove the test set and report training R^2 only"
+      "将多项式次数增加到 20，以获得更好的训练拟合效果",
+      "降低模型复杂度（较低程度）或添加正则化（Ridge）以防止过度拟合",
+      "收集较少的训练数据，导致模型无法记忆",
+      "删除测试集并仅报告训练 R^2"
     ],
     "correct": 1,
-    "explanation": "中文解析：Perfect training fit with poor test fit is overfitting. The fix is to reduce complexity (lower polynomial degree) or add regularization to penalize large weights."
+    "explanation": "完美的训练拟合与较差的测试拟合是过度拟合。解决方法是降低复杂性（降低多项式次数）或添加正则化来惩罚大权重。"
   }
 ]
